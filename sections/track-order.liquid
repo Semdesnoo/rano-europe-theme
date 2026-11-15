@@ -1,0 +1,76 @@
+{%- assign s = section.settings -%}
+<section class="section track" data-track data-url="{{ s.carrier_url | escape }}">
+  <div class="container track__wrap">
+    <span class="track__badge">{% render 'icon', name: 'package' %}</span>
+    <h1 class="track__title">{{ s.heading }}</h1>
+    <p class="track__sub">{{ s.text }}</p>
+
+    <div class="track__card">
+      <div class="track__tabs" role="tablist">
+        <button type="button" role="tab" class="track__tab is-active" aria-selected="true" data-track-tab="dhl">Tracking number</button>
+        <button type="button" role="tab" class="track__tab" aria-selected="false" data-track-tab="order">Order number</button>
+      </div>
+
+      <form class="track__form" data-track-form="dhl" novalidate>
+        <label class="visually-hidden" for="track-code">DHL tracking number</label>
+        <div class="track__input">
+          {% render 'icon', name: 'search' %}
+          <input id="track-code" name="code" type="text" placeholder="e.g. JVGL0612345678901234" autocomplete="off" autocapitalize="characters" spellcheck="false" required aria-describedby="track-hint">
+        </div>
+        <p class="track__hint" id="track-hint" data-track-msg>You'll find it in your shipping confirmation email from Rano or DHL.</p>
+        <button type="submit" class="btn btn--dark btn--block">Track package {% render 'icon', name: 'arrow-right' %}</button>
+      </form>
+
+      <form class="track__form" data-track-form="order" action="{{ routes.account_url }}" hidden>
+        <p class="track__lead">Sign in with the email address you ordered with. Your order, its status and the DHL tracking link are all in your account. No password needed, we email you a code.</p>
+        <button type="submit" class="btn btn--dark btn--block">Find my order {% render 'icon', name: 'arrow-right' %}</button>
+        <p class="track__hint">No account email? <a href="{{ s.contact_link }}" class="link">Ask our team</a> and include your order number.</p>
+      </form>
+
+      <p class="track__carrier"><span class="track__dhl" aria-label="DHL">DHL</span> Every Rano order ships with DHL, tracked from our studio to your door.</p>
+    </div>
+
+    <ol class="track__steps">
+      <li><span>{% render 'icon', name: 'bag' %}</span><strong>Order placed</strong><small>You receive a confirmation email right away.</small></li>
+      <li><span>{% render 'icon', name: 'package' %}</span><strong>Packed with care</strong><small>Within 1-2 working days, wrapped in our dust bag.</small></li>
+      <li><span>{% render 'icon', name: 'truck' %}</span><strong>With DHL</strong><small>Your tracking number arrives by email.</small></li>
+      <li><span>{% render 'icon', name: 'home' %}</span><strong>Delivered</strong><small>Netherlands 1-2 days, Europe 2-5 days.</small></li>
+    </ol>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="track__faq accordion">
+        <p class="track__faq-head">FAQs</p>
+        {%- for block in section.blocks -%}
+          <details {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.question }} {% render 'icon', name: 'caret-down' %}</summary>
+            <div class="rte">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Track order",
+  "class": "section-track",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Track your package" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Enter your DHL tracking number to see where your Rano is." },
+    { "type": "text", "id": "carrier_url", "label": "Carrier tracking URL", "info": "{code} is replaced by the tracking number.", "default": "https://www.dhl.com/nl-en/home/tracking/tracking-parcel.html?submit=1&tracking-id={code}" },
+    { "type": "url", "id": "contact_link", "label": "Contact link", "default": "/pages/contact-form" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "When will my order arrive?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Orders ship within 1-2 working days.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Track order" }]
+}
+{% endschema %}

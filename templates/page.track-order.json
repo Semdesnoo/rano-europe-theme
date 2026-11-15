@@ -1,0 +1,64 @@
+{
+  "sections": {
+    "main": {
+      "type": "track-order",
+      "blocks": {
+        "b0": {
+          "type": "faq",
+          "settings": {
+            "question": "When will my order arrive?",
+            "answer": "<p>We pack every order within 1-2 working days. DHL then delivers in 1-2 working days in the Netherlands and 2-5 working days elsewhere in Europe. Shipping is always free.</p>"
+          }
+        },
+        "b1": {
+          "type": "faq",
+          "settings": {
+            "question": "I haven't received a tracking number",
+            "answer": "<p>Your DHL tracking number is emailed as soon as your order leaves our studio. Check your spam folder, or sign in to your account under the <em>Order number</em> tab to see the status.</p>"
+          }
+        },
+        "b2": {
+          "type": "faq",
+          "settings": {
+            "question": "My tracking hasn't updated",
+            "answer": "<p>It can take up to 24 hours before DHL shows the first scan. Still no movement after 2 working days? <a href=\"/pages/contact-form\">Message us</a> with your order number and we'll chase DHL for you.</p>"
+          }
+        },
+        "b3": {
+          "type": "faq",
+          "settings": {
+            "question": "I missed the delivery",
+            "answer": "<p>DHL leaves a card or email and usually tries again the next working day, or brings the parcel to a nearby DHL ServicePoint. You can change the delivery moment via the DHL tracking page.</p>"
+          }
+        },
+        "b4": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I return my package?",
+            "answer": "<p>You have 14 days after delivery to return an item. Read our <a href=\"/policies/refund-policy\">Return &amp; Refund Policy</a> for the steps.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {}
+    },
+    "more": {
+      "type": "product-row",
+      "settings": {
+        "heading": "You may also like",
+        "link_label": "Shop all",
+        "link": "shopify://collections/all"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "more"
+  ]
+}

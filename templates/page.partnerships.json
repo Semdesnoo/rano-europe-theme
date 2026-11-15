@@ -1,0 +1,155 @@
+{
+  "sections": {
+    "main": {
+      "type": "apply-form",
+      "settings": {
+        "fallback": "model-giallo-2.jpg",
+        "eyebrow": "La famiglia Rano",
+        "heading": "Partner with Rano",
+        "form_name": "Partnerships & Ambassadors",
+        "intro_heading": "Interested in collaborating with us?",
+        "intro": "<p>We work with a small circle of creators, stylists and travellers who carry Rano naturally. Tell us about yourself and how you'd like to work together. We read every application.</p>",
+        "button": "Send application",
+        "success": "We received your request and will get back to you within 2 working days."
+      },
+      "blocks": {
+        "b0": {
+          "type": "heading",
+          "settings": {
+            "title": "About you"
+          }
+        },
+        "b1": {
+          "type": "field",
+          "settings": {
+            "label": "Full name",
+            "kind": "name",
+            "required": true,
+            "half": true,
+            "placeholder": ""
+          }
+        },
+        "b2": {
+          "type": "field",
+          "settings": {
+            "label": "Email",
+            "kind": "email",
+            "required": true,
+            "half": true,
+            "placeholder": ""
+          }
+        },
+        "b3": {
+          "type": "field",
+          "settings": {
+            "label": "Country",
+            "kind": "text",
+            "required": true,
+            "half": true,
+            "placeholder": ""
+          }
+        },
+        "b4": {
+          "type": "field",
+          "settings": {
+            "label": "City",
+            "kind": "text",
+            "required": false,
+            "half": true,
+            "placeholder": ""
+          }
+        },
+        "b5": {
+          "type": "choices",
+          "settings": {
+            "label": "How would you like to collaborate?",
+            "options": "Gifting, UGC content, Ambassador programme, PR & press, Event, Other",
+            "multiple": true,
+            "required": true
+          }
+        },
+        "b6": {
+          "type": "heading",
+          "settings": {
+            "title": "Your socials"
+          }
+        },
+        "b7": {
+          "type": "field",
+          "settings": {
+            "label": "Instagram",
+            "kind": "url",
+            "required": true,
+            "half": true,
+            "placeholder": "https://instagram.com/..."
+          }
+        },
+        "b8": {
+          "type": "field",
+          "settings": {
+            "label": "Instagram followers",
+            "kind": "number",
+            "required": false,
+            "half": true,
+            "placeholder": ""
+          }
+        },
+        "b9": {
+          "type": "field",
+          "settings": {
+            "label": "TikTok",
+            "kind": "url",
+            "required": false,
+            "half": true,
+            "placeholder": "https://tiktok.com/@..."
+          }
+        },
+        "b10": {
+          "type": "field",
+          "settings": {
+            "label": "TikTok followers",
+            "kind": "number",
+            "required": false,
+            "half": true,
+            "placeholder": ""
+          }
+        },
+        "b11": {
+          "type": "choices",
+          "settings": {
+            "label": "Content specialisation",
+            "options": "Travel, Fashion, Lifestyle, Photography, Video, Beauty",
+            "multiple": true,
+            "required": false
+          }
+        },
+        "b12": {
+          "type": "message",
+          "settings": {
+            "label": "Tell us more",
+            "placeholder": "Why Rano, and what would you create with us?",
+            "required": false
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7",
+        "b8",
+        "b9",
+        "b10",
+        "b11",
+        "b12"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

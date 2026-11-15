@@ -382,3 +382,25 @@ if (matchMedia('(max-width: 749px)').matches) {
     box.removeAttribute('data-carousel'); box.removeAttribute('data-autoplay'); box.classList.add('tp-marquee'); box.append(inner);
   });
 }
+
+// Track my order: tabs + DHL lookup
+document.querySelectorAll('[data-track]').forEach((box) => {
+  box.querySelectorAll('[data-track-tab]').forEach((tab) => tab.addEventListener('click', () => {
+    box.querySelectorAll('[data-track-tab]').forEach((t) => { const on = t === tab; t.classList.toggle('is-active', on); t.setAttribute('aria-selected', on); });
+    box.querySelectorAll('[data-track-form]').forEach((f) => { f.hidden = f.dataset.trackForm !== tab.dataset.trackTab; });
+  }));
+  const form = box.querySelector('[data-track-form="dhl"]'), input = form.querySelector('input'), msg = form.querySelector('[data-track-msg]'), hint = msg.textContent;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const code = input.value.replace(/[\s-]/g, '').toUpperCase();
+    const ok = /^[A-Z0-9]{8,35}$/.test(code); // DHL codes: 10-digit express, JJD/JVGL/3S parcel codes
+    input.parentElement.classList.toggle('is-error', !ok); msg.classList.toggle('is-error', !ok);
+    msg.textContent = ok ? hint : 'Please enter a valid DHL tracking number (letters and numbers only).';
+    if (ok) window.open(box.dataset.url.replace('{code}', encodeURIComponent(code)), '_blank', 'noopener');
+  });
+});
+// Application forms: at least one option where required
+document.addEventListener('submit', (e) => {
+  const need = [...e.target.querySelectorAll('[data-need-one]')].find((g) => !g.querySelector(':checked'));
+  if (need) { e.preventDefault(); need.closest('fieldset').scrollIntoView({ behavior: 'smooth', block: 'center' }); need.animate([{ transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'none' }], 240); }
+}, true);

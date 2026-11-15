@@ -1,0 +1,84 @@
+{
+  "sections": {
+    "intro": {
+      "type": "rich-text",
+      "settings": {
+        "style": "statement",
+        "heading": "Fatto a mano, con cura",
+        "eyebrow": "Craftsmanship",
+        "text": "<p>Every Rano piece starts in the south of Italy, where making things well is simply how things are done. We design slowly, choose our leather by hand and finish every edge with intention.</p>"
+      }
+    },
+    "s1": {
+      "type": "image-with-text",
+      "settings": {
+        "fallback": "model-giallo.jpg",
+        "eyebrow": "Il materiale",
+        "heading": "It starts with the leather",
+        "text": "<p>Genuine full-grain leather keeps the natural grain of the hide. That's why no two Rano bags are exactly alike, and why yours will only get better with every trip.</p>"
+      }
+    },
+    "details": {
+      "type": "craft-details",
+      "blocks": {
+        "b0": {
+          "type": "item",
+          "settings": {
+            "fallback": "detail-1.jpg",
+            "title": "Full-grain leather",
+            "text": "We choose genuine full-grain leather for its strength and the way it softens and darkens with use. No coatings that crack, no shortcuts."
+          }
+        },
+        "b1": {
+          "type": "item",
+          "settings": {
+            "fallback": "detail-2.jpg",
+            "title": "Stitched to last",
+            "text": "Dense, even stitching on every seam and reinforced handle joints, because a travel bag has to carry more than looks."
+          }
+        },
+        "b2": {
+          "type": "item",
+          "settings": {
+            "fallback": "detail-3.jpg",
+            "title": "Quiet details",
+            "text": "Silver-tone hardware, a debossed Rano mark and a smooth two-way zip. Details you feel more than see."
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2"
+      ],
+      "settings": {
+        "heading": "In the details"
+      }
+    },
+    "s2": {
+      "type": "image-with-text",
+      "settings": {
+        "fallback": "life-coast.jpg",
+        "reverse": true,
+        "eyebrow": "Prendersi cura",
+        "heading": "Made to age with you",
+        "text": "<p>Wipe your bag with a soft, dry cloth, keep it out of long direct sun and store it lightly stuffed in its dust bag. Small marks become part of its story.</p>"
+      }
+    },
+    "more": {
+      "type": "product-row",
+      "settings": {
+        "heading": "You may also like",
+        "link_label": "Shop all",
+        "link": "shopify://collections/all"
+      }
+    }
+  },
+  "order": [
+    "intro",
+    "s1",
+    "details",
+    "s2",
+    "more"
+  ]
+}

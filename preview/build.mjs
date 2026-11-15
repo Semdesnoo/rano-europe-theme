@@ -58,8 +58,8 @@ const menus = {
       L('By colour', '/collections/all', [L('Giallo', '/products/giallo-traveller'), L('Rosa', '/products/rano-rosa-traveller'), L('Blue Mare', '/products/blue-mare-traveller')]),
       L('Highlights', '/collections/all', [L('Black Friday sale', '/collections/all'), L('Bestsellers', '/collections/all'), L('Gift sets', '/products/bundle-product-4')])]),
     L('Bestsellers', '/collections/all'), L('About', '/pages/about-us'), L('Contact', '/pages/contact')] },
-  'footer-company': { title: 'Company', links: [L('About us', '/pages/about-us'), L('Reviews', '/#reviews'), L('Craftsmanship', '/pages/about-us'), L('Partnerships & Ambassadors', '/pages/contact-form'), L('Become a reseller', '/pages/contact-form'), L('Corporate Gifting', '/pages/contact-form'), L('Instagram', 'https://www.instagram.com/ranoeurope/'), L('TikTok', 'https://www.tiktok.com/@ranoeurope')] },
-  footer: { title: 'Customer service', links: [L('Help centre & FAQs', '/pages/contact'), L('Track my order', '/account'), L('Shipping Policy', '/policies/shipping-policy'), L('Return & Refund Policy', '/policies/refund-policy'), L('Privacy Policy', '/policies/privacy-policy'), L('Terms of Service', '/policies/terms-of-service'), L('Contact', '/pages/contact-form')] },
+  'footer-company': { title: 'Company', links: [L('About us', '/pages/about-us'), L('Reviews', '/#reviews'), L('Craftsmanship', '/pages/craftsmanship'), L('Partnerships & Ambassadors', '/pages/partnerships'), L('Become a reseller', '/pages/reseller'), L('Corporate Gifting', '/pages/corporate-gifting'), L('Instagram', 'https://www.instagram.com/ranoeurope/'), L('TikTok', 'https://www.tiktok.com/@ranoeurope')] },
+  footer: { title: 'Customer service', links: [L('Help centre & FAQs', '/pages/contact'), L('Track my order', '/pages/track-order'), L('Shipping Policy', '/policies/shipping-policy'), L('Return & Refund Policy', '/policies/refund-policy'), L('Privacy Policy', '/policies/privacy-policy'), L('Terms of Service', '/policies/terms-of-service'), L('Contact', '/pages/contact-form')] },
   'footer-shop': { title: 'Rano', links: [L('Shop All', '/collections/all'), L('Bestsellers', '/collections/all?sort_by=best-selling'), L('The Traveller', '/collections/rano-traveller'), L('Travel Pouch', '/collections/rano-travel-pouch'), L('Card Holder', '/collections/card-holder'), L('Full Travel Sets', '/products/bundle-product-7'), L('Black Friday Sale', '/collections/all')] },
 };
 
@@ -159,7 +159,7 @@ async function page(template, extra = {}) {
     template: { name: template.split('.')[0] }, request: { locale: { iso_code: 'en' }, origin: 'http://localhost', design_mode: false }, canonical_url: '/', page_title: 'Rano Europe', current_page: 1, ...extra,
   };
   Object.assign(engine.options.globals, { settings, collections, cart, routes: scope.routes, shop: scope.shop, localization: scope.localization });
-  const body = (await Promise.all(t.order.map((id) => renderSection(buildSection(id, t.sections[id]), scope)))).join('');
+  const body = extra.policy_html ?? (await Promise.all(t.order.map((id) => renderSection(buildSection(id, t.sections[id]), scope)))).join('');
   return engine.parseAndRender(read('layout/theme.liquid'), { ...scope, content_for_layout: body, content_for_header: '' });
 }
 
@@ -167,16 +167,23 @@ async function page(template, extra = {}) {
 const BANNER = `<div style="position:fixed;left:12px;bottom:12px;z-index:60;background:#151514;color:#fff;font:500 12px/1.3 Geist,sans-serif;padding:8px 12px;border-radius:4px;pointer-events:none">Preview. Winkelmand en checkout werken pas in Shopify.</div>
 <script>document.addEventListener('submit',e=>{if(e.target.closest('[data-add-form]')){e.preventDefault();e.stopImmediatePropagation();alert('Preview: toevoegen aan winkelmand werkt pas in Shopify.')}},true)</script>`;
 const rebase = (html) => html.replace(/(href|src|poster|action)="\/(?!\/)/g, `$1="${BASE}`).replace(/"root":"\/"|root: "\/"/g, (m) => m.replace('/', BASE)).replace('</body>', BANNER + '</body>');
+const policyHtml = (title, h) => `<div class="shopify-policy__container"><div class="shopify-policy__title"><h1>${title}</h1></div><div class="shopify-policy__body"><div class="rte">${fs.readFileSync(path.join(THEME, 'policies', h + '.html'), 'utf8')}</div></div></div>`;
 const pages = {
   '': () => page('index'),
   'pages/about-us': () => page('page.about', { page: { title: 'About us' } }),
   'pages/contact': () => page('page.contact', { page: { title: 'Contact' } }),
   'pages/contact-form': () => page('page.contact-form', { page: { title: 'Contact us' } }),
   'cart': () => page('cart'),
-  'policies/shipping-policy': () => page('page', { page: { title: 'Shipping Policy', content: '<p>Preview: in Shopify this page is filled automatically from Settings &gt; Policies.</p>' } }),
-  'policies/refund-policy': () => page('page', { page: { title: 'Return & Refund Policy', content: '<p>Preview: in Shopify this page is filled automatically from Settings &gt; Policies.</p>' } }),
-  'policies/privacy-policy': () => page('page', { page: { title: 'Privacy Policy', content: '<p>Preview: in Shopify this page is filled automatically from Settings &gt; Policies.</p>' } }),
-  'policies/terms-of-service': () => page('page', { page: { title: 'Terms of Service', content: '<p>Preview: in Shopify this page is filled automatically from Settings &gt; Policies.</p>' } }),
+  'policies/shipping-policy': () => page('page', { policy_html: policyHtml('Shipping Policy', 'shipping-policy') }),
+  'policies/refund-policy': () => page('page', { policy_html: policyHtml('Return &amp; Refund Policy', 'refund-policy') }),
+  'policies/privacy-policy': () => page('page', { policy_html: policyHtml('Privacy Policy', 'privacy-policy') }),
+  'policies/terms-of-service': () => page('page', { policy_html: policyHtml('Terms of Service', 'terms-of-service') }),
+  'policies/contact-information': () => page('page', { policy_html: policyHtml('Contact Information', 'contact-information') }),
+  'pages/track-order': () => page('page.track-order', { page: { title: 'Track my order' } }),
+  'pages/partnerships': () => page('page.partnerships', { page: { title: 'Partnerships & Ambassadors' } }),
+  'pages/reseller': () => page('page.reseller', { page: { title: 'Become a reseller' } }),
+  'pages/corporate-gifting': () => page('page.corporate-gifting', { page: { title: 'Corporate Gifting' } }),
+  'pages/craftsmanship': () => page('page.craftsmanship', { page: { title: 'Craftsmanship' } }),
   'search': () => page('search', { search: { performed: false } }),
   ...Object.fromEntries(products.map((p) => [`products/${p.handle}`, () => page('product', { product: p, page_title: p.title })])),
   ...Object.fromEntries(Object.values(collections).map((c) => [`collections/${c.handle}`, () => page('collection', { collection: c })])),

@@ -33,3 +33,23 @@ Upload the zip (Online Store > Themes > Add theme > Upload zip), then:
 - Settings > Markets / Languages: add countries and languages so the selector in the top bar shows them.
 - Customer accounts (Settings > Customer accounts): turn on, then *Customize* > upload `assets/account-banner.png` as logo/banner and set the accent colour to #151514. Shopify hosts the sign-in / create-account page; `preview/account.html` shows how it looks.
 - Check shipping/returns copy in `templates/product.json` against the real policy.
+
+## Extra pages and policies (set up once in Shopify)
+
+**Pages** (Online Store > Pages > Add page, choose the template on the right):
+
+| Page title | Handle | Template |
+|---|---|---|
+| Track my order | `track-order` | `page.track-order` |
+| Partnerships & Ambassadors | `partnerships` | `page.partnerships` |
+| Become a reseller | `reseller` | `page.reseller` |
+| Corporate Gifting | `corporate-gifting` | `page.corporate-gifting` |
+| Craftsmanship | `craftsmanship` | `page.craftsmanship` |
+
+Form submissions from the three application pages arrive in the store's contact email, labelled with the form name.
+
+**Policies** (Settings > Policies): copy the text from `policies/*.html` (open the file, copy everything, paste in the editor's `<>` HTML view).
+Fill in the placeholders in square brackets first: legal entity name, address, KvK number, VAT number and phone.
+These texts follow EU/Dutch consumer law and GDPR but are not legal advice; have them checked once.
+
+**Footer menus**: point *Track my order* to `/pages/track-order`, and Craftsmanship / Partnerships / Reseller / Corporate Gifting to their pages.

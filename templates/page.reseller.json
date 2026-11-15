@@ -1,0 +1,155 @@
+{
+  "sections": {
+    "main": {
+      "type": "apply-form",
+      "settings": {
+        "fallback": "life-stairs.jpg",
+        "eyebrow": "Wholesale",
+        "heading": "Become a Rano reseller",
+        "form_name": "Reseller application",
+        "intro_heading": "Bring Rano to your store",
+        "intro": "<p>We partner with a handful of boutiques, concept stores and travel shops that share our eye for detail. Because we produce in small numbers, we keep our stockists selective. Tell us about your store and we'll send our wholesale information.</p>",
+        "button": "Request wholesale info",
+        "success": "We received your request and will get back to you within 2 working days."
+      },
+      "blocks": {
+        "b0": {
+          "type": "heading",
+          "settings": {
+            "title": "Your store"
+          }
+        },
+        "b1": {
+          "type": "field",
+          "settings": {
+            "label": "Store name",
+            "kind": "text",
+            "required": true,
+            "half": true,
+            "placeholder": ""
+          }
+        },
+        "b2": {
+          "type": "field",
+          "settings": {
+            "label": "Website",
+            "kind": "url",
+            "required": false,
+            "half": true,
+            "placeholder": "https://"
+          }
+        },
+        "b3": {
+          "type": "field",
+          "settings": {
+            "label": "Country",
+            "kind": "text",
+            "required": true,
+            "half": true,
+            "placeholder": ""
+          }
+        },
+        "b4": {
+          "type": "field",
+          "settings": {
+            "label": "City",
+            "kind": "text",
+            "required": true,
+            "half": true,
+            "placeholder": ""
+          }
+        },
+        "b5": {
+          "type": "choices",
+          "settings": {
+            "label": "Type of store",
+            "options": "Boutique, Concept store, Department store, Travel & luggage, Online only, Other",
+            "multiple": false,
+            "required": true
+          }
+        },
+        "b6": {
+          "type": "choices",
+          "settings": {
+            "label": "Interested in",
+            "options": "The Traveller, Travel Pouch, Card Holder, Full Travel Sets",
+            "multiple": true,
+            "required": false
+          }
+        },
+        "b7": {
+          "type": "heading",
+          "settings": {
+            "title": "Contact person"
+          }
+        },
+        "b8": {
+          "type": "field",
+          "settings": {
+            "label": "Full name",
+            "kind": "name",
+            "required": true,
+            "half": true,
+            "placeholder": ""
+          }
+        },
+        "b9": {
+          "type": "field",
+          "settings": {
+            "label": "Email",
+            "kind": "email",
+            "required": true,
+            "half": true,
+            "placeholder": ""
+          }
+        },
+        "b10": {
+          "type": "field",
+          "settings": {
+            "label": "Phone",
+            "kind": "tel",
+            "required": false,
+            "half": true,
+            "placeholder": ""
+          }
+        },
+        "b11": {
+          "type": "field",
+          "settings": {
+            "label": "Expected first order (pieces)",
+            "kind": "number",
+            "required": false,
+            "half": true,
+            "placeholder": ""
+          }
+        },
+        "b12": {
+          "type": "message",
+          "settings": {
+            "label": "Anything else?",
+            "placeholder": "Tell us about your customers and other brands you carry.",
+            "required": false
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7",
+        "b8",
+        "b9",
+        "b10",
+        "b11",
+        "b12"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
