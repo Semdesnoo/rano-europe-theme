@@ -8,35 +8,63 @@
         "focal": "center 62%",
         "height": "large",
         "full_width": true,
-        "heading": "About Rano",
-        "text": "From Casarano's quiet streets to your next departure gate. Travel gear shaped by movement, not by seasons."
+        "heading": "Nato a Casarano",
+        "text": "Born in the south of Italy. Carried from Amsterdam to wherever you go next."
       }
     },
-    "intro": {
+    "mission": {
       "type": "rich-text",
       "settings": {
-        "heading": "Not just a bag",
-        "text": "<p>Born in the south of Italy, where craftsmanship is a way of life, not a trend. Every line and every stitch is shaped by tradition and finished with intention. Now that heritage moves forward to Amsterdam: historic streets, modern lives, decisive movement.</p>"
+        "style": "statement",
+        "heading": "",
+        "text": "<p>We make leather travel pieces the Italian way: slowly, carefully and built to last. Quiet in design, strong in use, and made to move with you.</p>"
       }
     },
-    "story1": {
+    "s1": {
       "type": "image-with-text",
       "settings": {
         "fallback": "life-coast.jpg",
-        "eyebrow": "Casarano, Italy",
-        "heading": "From Casarano to your next voyage",
-        "text": "<p>Rano was born in Casarano, a small town in southern Italy where days move slowly and details matter. We carry that spirit into every piece we design: clean lines, rich textures and quiet confidence.</p><p>We work exclusively with real leather, carefully selected for its natural feel and the way it softens and ages over time.</p>"
+        "eyebrow": "Dal Sud Italia",
+        "heading": "Where days move slowly",
+        "text": "<p>Rano was born in Casarano, a small town in Puglia where craftsmanship is a way of life, not a trend. Long lunches, sea air and an eye for detail shape everything we make.</p>"
       }
     },
-    "story2": {
+    "s2": {
       "type": "image-with-text",
       "settings": {
-        "fallback": "model-giallo-2.jpg",
+        "fallback": "detail-1.jpg",
         "reverse": true,
-        "heading": "Discretion over display",
-        "text": "<p>Rather than chasing seasons, we focus on understated travel pieces that feel right year after year. The Traveller is the first expression of that idea: a weekender made to keep pace with you, wherever you go.</p><p>Limited releases. No restocks.</p>",
-        "button_label": "Shop the Traveller",
-        "button_link": "shopify://collections/rano-traveller"
+        "eyebrow": "Fatto con cura",
+        "heading": "Real leather, honest work",
+        "text": "<p>We work only with genuine, full-grain leather, chosen for how it feels in the hand and how it softens over the years. Every line and every stitch is finished with intention.</p>"
+      }
+    },
+    "s3": {
+      "type": "image-with-text",
+      "settings": {
+        "fallback": "life-scooter.jpg",
+        "eyebrow": "Senza tempo",
+        "heading": "Not made for one season",
+        "text": "<p>We don't chase trends. We release a few pieces in small numbers and never restock, so the Rano you carry stays yours. Discretion over display, quality over excess.</p>"
+      }
+    },
+    "quote": {
+      "type": "rich-text",
+      "settings": {
+        "style": "quote",
+        "heading": "",
+        "text": "<p>Designed in Italy. Carried in Amsterdam. Made for the world.</p>",
+        "eyebrow": "La famiglia Rano",
+        "button_label": "Shop all",
+        "button_link": "shopify://collections/all"
+      }
+    },
+    "bestsellers": {
+      "type": "product-row",
+      "settings": {
+        "heading": "Bestsellers",
+        "link_label": "Shop all",
+        "link": "shopify://collections/all"
       }
     },
     "film": {
@@ -45,16 +73,20 @@
         "video_asset": "rano-film.mp4",
         "fallback": "rano-film-poster.jpg",
         "height": "large",
-        "heading": "Designed in Italy. Carried in Amsterdam.",
-        "text": "Made for the world."
+        "full_width": true,
+        "heading": "La dolce vita, on the move",
+        "text": "Watch the Rano story, from Puglia to Amsterdam."
       }
     }
   },
   "order": [
     "hero",
-    "intro",
-    "story1",
-    "story2",
+    "mission",
+    "s1",
+    "s2",
+    "s3",
+    "quote",
+    "bestsellers",
     "film"
   ]
 }

@@ -1,7 +1,9 @@
-<section class="section rich">
+<section class="section rich rich--{{ section.settings.style }}">
   <div class="container rich__inner reveal">
     {%- if section.settings.heading != blank -%}<h2 class="h1">{{ section.settings.heading }}</h2>{%- endif -%}
+    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow rich__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
     <div class="rte">{{ section.settings.text }}</div>
+    {%- if section.settings.button_label != blank -%}<a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn--dark rich__btn">{{ section.settings.button_label }}</a>{%- endif -%}
   </div>
 </section>
 
@@ -11,7 +13,13 @@
   "class": "section-rich",
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Quiet in design. Strong in use." },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Rano focuses on the pieces you reach for again and again.</p>" }
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Rano focuses on the pieces you reach for again and again.</p>" },
+    { "type": "select", "id": "style", "label": "Style", "default": "plain", "options": [
+      { "value": "plain", "label": "Plain" }, { "value": "statement", "label": "Large statement" }, { "value": "quote", "label": "Quote" }
+    ]},
+    { "type": "text", "id": "eyebrow", "label": "Small label below heading" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
   ],
   "presets": [{ "name": "Rich text" }]
 }
