@@ -50,7 +50,7 @@
             endfor
           -%}
           <button type="button" class="help-topic reveal" data-topic="{{ forloop.index }}" {{ block.shopify_attributes }}>
-            <span class="help-topic__media">{% render 'media', image: block.settings.image, fallback: block.settings.fallback, sizes: '(min-width: 990px) 30vw, 90vw', class: 'cover', alt: '' %}</span>
+            <span class="help-topic__media" style="--focal: {{ block.settings.focal | default: 'center 30%' }}">{% render 'media', image: block.settings.image, fallback: block.settings.fallback, sizes: '(min-width: 990px) 30vw, 90vw', class: 'cover', alt: '' %}</span>
             <span class="help-topic__text">
               <strong>{{ block.settings.title }}</strong>
               <small>{{ n }} {{ n | pluralize: 'article', 'articles' }}</small>
@@ -114,7 +114,8 @@
     { "type": "topic", "name": "Topic", "settings": [
       { "type": "text", "id": "title", "label": "Title", "default": "Shipping" },
       { "type": "image_picker", "id": "image", "label": "Image" },
-      { "type": "text", "id": "fallback", "label": "Bundled image file" }
+      { "type": "text", "id": "fallback", "label": "Bundled image file" },
+      { "type": "text", "id": "focal", "label": "Image focus (CSS object-position)", "default": "center 30%" }
     ]},
     { "type": "faq", "name": "Question", "settings": [
       { "type": "text", "id": "topic", "label": "Topic title", "info": "Must match a topic title exactly." },

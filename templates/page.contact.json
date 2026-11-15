@@ -36,42 +36,48 @@
           "type": "topic",
           "settings": {
             "title": "Care & Leather",
-            "fallback": "detail-1.jpg"
+            "fallback": "detail-1.jpg",
+            "focal": "center 55%"
           }
         },
         "t2": {
           "type": "topic",
           "settings": {
             "title": "Product information",
-            "fallback": "model-giallo.jpg"
+            "fallback": "life-giallo.jpg",
+            "focal": "center 45%"
           }
         },
         "t3": {
           "type": "topic",
           "settings": {
             "title": "Craftsmanship",
-            "fallback": "detail-2.jpg"
+            "fallback": "detail-3.jpg",
+            "focal": "center center"
           }
         },
         "t4": {
           "type": "topic",
           "settings": {
             "title": "Shipping",
-            "fallback": "life-stairs.jpg"
+            "fallback": "model-rosa.jpg",
+            "focal": "center 22%"
           }
         },
         "t5": {
           "type": "topic",
           "settings": {
             "title": "Returns",
-            "fallback": "pouch-woman.jpg"
+            "fallback": "pouch-woman.jpg",
+            "focal": "center 18%"
           }
         },
         "t6": {
           "type": "topic",
           "settings": {
             "title": "Orders & Payment",
-            "fallback": "card-holder.jpg"
+            "fallback": "card-holder.jpg",
+            "focal": "center 40%"
           }
         },
         "f1": {
