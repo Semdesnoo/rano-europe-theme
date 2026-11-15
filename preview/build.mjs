@@ -119,6 +119,7 @@ engine.registerFilter('model_viewer_tag', function (m, ...args) { const h = Obje
 engine.registerFilter('payment_type_svg_tag', (t) => `<span class="pay-icon" style="display:inline-block;border:1px solid #ccc;border-radius:3px;font-size:9px;text-align:center;line-height:22px">${t}</span>`);
 engine.registerFilter('default_pagination', () => '');
 engine.registerFilter('default_errors', () => '');
+engine.registerFilter('url_param_escape', (s) => encodeURIComponent(s));
 engine.registerFilter('pluralize', (n, a, b) => (n === 1 ? a : b));
 engine.registerFilter('payment_button', () => '');
 
@@ -163,6 +164,7 @@ const pages = {
   '': () => page('index'),
   'pages/about-us': () => page('page.about', { page: { title: 'About us' } }),
   'pages/contact': () => page('page.contact', { page: { title: 'Contact' } }),
+  'pages/contact-form': () => page('page.contact-form', { page: { title: 'Contact us' } }),
   'cart': () => page('cart'),
   'search': () => page('search', { search: { performed: false } }),
   ...Object.fromEntries(products.map((p) => [`products/${p.handle}`, () => page('product', { product: p, page_title: p.title })])),

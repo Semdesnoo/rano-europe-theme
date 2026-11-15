@@ -288,8 +288,17 @@
       });
       empty.hidden = hits > 0;
     });
-    $$('.help-action', help).forEach((a) => a.addEventListener('click', () => {
-      if (a.getAttribute('href') === '#help-contact') { const s = $('[data-help-subject]', help); s.value = a.dataset.subject; setTimeout(() => $('#h-order', help).focus({ preventScroll: true }), 500); }
+  }
+
+  /* ---------- Contact form page: subject from ?subject= or quick action ---------- */
+  const subj = $('[data-cform-subject]');
+  if (subj) {
+    const q = new URLSearchParams(location.search).get('subject');
+    if (q) subj.value = q;
+    $$('.cform-page [data-subject]').forEach((a) => a.addEventListener('click', (e) => {
+      if (a.getAttribute('href') !== '#cform') return;
+      e.preventDefault(); subj.value = a.dataset.subject;
+      $('#cform').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); $('#cf-name').focus({ preventScroll: true });
     }));
   }
 

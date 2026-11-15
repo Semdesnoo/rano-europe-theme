@@ -1,0 +1,47 @@
+{
+  "sections": {
+    "main": {
+      "type": "contact-form",
+      "blocks": {
+        "a1": {
+          "type": "action",
+          "settings": {
+            "label": "Track order",
+            "icon": "search",
+            "link": "/account"
+          }
+        },
+        "a2": {
+          "type": "action",
+          "settings": {
+            "label": "Return order",
+            "icon": "return"
+          }
+        },
+        "a3": {
+          "type": "action",
+          "settings": {
+            "label": "Cancel order",
+            "icon": "cancel"
+          }
+        },
+        "a4": {
+          "type": "action",
+          "settings": {
+            "label": "Report a problem",
+            "icon": "warning"
+          }
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "a4"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

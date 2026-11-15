@@ -522,6 +522,36 @@ a.promo__code{padding:5px 14px}
   .help-action__label{font-size:13.5px}
 }
 
+/* Help centre: contact card + button */
+.help-card--link{display:block;max-width:560px;transition:border-color .2s,box-shadow .2s}
+.help-card--link:hover{border-color:var(--ink);box-shadow:0 8px 24px rgba(20,20,18,.06)}
+.help-card--link .help-card__head,.help-card--link .help-card__body{display:grid}
+.help-card--link .help-card__body{display:block}
+.help-support .help-card{margin-top:22px}
+.help-support__btn{margin-top:18px}
+
+/* Contact form page */
+.cform-page{background:var(--bg)}
+.cform-wrap{max-width:720px}
+.cform-crumb{display:flex;align-items:center;gap:10px;font-size:13px;color:color-mix(in srgb,var(--ink) 55%,transparent);margin-bottom:28px}
+.cform-crumb .icon{width:15px;height:15px}
+.cform-crumb a:hover{color:var(--ink)}
+.cform-crumb span{color:var(--sale)}
+.help-actions--sm{gap:14px;margin-bottom:26px}
+.help-actions--sm .help-action{padding:18px 10px 16px;gap:12px}
+.help-actions--sm .help-action__label{font-size:13.5px}
+.cform{border:1px solid var(--line);border-radius:6px;background:#fff}
+.cform__title{font-size:20px;font-weight:600;padding:20px 22px;border-bottom:1px solid var(--line)}
+.cform__body{display:grid;gap:20px;padding:22px}
+.cfield label{display:block;font-size:14px;font-weight:600}
+.cfield small{display:block;font-size:12px;color:color-mix(in srgb,var(--ink) 55%,transparent);margin:2px 0 8px}
+.cfield textarea{margin-top:8px}
+.cfield input,.cfield textarea{width:100%;border:1px solid color-mix(in srgb,var(--ink) 22%,transparent);border-radius:4px;padding:11px 12px;font-size:15px;background:#fff}
+.cfield input:focus,.cfield textarea:focus{outline:none;border-color:#2a5bd7;box-shadow:0 0 0 1px #2a5bd7}
+.req{color:var(--sale)}
+.cform__note{font-size:12px;color:color-mix(in srgb,var(--ink) 60%,transparent)}
+@media (max-width:749px){.help-actions--sm{grid-template-columns:repeat(2,1fr);gap:10px}}
+
 /* Reveal on scroll (JS adds .js to html) */
 .js .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .js .reveal.is-in{opacity:1;transform:none}

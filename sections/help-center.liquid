@@ -21,7 +21,7 @@
     {%- if actions.size > 0 -%}
       <div class="help-actions">
         {%- for block in actions -%}
-          <a href="{{ block.settings.link | default: '#help-contact' }}" class="help-action reveal" data-subject="{{ block.settings.label | escape }}" {{ block.shopify_attributes }}>
+          <a href="{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}{{ s.form_page }}?subject={{ block.settings.label | url_param_escape }}{% endif %}" class="help-action reveal" {{ block.shopify_attributes }}>
             <span class="help-action__icon">{% render 'icon', name: 'package' %}<span class="help-action__badge">{% render 'icon', name: block.settings.icon %}</span></span>
             <span class="help-action__label">{{ block.settings.label }}</span>
           </a>
@@ -29,7 +29,7 @@
       </div>
     {%- endif -%}
 
-    <p class="help-empty muted" data-help-empty hidden>No answers found. <a href="#help-contact" class="link">Ask us directly</a>.</p>
+    <p class="help-empty muted" data-help-empty hidden>No answers found. <a href="{{ s.form_page }}" class="link">Ask us directly</a>.</p>
 
     <div class="help-topics-wrap" data-help-topics>
       <div class="section-head">
@@ -79,26 +79,11 @@
 
     <section class="help-support" id="help-contact">
       <h2 class="h2">{{ s.support_heading }}</h2>
-      <div class="help-support__grid">
-        <div class="help-card">
-          <a href="mailto:{{ s.email }}" class="help-card__head">{% render 'icon', name: 'mail' %}<strong>Contact us</strong>{% render 'icon', name: 'caret-right' %}</a>
-          <p class="help-card__body">{{ s.support_text }}<br><a href="mailto:{{ s.email }}" class="link">{{ s.email }}</a></p>
-        </div>
-        {%- form 'contact', class: 'form help-form' -%}
-          {%- if form.posted_successfully? -%}<p class="form-ok" role="status">Thank you. We will reply within one working day.</p>{%- endif -%}
-          {%- if form.errors -%}<div class="form-err" role="alert">{{ form.errors | default_errors }}</div>{%- endif -%}
-          <div class="help-form__row">
-            <div class="field"><label for="h-name">Name</label><input id="h-name" type="text" name="contact[name]" autocomplete="name"></div>
-            <div class="field"><label for="h-email">Email *</label><input id="h-email" type="email" name="contact[email]" autocomplete="email" required></div>
-          </div>
-          <div class="help-form__row">
-            <div class="field"><label for="h-subject">Subject</label><input id="h-subject" type="text" name="contact[subject]" data-help-subject></div>
-            <div class="field"><label for="h-order">Order number</label><input id="h-order" type="text" name="contact[order]" placeholder="#1001"></div>
-          </div>
-          <div class="field"><label for="h-body">Message *</label><textarea id="h-body" name="contact[body]" rows="5" required></textarea></div>
-          <button type="submit" class="btn btn--dark">Send message</button>
-        {%- endform -%}
-      </div>
+      <a href="{{ s.form_page }}" class="help-card help-card--link">
+        <span class="help-card__head">{% render 'icon', name: 'mail' %}<strong>Contact us</strong>{% render 'icon', name: 'caret-right' %}</span>
+        <span class="help-card__body">{{ s.support_text }}<br><span class="link">{{ s.email }}</span></span>
+      </a>
+      <a href="{{ s.form_page }}" class="btn btn--dark help-support__btn">Contact us</a>
     </section>
   </div>
 </div>
@@ -115,7 +100,8 @@
     { "type": "text", "id": "topics_heading", "label": "Topics heading", "default": "Choose a topic" },
     { "type": "text", "id": "support_heading", "label": "Support heading", "default": "Get support" },
     { "type": "textarea", "id": "support_text", "label": "Support text", "default": "Can't find your answer above? Send us a message and we will reply within one working day." },
-    { "type": "text", "id": "email", "label": "Email", "default": "info@ranoeurope.com" }
+    { "type": "text", "id": "email", "label": "Email", "default": "info@ranoeurope.com" },
+    { "type": "url", "id": "form_page", "label": "Contact form page", "default": "/pages/contact-form", "info": "Page using the 'contact-form' template." }
   ],
   "blocks": [
     { "type": "action", "name": "Quick action", "limit": 4, "settings": [
