@@ -334,7 +334,10 @@
       const chosen = $$('[data-option]', pdp).map((s) => s.value);
       const v = variants.find((x) => x.options.every((o, n) => o === chosen[n]));
       atc.disabled = !v || !v.available;
-      atc.textContent = !v ? 'Unavailable' : v.available ? 'Add to bag' : 'Sold out';
+      $('[data-atc-label]', atc).textContent = !v ? 'Unavailable' : v.available ? 'Add to bag' : 'Sold out';
+      const bx = $('[data-bundle]', pdp); if (v && bx) bx.dataset.mainPrice = v.price;
+      $('[data-atc-price]', atc).hidden = !v || !v.available; if (v) $('[data-atc-price]', atc).textContent = fmtMoney(v.price);
+      if (bx) bx.dispatchEvent(new Event('change'));
       if (!v) return;
       idInput.value = v.id;
       const sale = v.compare_at_price > v.price;
@@ -418,10 +421,10 @@ document.addEventListener('submit', (e) => {
 const fmtMoney = (c) => '€' + (c / 100).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+,)/g, '.');
 const bundlePct = (pieces, p2, p3) => (pieces >= 3 ? p3 : pieces === 2 ? p2 : 0);
 document.querySelectorAll('[data-bundle]').forEach((box) => {
-  const main = +box.dataset.mainPrice, p2 = +box.dataset.pct2, p3 = +box.dataset.pct3;
+  const p2 = +box.dataset.pct2, p3 = +box.dataset.pct3;
   const update = () => {
     const on = [...box.querySelectorAll('[data-bundle-item]:checked')];
-    const pieces = on.length + 1, pct = bundlePct(pieces, p2, p3), was = on.reduce((t, x) => t + +x.dataset.price, main), now = Math.round(was * (100 - pct) / 100);
+    const main = +box.dataset.mainPrice, pieces = on.length + 1, pct = bundlePct(pieces, p2, p3), was = on.reduce((t, x) => t + +x.dataset.price, main), now = Math.round(was * (100 - pct) / 100);
     box.querySelectorAll('[data-bundle-from]').forEach((el) => { el.textContent = fmtMoney(Math.round(+el.dataset.bundleFrom * (100 - bundlePct(Math.max(pieces, 2), p2, p3)) / 100)); });
     box.querySelectorAll('.bundle__item').forEach((l) => l.classList.toggle('is-on', l.querySelector('input').checked));
     const sum = box.querySelector('[data-bundle-sum]'); sum.hidden = !on.length;
@@ -429,9 +432,8 @@ document.querySelectorAll('[data-bundle]').forEach((box) => {
     box.querySelector('[data-bundle-was]').textContent = fmtMoney(was);
     box.querySelector('[data-bundle-save]').textContent = fmtMoney(was - now);
     const atc = box.closest('form').querySelector('[data-atc]');
-    if (atc && !atc.disabled) atc.textContent = on.length ? `Add set to bag · ${fmtMoney(now)}` : atc.dataset.label || (atc.dataset.label = atc.textContent.trim(), atc.textContent);
+    if (atc && !atc.disabled) { atc.querySelector('[data-atc-label]').textContent = on.length ? 'Add set to bag' : 'Add to bag'; atc.querySelector('[data-atc-price]').textContent = fmtMoney(now); }
   };
-  const atc = box.closest('form').querySelector('[data-atc]'); if (atc) atc.dataset.label = atc.textContent.trim();
   box.addEventListener('change', update);
 });
 console.assert(fmtMoney(129610) === '€1.296,10' && bundlePct(1, 10, 15) === 0 && bundlePct(2, 10, 15) === 10 && bundlePct(4, 10, 15) === 15, 'bundlePct');

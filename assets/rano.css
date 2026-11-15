@@ -929,3 +929,9 @@ select{border-radius:8px;cursor:pointer}
 .bundle__sum s{color:color-mix(in srgb,var(--ink) 50%,transparent)}
 .bundle__save{margin-left:auto;background:var(--ink);color:#fff;border-radius:999px;padding:3px 10px;font-size:11.5px}
 .bundle+.pdp-gift{margin-top:10px}
+
+/* Add to bag with live price */
+.btn--atc{gap:10px}
+.btn--atc .icon{width:18px;height:18px;flex:none}
+.btn--atc__price{display:inline-flex;align-items:center;gap:10px;font-variant-numeric:tabular-nums}
+.btn--atc__price::before{content:"";width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.7}

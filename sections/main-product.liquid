@@ -136,8 +136,10 @@
             <input type="checkbox" name="properties[Gift wrapping]" value="Yes" class="switch">
           </label>
         {%- endif -%}
-        <button type="submit" class="btn btn--dark btn--block btn--lg" data-atc{% unless current.available %} disabled{% endunless %}>
-          {%- if current.available -%}{{ 'products.add_to_cart' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}
+        <button type="submit" class="btn btn--dark btn--block btn--lg btn--atc" data-atc{% unless current.available %} disabled{% endunless %}>
+          {%- render 'icon', name: 'bag' -%}
+          <span data-atc-label>{%- if current.available -%}{{ 'products.add_to_cart' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}</span>
+          <span class="btn--atc__price" data-atc-price{% unless current.available %} hidden{% endunless %}>{{ current.price | money }}</span>
         </button>
         {%- if section.settings.dynamic_checkout -%}{{ form | payment_button }}{%- endif -%}
       {%- endform -%}
