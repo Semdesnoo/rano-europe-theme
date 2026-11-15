@@ -1,0 +1,28 @@
+{
+  "general": {
+    "skip": "Skip to content",
+    "menu": "Menu",
+    "close": "Close",
+    "search": "Search",
+    "account": "Account",
+    "cart": "Bag",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "products": {
+    "add_to_cart": "Add to bag",
+    "sold_out": "Sold out",
+    "unavailable": "Unavailable",
+    "sale": "Sale",
+    "colour": "Colour",
+    "quantity": "Quantity"
+  },
+  "cart": {
+    "title": "Your bag",
+    "empty": "Your bag is empty",
+    "subtotal": "Subtotal",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "taxes": "Taxes included. Shipping calculated at checkout."
+  }
+}

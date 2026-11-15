@@ -1,0 +1,46 @@
+<section class="section banner-wrap{% if section.settings.full_width %} banner-wrap--full{% endif %}">
+  <div class="banner banner--{{ section.settings.height }} reveal">
+    <div class="banner__media">
+      {%- if section.settings.video or section.settings.video_asset != blank -%}
+        {% render 'video', video: section.settings.video, video_asset: section.settings.video_asset, poster: section.settings.fallback, class: 'cover' %}
+      {%- else -%}
+        <div class="banner__img banner__img--desk">{% render 'media', image: section.settings.image, fallback: section.settings.fallback, sizes: '100vw', class: 'cover', alt: section.settings.heading %}</div>
+        <div class="banner__img banner__img--mob">{% render 'media', image: section.settings.image_mobile, fallback: section.settings.fallback_mobile, sizes: '100vw', class: 'cover', alt: section.settings.heading %}</div>
+      {%- endif -%}
+    </div>
+    <div class="banner__content">
+      <h2 class="banner__title">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="banner__text">{{ section.settings.text }}</p>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}<a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn--light">{{ section.settings.button_label }}</a>{%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }} .banner__media .cover { object-position: {{ section.settings.focal }}; }
+</style>
+
+{% schema %}
+{
+  "name": "Image banner",
+  "class": "section-banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "fallback", "label": "Bundled image file" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Mobile image" },
+    { "type": "text", "id": "fallback_mobile", "label": "Bundled mobile image file" },
+    { "type": "video", "id": "video", "label": "Video (upload, replaces image)" },
+    { "type": "text", "id": "video_asset", "label": "Bundled video file" },
+    { "type": "text", "id": "focal", "label": "Image focus (CSS object-position)", "default": "center center" },
+    { "type": "select", "id": "height", "label": "Height", "default": "large", "options": [
+      { "value": "medium", "label": "Medium" }, { "value": "large", "label": "Large" }
+    ]},
+    { "type": "checkbox", "id": "full_width", "label": "Edge to edge", "default": false },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Born in Casarano" },
+    { "type": "textarea", "id": "text", "label": "Text" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Image banner" }]
+}
+{% endschema %}

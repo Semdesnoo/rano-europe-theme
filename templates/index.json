@@ -1,0 +1,125 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-slideshow",
+      "blocks": {
+        "film": {
+          "type": "slide",
+          "settings": {
+            "layout": "single",
+            "video_asset": "rano-film.mp4",
+            "fallback": "rano-film-poster.jpg",
+            "heading": "Designed in Italy. Carried everywhere.",
+            "text": "Genuine leather travel pieces, made in small numbers.",
+            "button_label": "Shop the collection",
+            "button_link": "shopify://collections/all"
+          }
+        },
+        "trio": {
+          "type": "slide",
+          "settings": {
+            "layout": "trio",
+            "fallback": "model-giallo.jpg",
+            "fallback_2": "model-rosa.jpg",
+            "fallback_3": "model-blue.jpg",
+            "heading": "One silhouette. Three colours.",
+            "text": "Giallo, Rosa and Blue Mare. Pick yours.",
+            "button_label": "Shop the Traveller",
+            "button_link": "shopify://collections/rano-traveller"
+          }
+        }
+      },
+      "block_order": ["film", "trio"],
+      "settings": { "height": "large", "interval": 8 }
+    },
+    "bestsellers": {
+      "type": "product-tabs",
+      "blocks": {
+        "t1": { "type": "tab", "settings": { "title": "The Traveller", "collection": "rano-traveller" } },
+        "t2": { "type": "tab", "settings": { "title": "Travel Pouch", "collection": "rano-travel-pouch" } },
+        "t3": { "type": "tab", "settings": { "title": "Card Holder", "collection": "card-holder" } },
+        "t4": { "type": "tab", "settings": { "title": "Everything" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "settings": { "heading": "Bestsellers", "limit": 8, "link_label": "View all", "link": "shopify://collections/all" }
+    },
+    "looks": {
+      "type": "shop-the-look",
+      "blocks": {
+        "l1": { "type": "look", "settings": { "fallback": "model-giallo-2.jpg", "product": "giallo-traveller" } },
+        "l2": { "type": "look", "settings": { "video_asset": "look-pouch.mp4", "fallback": "look-pouch.jpg", "product": "rosa-travel-pouch" } },
+        "l3": { "type": "look", "settings": { "fallback": "model-rosa.jpg", "product": "rano-rosa-traveller" } },
+        "l4": { "type": "look", "settings": { "video_asset": "look-canal.mp4", "fallback": "look-canal.jpg", "product": "giallo-traveller" } },
+        "l5": { "type": "look", "settings": { "fallback": "model-blue.jpg", "product": "blue-mare-traveller" } },
+        "l6": { "type": "look", "settings": { "fallback": "life-giallo.jpg", "product": "giallo-travel-pouch" } }
+      },
+      "block_order": ["l1", "l2", "l3", "l4", "l5", "l6"],
+      "settings": { "heading": "Seen on the move" }
+    },
+    "casarano": {
+      "type": "image-banner",
+      "settings": {
+        "fallback": "life-fiat.jpg",
+        "fallback_mobile": "life-fiat.jpg",
+        "focal": "center 62%",
+        "height": "large",
+        "heading": "Born in Casarano",
+        "text": "A small town in southern Italy, where days move slowly and details matter.",
+        "button_label": "Our story",
+        "button_link": "shopify://pages/about-us"
+      }
+    },
+    "split": {
+      "type": "split-banners",
+      "blocks": {
+        "b1": { "type": "banner", "settings": { "fallback": "life-stairs.jpg", "heading": "The Traveller", "text": "A spacious weekender that holds its shape.", "button_label": "Shop now", "link": "shopify://collections/rano-traveller" } },
+        "b2": { "type": "banner", "settings": { "fallback": "pouch-woman.jpg", "heading": "The Travel Pouch", "text": "Your essentials, organised in leather.", "button_label": "Shop now", "link": "shopify://collections/rano-travel-pouch" } }
+      },
+      "block_order": ["b1", "b2"]
+    },
+    "complete": {
+      "type": "product-row",
+      "settings": { "heading": "Complete the set", "link_label": "Shop all", "link": "shopify://collections/all" }
+    },
+    "details": {
+      "type": "craft-details",
+      "blocks": {
+        "d1": { "type": "item", "settings": { "fallback": "detail-1.jpg", "title": "Genuine leather", "text": "Full-grain leather, carefully selected for its natural feel. It softens and ages with character." } },
+        "d2": { "type": "item", "settings": { "fallback": "detail-2.jpg", "title": "Designed in Italy", "text": "Shaped in Casarano, finished with intention." } },
+        "d3": { "type": "item", "settings": { "fallback": "detail-3.jpg", "title": "Cabin ready", "text": "Sized for weekends, overnights and carry-on cabins." } }
+      },
+      "block_order": ["d1", "d2", "d3"],
+      "settings": { "heading": "Why Rano" }
+    },
+    "journey": {
+      "type": "image-banner",
+      "settings": {
+        "fallback": "life-coast.jpg",
+        "fallback_mobile": "life-coast.jpg",
+        "focal": "center 55%",
+        "height": "medium",
+        "full_width": true,
+        "heading": "Made for the journey",
+        "text": "Early flights, late check-ins and everything in between."
+      }
+    },
+    "ugc": {
+      "type": "ugc-gallery",
+      "blocks": {
+        "u1": { "type": "tile", "settings": { "fallback": "ugc-1.jpg" } },
+        "u2": { "type": "tile", "settings": { "fallback": "ugc-3.jpg" } },
+        "u3": { "type": "tile", "settings": { "fallback": "ugc-8.jpg" } },
+        "u4": { "type": "tile", "settings": { "fallback": "ugc-5.jpg" } },
+        "u5": { "type": "tile", "settings": { "fallback": "ugc-2.jpg" } },
+        "u6": { "type": "tile", "settings": { "fallback": "ugc-6.jpg" } },
+        "u7": { "type": "tile", "settings": { "fallback": "ugc-9.jpg" } },
+        "u8": { "type": "tile", "settings": { "fallback": "ugc-7.jpg" } },
+        "u9": { "type": "tile", "settings": { "fallback": "ugc-4.jpg" } },
+        "u10": { "type": "tile", "settings": { "fallback": "ugc-10.jpg" } }
+      },
+      "block_order": ["u1", "u2", "u3", "u4", "u5", "u6", "u7", "u8", "u9", "u10"],
+      "settings": { "heading": "#ranoeurope", "link_label": "Follow @ranoeurope" }
+    }
+  },
+  "order": ["hero", "bestsellers", "looks", "casarano", "split", "complete", "details", "journey", "ugc"]
+}

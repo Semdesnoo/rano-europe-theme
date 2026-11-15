@@ -1,0 +1,56 @@
+{%- comment -%}
+  Product card. Params: product, sizes
+  Colour swatches = sibling products in the product's smallest real collection
+  (Rano sells each colourway as its own product).
+{%- endcomment -%}
+{%- liquid
+  assign sizes = sizes | default: '(min-width: 990px) 20vw, 45vw'
+  assign img = product.featured_image
+  assign img2 = product.images[1]
+  assign alt_text = img.alt | default: product.title
+  assign sub = settings.card_subtitle
+  if product.tags contains 'bundle'
+    assign sub = 'The complete set'
+  endif
+-%}
+<article class="card reveal">
+  <div class="card__media">
+    <a href="{{ product.url }}" class="card__media-link" tabindex="-1" aria-hidden="true">
+      {%- if img -%}
+        {{ img | image_url: width: 900 | image_tag: widths: '360, 540, 720, 900', sizes: sizes, class: 'card__img', loading: 'lazy', alt: alt_text }}
+        {%- if settings.card_hover_image and img2 -%}
+          {{ img2 | image_url: width: 900 | image_tag: widths: '360, 540, 720, 900', sizes: sizes, class: 'card__img card__img--alt', loading: 'lazy', alt: '' }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'card__img' }}
+      {%- endif -%}
+    </a>
+    {%- if product.available == false -%}
+      <span class="badge">{{ 'products.sold_out' | t }}</span>
+    {%- elsif product.compare_at_price > product.price -%}
+      {%- assign save = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
+      <span class="badge badge--sale">-{{ save }}%</span>
+    {%- elsif product.tags contains 'new' -%}
+      <span class="badge">New</span>
+    {%- elsif product.tags contains 'bestseller' -%}
+      <span class="badge">Bestseller</span>
+    {%- endif -%}
+    {%- if settings.card_quick_add and product.available -%}
+      {%- if product.has_only_default_variant -%}
+        <form action="{{ routes.cart_add_url }}" method="post" class="card__quick" data-add-form>
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="icon-btn icon-btn--float" aria-label="Add {{ product.title | escape }} to bag">{% render 'icon', name: 'plus' %}</button>
+        </form>
+      {%- else -%}
+        <a href="{{ product.url }}" class="icon-btn icon-btn--float card__quick" aria-label="Choose options for {{ product.title | escape }}">{% render 'icon', name: 'plus' %}</a>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+  <div class="card__info">
+    <h3 class="card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    <p class="card__sub">{{ sub }}</p>
+    {% render 'price', price: product.price, compare: product.compare_at_price %}
+    {% render 'swatches', product: product %}
+  </div>
+</article>

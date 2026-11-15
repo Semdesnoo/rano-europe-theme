@@ -1,0 +1,23 @@
+{%- comment -%}
+  Colour swatches. Rano sells each colourway as its own product, so siblings =
+  products in the product's smallest real collection (e.g. "Rano Traveller").
+  Params: product, large (bool)
+{%- endcomment -%}
+{%- liquid
+  assign family = nil
+  for c in product.collections
+    if c.handle != 'frontpage' and c.handle != 'all' and c.products_count > 1 and c.products_count < 7
+      assign family = c
+      break
+    endif
+  endfor
+-%}
+{%- if family -%}
+  <ul class="swatches{% if large %} swatches--lg{% endif %}" aria-label="{{ 'products.colour' | t }}">
+    {%- for p in family.products limit: 6 -%}
+      <li>
+        <a href="{{ p.url }}" class="swatch{% if p.id == product.id %} is-active{% endif %}" style="--sw: {% render 'swatch-color', product: p %}" title="{{ p.title | escape }}"{% if p.id == product.id %} aria-current="true"{% endif %}><span class="visually-hidden">{{ p.title }}</span></a>
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

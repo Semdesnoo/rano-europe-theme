@@ -1,0 +1,31 @@
+<section class="section story{% if section.settings.reverse %} story--reverse{% endif %}">
+  <div class="container story__grid">
+    <div class="story__media reveal">
+      {% render 'media', image: section.settings.image, fallback: section.settings.fallback, sizes: '(min-width: 990px) 50vw, 100vw', class: 'cover', alt: section.settings.heading %}
+    </div>
+    <div class="story__text reveal">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="h1">{{ section.settings.heading }}</h2>
+      <div class="rte">{{ section.settings.text }}</div>
+      {%- if section.settings.button_label != blank -%}<a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn--dark">{{ section.settings.button_label }}</a>{%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image with text",
+  "class": "section-story",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "fallback", "label": "Bundled image file" },
+    { "type": "checkbox", "id": "reverse", "label": "Image on the right", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Small label" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "From Casarano to your next voyage" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Rano was born in Casarano, a small town in southern Italy where days move slowly and details matter.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Image with text" }]
+}
+{% endschema %}

@@ -1,0 +1,61 @@
+<section class="section looks">
+  <div class="container section-head">
+    <h2 class="h2">{{ section.settings.heading }}</h2>
+    <div class="carousel-nav hide-mobile">
+      <button type="button" class="icon-btn icon-btn--round" data-prev aria-label="{{ 'general.previous' | t }}">{% render 'icon', name: 'caret-left' %}</button>
+      <button type="button" class="icon-btn icon-btn--round" data-next aria-label="{{ 'general.next' | t }}">{% render 'icon', name: 'caret-right' %}</button>
+    </div>
+  </div>
+  <div class="carousel carousel--looks" data-carousel>
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign s = block.settings
+        assign p = s.product
+      -%}
+      <article class="look reveal" {{ block.shopify_attributes }}>
+        <div class="look__media">
+          {%- if s.video or s.video_asset != blank -%}
+            {% render 'video', video: s.video, video_asset: s.video_asset, poster: s.fallback, class: 'cover' %}
+          {%- else -%}
+            {% render 'media', image: s.image, fallback: s.fallback, sizes: '(min-width: 990px) 22vw, 70vw', class: 'cover', alt: p.title %}
+          {%- endif -%}
+        </div>
+        {%- if p != blank -%}
+          <div class="look__product">
+            <a href="{{ p.url }}" class="look__thumb">{{ p.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: p.title }}</a>
+            <div>
+              <a href="{{ p.url }}" class="look__title">{{ p.title }}</a>
+              {% render 'price', price: p.price, compare: p.compare_at_price %}
+            </div>
+          </div>
+          <a href="{{ p.url }}" class="btn btn--outline btn--block btn--sm">View product</a>
+        {%- endif -%}
+      </article>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shop the look",
+  "class": "section-looks",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Seen on the move" }
+  ],
+  "blocks": [
+    {
+      "type": "look",
+      "name": "Look",
+      "settings": [
+        { "type": "video", "id": "video", "label": "Video (upload)", "info": "Vertical 9:16 video, e.g. an Instagram reel." },
+        { "type": "text", "id": "video_asset", "label": "Bundled video file" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "fallback", "label": "Bundled image file", "info": "Used when no image is selected, and as video poster." },
+        { "type": "product", "id": "product", "label": "Product" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Shop the look", "blocks": [{ "type": "look" }, { "type": "look" }, { "type": "look" }] }]
+}
+{% endschema %}

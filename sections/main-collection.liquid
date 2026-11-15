@@ -1,0 +1,33 @@
+{%- paginate collection.products by 24 -%}
+<section class="section collection">
+  <div class="container">
+    <header class="page-head">
+      <h1 class="h1">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}<div class="rte page-head__text">{{ collection.description }}</div>{%- endif -%}
+    </header>
+    <div class="toolbar">
+      <p class="muted small">{{ collection.products_count }} {{ collection.products_count | pluralize: 'piece', 'pieces' }}</p>
+      <form class="toolbar__sort" method="get">
+        <label for="sort" class="small">Sort</label>
+        <select id="sort" name="sort_by" onchange="this.form.submit()">
+          {%- for option in collection.sort_options -%}
+            <option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name }}</option>
+          {%- endfor -%}
+        </select>
+      </form>
+    </div>
+    <div class="grid">
+      {%- for product in collection.products -%}
+        {% render 'product-card', product: product, sizes: '(min-width: 990px) 25vw, 50vw' %}
+      {%- else -%}
+        <p class="muted">This collection is empty. New pieces drop soon.</p>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}<nav class="pagination" aria-label="Pagination">{{ paginate | default_pagination }}</nav>{%- endif -%}
+  </div>
+</section>
+{%- endpaginate -%}
+
+{% schema %}
+{ "name": "Collection", "class": "section-collection", "settings": [] }
+{% endschema %}

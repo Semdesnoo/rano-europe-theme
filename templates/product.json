@@ -1,0 +1,111 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "a1": {
+          "type": "accordion",
+          "settings": {
+            "title": "Details & care",
+            "content": "<p>100% genuine leather with silver-tone hardware and a smart interior. Wipe clean with a soft, dry cloth and keep away from prolonged direct sunlight. The leather softens and develops character with use.</p>"
+          }
+        },
+        "a2": {
+          "type": "accordion",
+          "settings": {
+            "title": "Shipping & returns",
+            "content": "<p>Free shipping on every order. Orders are dispatched within 1-2 working days. Not the right fit? Return unused items within 14 days.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2"
+      ],
+      "settings": {
+        "dynamic_checkout": true,
+        "shipping_link": "/policies/shipping-policy"
+      }
+    },
+    "complete": {
+      "type": "product-row",
+      "settings": {
+        "heading": "Complete the set",
+        "link_label": "Shop all",
+        "link": "shopify://collections/all"
+      }
+    },
+    "ugc": {
+      "type": "ugc-gallery",
+      "blocks": {
+        "u1": {
+          "type": "tile",
+          "settings": {
+            "fallback": "ugc-1.jpg"
+          }
+        },
+        "u2": {
+          "type": "tile",
+          "settings": {
+            "fallback": "ugc-3.jpg"
+          }
+        },
+        "u3": {
+          "type": "tile",
+          "settings": {
+            "fallback": "ugc-8.jpg"
+          }
+        },
+        "u4": {
+          "type": "tile",
+          "settings": {
+            "fallback": "ugc-5.jpg"
+          }
+        },
+        "u5": {
+          "type": "tile",
+          "settings": {
+            "fallback": "ugc-2.jpg"
+          }
+        },
+        "u6": {
+          "type": "tile",
+          "settings": {
+            "fallback": "ugc-6.jpg"
+          }
+        },
+        "u7": {
+          "type": "tile",
+          "settings": {
+            "fallback": "ugc-9.jpg"
+          }
+        },
+        "u8": {
+          "type": "tile",
+          "settings": {
+            "fallback": "ugc-7.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "u1",
+        "u2",
+        "u3",
+        "u4",
+        "u5",
+        "u6",
+        "u7",
+        "u8"
+      ],
+      "settings": {
+        "heading": "#ranoeurope",
+        "link_label": "Follow @ranoeurope"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "complete",
+    "ugc"
+  ]
+}

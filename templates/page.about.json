@@ -1,0 +1,60 @@
+{
+  "sections": {
+    "hero": {
+      "type": "image-banner",
+      "settings": {
+        "fallback": "life-fiat.jpg",
+        "fallback_mobile": "life-fiat.jpg",
+        "focal": "center 62%",
+        "height": "large",
+        "full_width": true,
+        "heading": "About Rano",
+        "text": "From Casarano's quiet streets to your next departure gate. Travel gear shaped by movement, not by seasons."
+      }
+    },
+    "intro": {
+      "type": "rich-text",
+      "settings": {
+        "heading": "Not just a bag",
+        "text": "<p>Born in the south of Italy, where craftsmanship is a way of life, not a trend. Every line and every stitch is shaped by tradition and finished with intention. Now that heritage moves forward to Amsterdam: historic streets, modern lives, decisive movement.</p>"
+      }
+    },
+    "story1": {
+      "type": "image-with-text",
+      "settings": {
+        "fallback": "life-coast.jpg",
+        "eyebrow": "Casarano, Italy",
+        "heading": "From Casarano to your next voyage",
+        "text": "<p>Rano was born in Casarano, a small town in southern Italy where days move slowly and details matter. We carry that spirit into every piece we design: clean lines, rich textures and quiet confidence.</p><p>We work exclusively with real leather, carefully selected for its natural feel and the way it softens and ages over time.</p>"
+      }
+    },
+    "story2": {
+      "type": "image-with-text",
+      "settings": {
+        "fallback": "model-giallo-2.jpg",
+        "reverse": true,
+        "heading": "Discretion over display",
+        "text": "<p>Rather than chasing seasons, we focus on understated travel pieces that feel right year after year. The Traveller is the first expression of that idea: a weekender made to keep pace with you, wherever you go.</p><p>Limited releases. No restocks.</p>",
+        "button_label": "Shop the Traveller",
+        "button_link": "shopify://collections/rano-traveller"
+      }
+    },
+    "film": {
+      "type": "image-banner",
+      "settings": {
+        "video_asset": "rano-film.mp4",
+        "fallback": "rano-film-poster.jpg",
+        "height": "large",
+        "heading": "Designed in Italy. Carried in Amsterdam.",
+        "text": "Made for the world."
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "intro",
+    "story1",
+    "story2",
+    "film"
+  ]
+}

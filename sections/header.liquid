@@ -1,0 +1,99 @@
+{%- assign menu = section.settings.menu -%}
+<header class="header" data-header>
+  <div class="header__inner">
+    <div class="header__left">
+      <button class="icon-btn header__burger" type="button" data-open="menu-drawer" aria-label="{{ 'general.menu' | t }}" aria-controls="menu-drawer">{% render 'icon', name: 'menu' %}</button>
+      <button class="icon-btn header__search-m" type="button" data-open="search-panel" aria-label="{{ 'general.search' | t }}">{% render 'icon', name: 'search' %}</button>
+      <nav class="nav" aria-label="Main">
+        <ul class="nav__list">
+          {%- for link in menu.links -%}
+            <li class="nav__item{% if link.links.size > 0 %} has-sub{% endif %}">
+              <a href="{{ link.url }}" class="nav__link{% if link.active or link.child_active %} is-active{% endif %}"{% if link.links.size > 0 %} aria-haspopup="true"{% endif %}>{{ link.title }}</a>
+              {%- if link.links.size > 0 -%}
+                <div class="nav__sub">
+                  <ul>
+                    {%- for child in link.links -%}
+                      <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    </div>
+
+    <a href="{{ routes.root_url }}" class="header__logo" aria-label="{{ shop.name }}">
+      {%- if settings.logo -%}
+        {{ settings.logo | image_url: width: 600 | image_tag: class: 'logo', alt: shop.name, loading: 'eager' }}
+      {%- else -%}
+        <img src="{{ 'logo-black.png' | asset_url }}" class="logo" alt="{{ shop.name }}" width="948" height="355">
+      {%- endif -%}
+    </a>
+
+    <div class="header__right">
+      <button class="icon-btn header__search-d" type="button" data-open="search-panel" aria-label="{{ 'general.search' | t }}">{% render 'icon', name: 'search' %}</button>
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="icon-btn header__account" href="{{ routes.account_url }}" aria-label="{{ 'general.account' | t }}">{% render 'icon', name: 'user' %}</a>
+      {%- endif -%}
+      <a class="icon-btn header__cart" href="{{ routes.cart_url }}" data-open="cart-drawer" aria-label="{{ 'general.cart' | t }}">
+        {% render 'icon', name: 'bag' %}
+        <span class="cart-count" data-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="search-panel" id="search-panel" data-drawer hidden>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-panel__form">
+      <label for="header-search" class="visually-hidden">{{ 'general.search' | t }}</label>
+      {% render 'icon', name: 'search' %}
+      <input id="header-search" type="search" name="q" placeholder="Search Traveller, Pouch, Card Holder" autocomplete="off">
+      <input type="hidden" name="type" value="product">
+      <button type="button" class="icon-btn" data-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+    </form>
+  </div>
+</header>
+
+<div class="drawer drawer--left" id="menu-drawer" data-drawer hidden aria-label="{{ 'general.menu' | t }}" role="dialog" aria-modal="true">
+  <div class="drawer__head">
+    <img src="{{ 'logo-black.png' | asset_url }}" class="logo logo--drawer" alt="{{ shop.name }}" width="948" height="355">
+    <button class="icon-btn" type="button" data-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+  </div>
+  <nav class="drawer__body m-nav" aria-label="Mobile">
+    {%- for link in menu.links -%}
+      {%- if link.links.size > 0 -%}
+        <details class="m-nav__group">
+          <summary class="m-nav__link">{{ link.title }} {% render 'icon', name: 'caret-down' %}</summary>
+          <ul>
+            {%- for child in link.links -%}<li><a href="{{ child.url }}">{{ child.title }}</a></li>{%- endfor -%}
+          </ul>
+        </details>
+      {%- else -%}
+        <a href="{{ link.url }}" class="m-nav__link">{{ link.title }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+    <a href="{{ section.settings.drawer_link | default: routes.all_products_collection_url }}" class="m-nav__feature">
+      {% render 'media', image: section.settings.drawer_image, fallback: 'model-giallo-2.jpg', sizes: '90vw', class: 'cover', alt: section.settings.drawer_caption %}
+      <span>{{ section.settings.drawer_caption }}</span>
+    </a>
+  </nav>
+  <div class="drawer__foot">
+    {%- if shop.customer_accounts_enabled -%}<a href="{{ routes.account_url }}">{% render 'icon', name: 'user' %} {{ 'general.account' | t }}</a>{%- endif -%}
+    {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" target="_blank" rel="noopener">{% render 'icon', name: 'instagram' %} Instagram</a>{%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "header", "content": "Mobile menu" },
+    { "type": "image_picker", "id": "drawer_image", "label": "Featured image" },
+    { "type": "text", "id": "drawer_caption", "label": "Featured caption", "default": "Shop the Traveller" },
+    { "type": "url", "id": "drawer_link", "label": "Featured link" }
+  ]
+}
+{% endschema %}

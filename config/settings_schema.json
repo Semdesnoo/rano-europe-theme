@@ -1,0 +1,49 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Rano",
+    "theme_version": "1.0.0",
+    "theme_author": "Rano Europe",
+    "theme_documentation_url": "https://ranoeurope.com",
+    "theme_support_url": "https://ranoeurope.com/pages/contact"
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo (dark, for light backgrounds)", "info": "Leave empty to use the bundled Rano logo." },
+      { "type": "range", "id": "logo_width", "label": "Logo width (desktop)", "min": 80, "max": 260, "step": 2, "unit": "px", "default": 132 },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "color", "id": "color_ink", "label": "Text & buttons", "default": "#151514" },
+      { "type": "color", "id": "color_bg", "label": "Background", "default": "#fcfcfa" },
+      { "type": "color", "id": "color_card", "label": "Product image background", "default": "#ececea" },
+      { "type": "color", "id": "color_sale", "label": "Sale badge", "default": "#7a2f2a" }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      { "type": "checkbox", "id": "card_hover_image", "label": "Show second image on hover", "default": true },
+      { "type": "checkbox", "id": "card_quick_add", "label": "Show quick add button", "default": true },
+      { "type": "text", "id": "card_subtitle", "label": "Default subtitle", "default": "Genuine Italian leather" }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      { "type": "text", "id": "cart_note", "label": "Cart drawer message", "default": "Free shipping on every order" },
+      { "type": "collection", "id": "cart_empty_collection", "label": "Suggested collection when cart is empty" }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "url", "id": "social_instagram", "label": "Instagram", "default": "https://www.instagram.com/ranoeurope/" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" }
+    ]
+  }
+]

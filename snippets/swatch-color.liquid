@@ -1,0 +1,15 @@
+{%- comment -%} Outputs a CSS colour for a Rano colourway, derived from the product handle/title. {%- endcomment -%}
+{%- liquid
+  assign key = product.handle | append: ' ' | append: product.title | downcase
+  if key contains 'giallo' or key contains 'yellow'
+    echo '#e3b73a'
+  elsif key contains 'rosa' or key contains 'pink'
+    echo '#ebbfc6'
+  elsif key contains 'blue' or key contains 'mare' or key contains 'blu'
+    echo '#9db5c8'
+  elsif key contains 'nero' or key contains 'black'
+    echo '#1d1d1c'
+  else
+    echo '#cfc9bf'
+  endif
+-%}

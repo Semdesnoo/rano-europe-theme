@@ -1,0 +1,41 @@
+<section class="section ugc">
+  <div class="container section-head">
+    <h2 class="h2">{{ section.settings.heading }}</h2>
+    {%- if settings.social_instagram != blank and section.settings.link_label != blank -%}
+      <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" class="link-arrow">{% render 'icon', name: 'instagram' %} {{ section.settings.link_label }}</a>
+    {%- endif -%}
+  </div>
+  <div class="carousel carousel--ugc" data-carousel>
+    {%- for block in section.blocks -%}
+      {%- assign s = block.settings -%}
+      {%- assign href = s.product.url | default: settings.social_instagram -%}
+      <a href="{{ href }}" class="ugc__tile reveal"{% if s.product == blank %} target="_blank" rel="noopener"{% endif %} {{ block.shopify_attributes }}>
+        {% render 'media', image: s.image, fallback: s.fallback, sizes: '(min-width: 990px) 17vw, 45vw', class: 'cover', alt: 'Rano on Instagram' %}
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Instagram gallery",
+  "class": "section-ugc",
+  "max_blocks": 16,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "#ranoeurope" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Follow @ranoeurope" }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Photo",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "fallback", "label": "Bundled image file" },
+        { "type": "product", "id": "product", "label": "Link to product", "info": "Leave empty to link to Instagram." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Instagram gallery", "blocks": [{ "type": "tile" }, { "type": "tile" }, { "type": "tile" }, { "type": "tile" }] }]
+}
+{% endschema %}

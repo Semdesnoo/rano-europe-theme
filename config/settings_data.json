@@ -1,0 +1,17 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "logo_width": 132,
+      "color_ink": "#151514",
+      "color_bg": "#fcfcfa",
+      "color_card": "#ececea",
+      "color_sale": "#7a2f2a",
+      "card_hover_image": true,
+      "card_quick_add": true,
+      "card_subtitle": "Genuine Italian leather",
+      "cart_note": "Free shipping on every order",
+      "social_instagram": "https://www.instagram.com/ranoeurope/"
+    }
+  }
+}

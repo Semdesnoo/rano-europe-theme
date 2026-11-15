@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Contact",
+        "text": "<p>Questions about an order, a product or a collaboration? Send us a message and we will reply within one working day.</p>"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

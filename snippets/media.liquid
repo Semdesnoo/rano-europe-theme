@@ -1,0 +1,19 @@
+{%- comment -%}
+  Renders an image setting, or falls back to a bundled theme asset.
+  Params: image, fallback (asset filename), sizes, class, eager (bool), alt
+{%- endcomment -%}
+{%- liquid
+  assign loading = 'lazy'
+  if eager
+    assign loading = 'eager'
+  endif
+  assign sizes = sizes | default: '100vw'
+-%}
+{%- if image -%}
+  {%- assign alt_text = alt | default: image.alt -%}
+  {{ image | image_url: width: 2400 | image_tag: widths: '400, 700, 1000, 1400, 1800, 2400', sizes: sizes, class: class, loading: loading, alt: alt_text }}
+{%- elsif fallback != blank -%}
+  <img src="{{ fallback | asset_url }}" alt="{{ alt | escape }}" class="{{ class }}" loading="{{ loading }}" decoding="async" width="1600" height="2000">
+{%- else -%}
+  {{ 'lifestyle-1' | placeholder_svg_tag: class }}
+{%- endif -%}

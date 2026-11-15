@@ -1,0 +1,18 @@
+<section class="section rich">
+  <div class="container rich__inner reveal">
+    {%- if section.settings.heading != blank -%}<h2 class="h1">{{ section.settings.heading }}</h2>{%- endif -%}
+    <div class="rte">{{ section.settings.text }}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "class": "section-rich",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Quiet in design. Strong in use." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Rano focuses on the pieces you reach for again and again.</p>" }
+  ],
+  "presets": [{ "name": "Rich text" }]
+}
+{% endschema %}

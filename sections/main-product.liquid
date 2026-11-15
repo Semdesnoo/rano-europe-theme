@@ -1,0 +1,145 @@
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign colour = product.title | remove: 'Full Travel Set' | remove: 'Pouch & Card Holder Set' | remove: 'Travel Pouch' | remove: 'Traveller' | remove: 'Card Holder' | remove: 'Cardholder' | strip
+-%}
+<section class="pdp" data-product>
+  <div class="pdp__gallery" data-gallery>
+    <div class="pdp__track">
+      {%- for media in product.media -%}
+        <div class="pdp__slide{% if forloop.first %} pdp__slide--first{% endif %}">
+          {%- liquid
+            assign loading = 'lazy'
+            if forloop.first
+              assign loading = 'eager'
+            endif
+            assign alt_text = media.alt | default: product.title
+          -%}
+          {%- case media.media_type -%}
+            {%- when 'image' -%}
+              {{ media | image_url: width: 1800 | image_tag: widths: '500, 800, 1100, 1400, 1800', sizes: '(min-width: 990px) 30vw, 100vw', loading: loading, class: 'cover', alt: alt_text }}
+            {%- when 'video' -%}
+              {{ media | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, image_size: '1100x', class: 'cover' }}
+            {%- else -%}
+              {{ media | media_tag: image_size: '1100x' }}
+          {%- endcase -%}
+        </div>
+      {%- else -%}
+        <div class="pdp__slide">{{ 'product-1' | placeholder_svg_tag: 'cover' }}</div>
+      {%- endfor -%}
+    </div>
+    {%- if product.media.size > 1 -%}
+      <div class="pdp__dots hide-desktop" aria-hidden="true">
+        {%- for media in product.media -%}<span{% if forloop.first %} class="is-active"{% endif %}></span>{%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="pdp__info">
+    <div class="pdp__sticky">
+      {%- if product.collections.size > 0 -%}
+        {%- assign crumb = product.collections | where: 'handle', 'bags' | first | default: product.collections.first -%}
+        <a href="{{ crumb.url }}" class="pdp__crumb">{{ crumb.title }}</a>
+      {%- endif -%}
+      <h1 class="pdp__title">{{ product.title }}</h1>
+      <div class="pdp__price" data-price>{% render 'price', price: current.price, compare: current.compare_at_price %}</div>
+      <p class="muted small">Tax included. <a href="{{ section.settings.shipping_link }}" class="link">Free shipping</a>.</p>
+
+      {%- capture sw -%}{% render 'swatches', product: product, large: true %}{%- endcapture -%}
+      {%- if sw != blank -%}
+        <div class="pdp__opt">
+          <p class="pdp__label">{{ 'products.colour' | t }}{% if colour != blank %}: <strong>{{ colour }}</strong>{% endif %}</p>
+          {{ sw }}
+        </div>
+      {%- endif -%}
+
+      {%- form 'product', product, class: 'pdp__form', data-add-form: '', novalidate: 'novalidate' -%}
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <div class="field pdp__opt">
+              <label for="opt-{{ forloop.index0 }}" class="pdp__label">{{ option.name }}</label>
+              <select id="opt-{{ forloop.index0 }}" data-option="{{ forloop.index0 }}">
+                {%- for value in option.values -%}<option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>{{ value }}</option>{%- endfor -%}
+              </select>
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+        <input type="hidden" name="id" value="{{ current.id }}" data-variant-id>
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="btn btn--dark btn--block btn--lg" data-atc{% unless current.available %} disabled{% endunless %}>
+          {%- if current.available -%}{{ 'products.add_to_cart' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}
+        </button>
+        {%- if section.settings.dynamic_checkout -%}{{ form | payment_button }}{%- endif -%}
+      {%- endform -%}
+
+      <ul class="pdp__usps">
+        <li>{% render 'icon', name: 'truck' %} Free shipping, delivered in 2-4 days</li>
+        <li>{% render 'icon', name: 'seal' %} 100% genuine leather</li>
+        <li>{% render 'icon', name: 'plane' %} Designed in Italy</li>
+      </ul>
+
+      <div class="accordion">
+        {%- if product.description != blank -%}
+          <details open>
+            <summary>Description {% render 'icon', name: 'plus' %}</summary>
+            <div class="rte">{{ product.description }}</div>
+          </details>
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          <details {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.title }} {% render 'icon', name: 'plus' %}</summary>
+            <div class="rte">{{ block.settings.content }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="sticky-atc" data-sticky-atc hidden>
+    <div class="sticky-atc__info">
+      <span class="sticky-atc__title">{{ product.title }}</span>
+      {% render 'price', price: current.price, compare: current.compare_at_price %}
+    </div>
+    <button type="button" class="btn btn--dark" data-sticky-submit{% unless current.available %} disabled{% endunless %}>{{ 'products.add_to_cart' | t }}</button>
+  </div>
+
+  <script type="application/json" data-variants>{{ product.variants | json }}</script>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "image": [{% if product.featured_image %}{{ product.featured_image | image_url: width: 1200 | prepend: 'https:' | json }}{% endif %}],
+  "description": {{ product.description | strip_html | json }},
+  "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
+  "offers": {
+    "@type": "Offer",
+    "url": {{ request.origin | append: product.url | json }},
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "price": {{ current.price | divided_by: 100.0 | json }},
+    "availability": "https://schema.org/{% if current.available %}InStock{% else %}OutOfStock{% endif %}"
+  }
+}
+</script>
+
+{% schema %}
+{
+  "name": "Product",
+  "class": "section-pdp",
+  "settings": [
+    { "type": "checkbox", "id": "dynamic_checkout", "label": "Show dynamic checkout buttons", "default": true },
+    { "type": "url", "id": "shipping_link", "label": "Shipping policy link", "default": "/policies/shipping-policy" }
+  ],
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "Accordion",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Details & care" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>100% genuine leather with silver-tone hardware. Wipe with a soft dry cloth. Keep away from prolonged direct sunlight.</p>" }
+      ]
+    }
+  ]
+}
+{% endschema %}
