@@ -345,3 +345,6 @@
     }
   }
 })();
+
+// Footer columns: open on desktop, accordion on mobile
+if (matchMedia('(max-width: 989px)').matches) document.querySelectorAll('[data-footer-col]').forEach((d) => d.removeAttribute('open'));

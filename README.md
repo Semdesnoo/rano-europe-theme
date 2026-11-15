@@ -29,7 +29,7 @@ Local preview: `npm install && npm run preview`, then serve `_site/` with any st
 ## Shopify install
 Upload the zip (Online Store > Themes > Add theme > Upload zip), then:
 - Pages: assign template `page.about` to *About us*, `page.contact` to *Contact*.
-- Navigation: `main-menu` = Shop All, Bestsellers, About, Contact. Give *Shop All* sub-items with their own sub-items (e.g. By category / By colour / Highlights) to get the mega menu columns; the 4 images are set in the header section. Footer uses `main-menu` + `footer`.
+- Navigation: `main-menu` = Shop All, Bestsellers, About, Contact. Give *Shop All* sub-items with their own sub-items (e.g. By category / By colour / Highlights) to get the mega menu columns; the 4 images are set in the header section. Footer has 3 columns: make menus `footer-company` (Company), `footer` (Customer service) and `footer-shop` (Rano) in Navigation; the preview shows the suggested links. Policy links (`/policies/shipping-policy`, `refund-policy`, `privacy-policy`, `terms-of-service`) are filled from Settings > Policies.
 - Settings > Markets / Languages: add countries and languages so the selector in the top bar shows them.
 - Customer accounts (Settings > Customer accounts): turn on, then *Customize* > upload `assets/account-banner.png` as logo/banner and set the accent colour to #151514. Shopify hosts the sign-in / create-account page; `preview/account.html` shows how it looks.
 - Check shipping/returns copy in `templates/product.json` against the real policy.

@@ -1,6 +1,6 @@
 <footer class="footer">
   <div class="container">
-    <div class="footer__grid">
+    <div class="footer__top">
       <div class="footer__brand">
         <img src="{{ 'logo-black.png' | asset_url }}" class="logo logo--footer" alt="{{ shop.name }}" loading="lazy" width="948" height="355">
         <p>{{ section.settings.about }}</p>
@@ -9,19 +9,6 @@
           {%- if settings.social_tiktok != blank -%}<a class="icon-btn" href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon', name: 'tiktok' %}</a>{%- endif -%}
         </div>
       </div>
-
-      {%- for i in (1..2) -%}
-        {%- assign key = 'menu_' | append: i -%}
-        {%- assign m = section.settings[key] -%}
-        {%- if m.links.size > 0 -%}
-          <details class="footer__col" open>
-            <summary>{{ m.title }}</summary>
-            <ul>
-              {%- for link in m.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
-            </ul>
-          </details>
-        {%- endif -%}
-      {%- endfor -%}
 
       <div class="footer__news">
         <h2 class="footer__h">{{ section.settings.news_heading }}</h2>
@@ -42,6 +29,21 @@
       </div>
     </div>
 
+    <nav class="footer__cols" aria-label="Footer">
+      {%- for i in (1..3) -%}
+        {%- assign key = 'menu_' | append: i -%}
+        {%- assign m = section.settings[key] -%}
+        {%- if m.links.size > 0 -%}
+          <details class="footer__col" open data-footer-col>
+            <summary>{{ m.title }}{% render 'icon', name: 'plus' %}</summary>
+            <ul>
+              {%- for link in m.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
+            </ul>
+          </details>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+
     <div class="footer__bottom">
       <div class="footer__locale">{% render 'localization', up: true %}</div>
       <ul class="footer__pay" aria-label="Payment methods">
@@ -58,8 +60,9 @@
   "class": "section-footer",
   "settings": [
     { "type": "textarea", "id": "about", "label": "Brand text", "default": "Born in Casarano, southern Italy. Genuine leather travel pieces made to move with you, wherever you go." },
-    { "type": "link_list", "id": "menu_1", "label": "Menu 1", "default": "main-menu" },
-    { "type": "link_list", "id": "menu_2", "label": "Menu 2", "default": "footer" },
+    { "type": "link_list", "id": "menu_1", "label": "Column 1 (Company)", "default": "footer-company" },
+    { "type": "link_list", "id": "menu_2", "label": "Column 2 (Customer service)", "default": "footer" },
+    { "type": "link_list", "id": "menu_3", "label": "Column 3 (Shop)", "default": "footer-shop" },
     { "type": "text", "id": "news_heading", "label": "Newsletter heading", "default": "Enter the world of Rano" },
     { "type": "textarea", "id": "news_text", "label": "Newsletter text", "default": "Early access to limited drops. No restocks, so be first." }
   ]

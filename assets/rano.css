@@ -235,7 +235,8 @@ ul{list-style:none;margin:0;padding:0}
 
 /* Footer */
 .footer{background:#111;color:#fff;--ink:#fff;--line:rgba(255,255,255,.14);--soft:rgba(255,255,255,.06);padding:clamp(48px,6vw,80px) 0 28px;margin-top:calc(var(--sec)/2);font-size:14px}
-.footer__grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1.4fr;gap:40px}
+.footer__top{display:grid;grid-template-columns:1fr minmax(0,440px);gap:40px;align-items:start;padding-bottom:clamp(36px,5vw,56px)}
+.footer__cols{display:grid;grid-template-columns:repeat(3,1fr);gap:0 clamp(24px,4vw,64px)}
 .logo--footer{width:120px;margin-bottom:18px}
 .footer__brand p{max-width:34ch;color:color-mix(in srgb,var(--ink) 65%,transparent)}
 .footer__social{display:flex;gap:4px;margin:16px 0 0 -10px}
@@ -660,8 +661,7 @@ a.promo__code{padding:5px 14px}
   .details__grid{grid-template-columns:1fr;grid-template-rows:none}
   .details__item:first-child{grid-row:auto}
   .details__item:first-child .details__media{aspect-ratio:4/3}
-  .footer__grid{grid-template-columns:1fr 1fr}
-  .footer__brand,.footer__news{grid-column:1/-1}
+  .footer__top{grid-template-columns:1fr}
   .story__grid,.contact__grid{grid-template-columns:1fr}
   .story--reverse .story__media{order:0}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -687,7 +687,7 @@ a.promo__code{padding:5px 14px}
   .details__item{grid-template-columns:42% 1fr}
   .details__item figcaption{padding:16px 16px 16px 0}
   .details__media{min-height:180px}
-  .footer__grid{gap:28px 20px}
+  .footer__cols{grid-template-columns:1fr}
   .footer__bottom{flex-direction:column;align-items:flex-start;margin-top:36px}
   .btn{padding:0 22px}
   .grid{gap:28px 10px}
@@ -696,6 +696,7 @@ a.promo__code{padding:5px 14px}
 @media (min-width:990px){
   .sticky-atc{display:none}
   .footer__col summary{pointer-events:none}
+  .footer__col summary .icon{display:none}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
@@ -730,3 +731,10 @@ select{border-radius:8px;cursor:pointer}
 .footer .loc__list{background:#1b1b1b;color:#fff}
 .footer .loc__list button:hover{background:rgba(255,255,255,.08)}
 .footer .form-ok{background:rgba(255,255,255,.08)}
+
+/* Footer link columns (Dore & Rose style): label, hairline, links */
+.footer__col summary{display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--line);cursor:pointer}
+.footer__col summary .icon{width:14px;height:14px;transition:transform .25s}
+.footer__col[open] summary .icon{transform:rotate(45deg)}
+.footer__col ul{padding-bottom:8px}
+@media (max-width:989px){.footer__col summary{margin:0;padding:16px 0}.footer__col ul{padding:4px 0 14px}}

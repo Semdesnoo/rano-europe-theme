@@ -58,7 +58,9 @@ const menus = {
       L('By colour', '/collections/all', [L('Giallo', '/products/giallo-traveller'), L('Rosa', '/products/rano-rosa-traveller'), L('Blue Mare', '/products/blue-mare-traveller')]),
       L('Highlights', '/collections/all', [L('Black Friday sale', '/collections/all'), L('Bestsellers', '/collections/all'), L('Gift sets', '/products/bundle-product-4')])]),
     L('Bestsellers', '/collections/all'), L('About', '/pages/about-us'), L('Contact', '/pages/contact')] },
-  footer: { title: 'Help', links: [L('Contact', '/pages/contact'), L('Shipping policy', '#'), L('Refund policy', '#'), L('Privacy policy', '#'), L('Search', '/search')] },
+  'footer-company': { title: 'Company', links: [L('About us', '/pages/about-us'), L('Reviews', '/#reviews'), L('Craftsmanship', '/pages/about-us'), L('Partnerships & Ambassadors', '/pages/contact-form'), L('Become a reseller', '/pages/contact-form'), L('Corporate Gifting', '/pages/contact-form'), L('Instagram', 'https://www.instagram.com/ranoeurope/')] },
+  footer: { title: 'Customer service', links: [L('Help centre & FAQs', '/pages/contact'), L('Track my order', '/account'), L('Shipping Policy', '/policies/shipping-policy'), L('Return & Refund Policy', '/policies/refund-policy'), L('Privacy Policy', '/policies/privacy-policy'), L('Terms of Service', '/policies/terms-of-service'), L('Contact', '/pages/contact-form')] },
+  'footer-shop': { title: 'Rano', links: [L('Shop All', '/collections/all'), L('Bestsellers', '/collections/all?sort_by=best-selling'), L('The Traveller', '/collections/rano-traveller'), L('Travel Pouch', '/collections/rano-travel-pouch'), L('Card Holder', '/collections/card-holder'), L('Full Travel Sets', '/products/bundle-product-7'), L('Black Friday Sale', '/collections/all')] },
 };
 
 // ---------- settings ----------
@@ -171,6 +173,10 @@ const pages = {
   'pages/contact': () => page('page.contact', { page: { title: 'Contact' } }),
   'pages/contact-form': () => page('page.contact-form', { page: { title: 'Contact us' } }),
   'cart': () => page('cart'),
+  'policies/shipping-policy': () => page('page', { page: { title: 'Shipping Policy', content: '<p>Preview: in Shopify this page is filled automatically from Settings &gt; Policies.</p>' } }),
+  'policies/refund-policy': () => page('page', { page: { title: 'Return & Refund Policy', content: '<p>Preview: in Shopify this page is filled automatically from Settings &gt; Policies.</p>' } }),
+  'policies/privacy-policy': () => page('page', { page: { title: 'Privacy Policy', content: '<p>Preview: in Shopify this page is filled automatically from Settings &gt; Policies.</p>' } }),
+  'policies/terms-of-service': () => page('page', { page: { title: 'Terms of Service', content: '<p>Preview: in Shopify this page is filled automatically from Settings &gt; Policies.</p>' } }),
   'search': () => page('search', { search: { performed: false } }),
   ...Object.fromEntries(products.map((p) => [`products/${p.handle}`, () => page('product', { product: p, page_title: p.title })])),
   ...Object.fromEntries(Object.values(collections).map((c) => [`collections/${c.handle}`, () => page('collection', { collection: c })])),
