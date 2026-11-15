@@ -6,15 +6,17 @@
         "a1": {
           "type": "accordion",
           "settings": {
-            "title": "Details & care",
-            "content": "<p>100% genuine leather with silver-tone hardware and a smart interior. Wipe clean with a soft, dry cloth and keep away from prolonged direct sunlight. The leather softens and develops character with use.</p>"
+            "title": "Details",
+            "content": "<p>100% genuine full-grain leather, silver-tone hardware, two-way zip and a smart interior with inner pocket. Detachable, adjustable shoulder strap. Designed in Italy.</p>",
+            "icon": "info"
           }
         },
         "a2": {
           "type": "accordion",
           "settings": {
             "title": "Shipping & returns",
-            "content": "<p>Free shipping on every order. Orders are dispatched within 1-2 working days. Not the right fit? Return unused items within 14 days.</p>"
+            "content": "<p>Free shipping on every order. Orders are dispatched within 1-2 working days. Not the right fit? Return unused items within 14 days.</p>",
+            "icon": "truck"
           }
         },
         "v1": {
@@ -40,13 +42,46 @@
             "poster": "look-canal.jpg",
             "caption": "Made for weekends"
           }
+        },
+        "a3": {
+          "type": "accordion",
+          "settings": {
+            "title": "Care guide",
+            "icon": "drop",
+            "content": "<p>Wipe clean with a soft, dry cloth. Keep away from prolonged direct sunlight and heat. Store in the dust bag, stuffed lightly so it keeps its shape. The leather softens and develops character with use.</p>"
+          }
+        },
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Does it fit as cabin luggage?",
+            "answer": "<p>Yes. The Traveller is sized for most airline cabins and weekend trips. The Travel Pouch and Card Holder slip inside.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Is it real leather?",
+            "answer": "<p>Always. Every Rano piece is made from 100% genuine full-grain leather that softens and ages beautifully.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "When will it arrive?",
+            "answer": "<p>Orders ship within 1-2 working days and arrive in 2-4 days. Shipping is free on every order.</p>"
+          }
         }
       },
       "block_order": [
         "v1",
         "v2",
         "v3",
+        "q1",
+        "q2",
+        "q3",
         "a1",
+        "a3",
         "a2"
       ],
       "settings": {

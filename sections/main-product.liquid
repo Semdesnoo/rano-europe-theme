@@ -75,17 +75,21 @@
         {%- endunless -%}
         <input type="hidden" name="id" value="{{ current.id }}" data-variant-id>
         <input type="hidden" name="quantity" value="1">
+        {%- if section.settings.gift_wrap -%}
+          <label class="pdp-gift">
+            <span class="pdp-gift__icon">{% render 'icon', name: 'gift' %}</span>
+            <span class="pdp-gift__text"><strong>{{ section.settings.gift_title }}</strong><small>{{ section.settings.gift_text }}</small></span>
+            <span class="pdp-gift__price">{{ section.settings.gift_price }}</span>
+            <input type="checkbox" name="properties[Gift wrapping]" value="Yes" class="switch">
+          </label>
+        {%- endif -%}
         <button type="submit" class="btn btn--dark btn--block btn--lg" data-atc{% unless current.available %} disabled{% endunless %}>
           {%- if current.available -%}{{ 'products.add_to_cart' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}
         </button>
         {%- if section.settings.dynamic_checkout -%}{{ form | payment_button }}{%- endif -%}
       {%- endform -%}
+      <p class="pdp-trust"><span>{% render 'icon', name: 'return' %} 14-day returns</span><span>{% render 'icon', name: 'truck' %} Free shipping</span><span>{% render 'icon', name: 'seal' %} Genuine leather</span></p>
 
-      <ul class="pdp__usps">
-        <li>{% render 'icon', name: 'truck' %} Free shipping, delivered in 2-4 days</li>
-        <li>{% render 'icon', name: 'seal' %} 100% genuine leather</li>
-        <li>{% render 'icon', name: 'plane' %} Designed in Italy</li>
-      </ul>
 
       {%- assign vids = section.blocks | where: 'type', 'video' -%}
       {%- if vids.size > 0 -%}
@@ -105,21 +109,61 @@
         </div>
       {%- endif -%}
 
-      <div class="accordion">
-        {%- if product.description != blank -%}
-          <details open>
-            <summary>Description {% render 'icon', name: 'plus' %}</summary>
-            <div class="rte">{{ product.description }}</div>
-          </details>
-        {%- endif -%}
+      {%- if product.description != blank -%}<div class="pdp-desc rte">{{ product.description }}</div>{%- endif -%}
+
+      {%- assign qs = section.blocks | where: 'type', 'question' -%}
+      {%- if qs.size > 0 -%}
+        <div class="pdp-ask" data-ask>
+          <div class="pdp-ask__chips">
+            {%- for block in qs -%}
+              <button type="button" class="pdp-ask__chip" data-ask-q="{{ forloop.index }}" aria-expanded="false" {{ block.shopify_attributes }}>{% render 'icon', name: 'sparkle' %} {{ block.settings.question }}</button>
+            {%- endfor -%}
+          </div>
+          {%- for block in qs -%}
+            <div class="pdp-ask__answer" data-ask-a="{{ forloop.index }}" hidden>
+              <p class="pdp-ask__q">{{ block.settings.question }}</p>
+              <div class="pdp-ask__bubble"><span class="pdp-ask__from">Rano</span>{{ block.settings.answer }}</div>
+            </div>
+          {%- endfor -%}
+          <form action="{{ section.settings.ask_link }}" method="get" class="pdp-ask__form">
+            <input type="hidden" name="product" value="{{ product.title | escape }}">
+            <label class="visually-hidden" for="ask-{{ section.id }}">Ask us anything</label>
+            <input id="ask-{{ section.id }}" name="q" type="text" placeholder="Ask us anything..." autocomplete="off" required>
+            <button type="submit" aria-label="Send question">{% render 'icon', name: 'arrow-up' %}</button>
+          </form>
+        </div>
+      {%- endif -%}
+
+      <div class="accordion accordion--icons">
         {%- for block in section.blocks -%}
           {%- if block.type != 'accordion' -%}{%- continue -%}{%- endif -%}
           <details {{ block.shopify_attributes }}>
-            <summary>{{ block.settings.title }} {% render 'icon', name: 'plus' %}</summary>
+            <summary><span>{%- if block.settings.icon != blank -%}{% render 'icon', name: block.settings.icon %}{%- endif -%}{{ block.settings.title }}</span> {% render 'icon', name: 'caret-down' %}</summary>
             <div class="rte">{{ block.settings.content }}</div>
           </details>
         {%- endfor -%}
       </div>
+
+      {%- if section.settings.also_love_heading != blank -%}
+        {%- liquid
+          assign pool = collections.all.products
+          assign shown = 0
+        -%}
+        <div class="pdp-love">
+          <p class="pdp-love__head">{{ section.settings.also_love_heading }}</p>
+          <div class="pdp-love__grid">
+            {%- for p in pool -%}
+              {%- if p.id == product.id or shown >= 4 -%}{%- continue -%}{%- endif -%}
+              {%- assign shown = shown | plus: 1 -%}
+              <a href="{{ p.url }}" class="pdp-love__item">
+                <span class="pdp-love__img">{{ p.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', sizes: '160px', alt: p.title }}</span>
+                <span class="pdp-love__title">{{ p.title }}</span>
+                <span class="pdp-love__price">{% render 'price', price: p.price, compare: p.compare_at_price %}</span>
+              </a>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
     </div>
   </div>
 
@@ -160,7 +204,15 @@
     { "type": "checkbox", "id": "dynamic_checkout", "label": "Show dynamic checkout buttons", "default": true },
     { "type": "checkbox", "id": "spin", "label": "Drag-to-rotate on first image", "info": "Turns through the product photos with a 3D effect. Real 3D models (.glb media) are shown automatically when uploaded.", "default": true },
     { "type": "url", "id": "shipping_link", "label": "Shipping policy link", "default": "/policies/shipping-policy" },
-    { "type": "text", "id": "videos_heading", "label": "Video blocks heading", "default": "See it in motion" }
+    { "type": "text", "id": "videos_heading", "label": "Video blocks heading", "default": "See it in motion" },
+    { "type": "header", "content": "Gift wrapping" },
+    { "type": "checkbox", "id": "gift_wrap", "label": "Show gift wrapping option", "info": "Adds the line item property 'Gift wrapping: Yes' to the order.", "default": true },
+    { "type": "text", "id": "gift_title", "label": "Title", "default": "Add gift wrapping" },
+    { "type": "text", "id": "gift_text", "label": "Text", "default": "Wrapped in tissue in a Rano gift box, with a handwritten card." },
+    { "type": "text", "id": "gift_price", "label": "Price label", "default": "Free" },
+    { "type": "header", "content": "Questions" },
+    { "type": "url", "id": "ask_link", "label": "'Ask us anything' sends to", "default": "/pages/contact-form" },
+    { "type": "text", "id": "also_love_heading", "label": "'You'll also love' heading", "default": "You'll also love" }
   ],
   "blocks": [
     {
@@ -168,7 +220,19 @@
       "name": "Accordion",
       "settings": [
         { "type": "text", "id": "title", "label": "Title", "default": "Details & care" },
+        { "type": "select", "id": "icon", "label": "Icon", "default": "info", "options": [
+          { "value": "info", "label": "Details" }, { "value": "drop", "label": "Care" }, { "value": "truck", "label": "Shipping" }, { "value": "return", "label": "Returns" }, { "value": "seal", "label": "Quality" }
+        ]},
         { "type": "richtext", "id": "content", "label": "Content", "default": "<p>100% genuine leather with silver-tone hardware. Wipe with a soft dry cloth. Keep away from prolonged direct sunlight.</p>" }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Quick question",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Does it fit as cabin luggage?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Yes. The Traveller fits most airline cabin rules.</p>" }
       ]
     },
     {

@@ -356,3 +356,17 @@
 
 // Footer columns: open on desktop, accordion on mobile
 if (matchMedia('(max-width: 989px)').matches) document.querySelectorAll('[data-footer-col]').forEach((d) => d.removeAttribute('open'));
+
+// PDP quick questions: show the matching answer as a chat bubble
+document.addEventListener('click', (e) => {
+  const chip = e.target.closest('[data-ask-q]'); if (!chip) return;
+  const box = chip.closest('[data-ask]'); const open = chip.getAttribute('aria-expanded') !== 'true';
+  box.querySelectorAll('[data-ask-q]').forEach((c) => c.setAttribute('aria-expanded', 'false'));
+  box.querySelectorAll('[data-ask-a]').forEach((a) => { a.hidden = !(open && a.dataset.askA === chip.dataset.askQ); });
+  chip.setAttribute('aria-expanded', open);
+});
+// "Ask us anything" on the product page prefills the contact form
+{
+  const q = new URLSearchParams(location.search); const body = document.querySelector('textarea[name="contact[body]"]');
+  if (body && q.get('q') && !body.value) body.value = (q.get('product') ? `About ${q.get('product')}: ` : '') + q.get('q');
+}
