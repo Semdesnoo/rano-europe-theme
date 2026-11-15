@@ -370,3 +370,15 @@ document.addEventListener('click', (e) => {
   const q = new URLSearchParams(location.search); const body = document.querySelector('textarea[name="contact[body]"]');
   if (body && q.get('q') && !body.value) body.value = (q.get('product') ? `About ${q.get('product')}: ` : '') + q.get('q');
 }
+
+// Mobile reviews: turn grid/strip into a seamless, non-pausing marquee
+if (matchMedia('(max-width: 749px)').matches) {
+  document.querySelectorAll('[data-tp-grid], .tp-track').forEach((box) => {
+    const cards = [...box.children]; if (cards.length < 2) return;
+    const inner = document.createElement('div'); inner.className = 'tp-marquee__inner';
+    cards.forEach((c) => inner.append(c));
+    cards.forEach((c) => { const d = c.cloneNode(true); d.setAttribute('aria-hidden', 'true'); d.querySelectorAll('a,button').forEach((x) => x.tabIndex = -1); inner.append(d); });
+    inner.style.setProperty('--tp-dur', cards.length * 6 + 's');
+    box.removeAttribute('data-carousel'); box.removeAttribute('data-autoplay'); box.classList.add('tp-marquee'); box.append(inner);
+  });
+}
