@@ -124,7 +124,7 @@ const cart = { item_count: 0, items: [], total_price: 0, currency: { iso_code: '
 async function page(template, extra = {}) {
   const t = JSON.parse(read(`templates/${template}.json`));
   const scope = {
-    settings, collections, cart, shop: { name: 'Rano Europe', customer_accounts_enabled: true, enabled_payment_types: ['visa', 'master', 'ideal', 'apple_pay', 'paypal', 'klarna'] },
+    settings, collections, cart, shop: { name: 'Rano Europe', privacy_policy: { url: 'https://ranoeurope.com/policies/privacy-policy' }, customer_accounts_enabled: true, enabled_payment_types: ['visa', 'master', 'ideal', 'apple_pay', 'paypal', 'klarna'] },
     routes: { root_url: '/', cart_url: '/cart', cart_add_url: '/cart/add', cart_change_url: '/cart/change', search_url: '/search', account_url: '/account', all_products_collection_url: '/collections/all' },
     request: { locale: { iso_code: 'en' }, origin: 'http://localhost' }, localization: { available_countries: [] },
     template: { name: template.split('.')[0] }, canonical_url: '/', page_title: 'Rano Europe', current_page: 1, ...extra,

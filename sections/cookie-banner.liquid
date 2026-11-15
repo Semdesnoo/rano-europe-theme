@@ -1,0 +1,27 @@
+<div class="cookie" id="cookie-banner" role="dialog" aria-modal="false" aria-labelledby="cookie-title" hidden data-cookie>
+  <h2 class="cookie__title" id="cookie-title">{{ section.settings.heading }}</h2>
+  <p class="cookie__text">
+    {{ section.settings.text }}
+    {% if shop.privacy_policy %}<a href="{{ shop.privacy_policy.url }}" class="link">Privacy Policy</a>{% endif %}
+  </p>
+  <div class="cookie__toggles">
+    <label class="switch"><span>Necessary</span><input type="checkbox" checked disabled><i aria-hidden="true"></i></label>
+    <label class="switch"><span>Statistics</span><input type="checkbox" data-consent="analytics"><i aria-hidden="true"></i></label>
+    <label class="switch"><span>Marketing</span><input type="checkbox" data-consent="marketing"><i aria-hidden="true"></i></label>
+    <label class="switch"><span>Preferences</span><input type="checkbox" data-consent="preferences"><i aria-hidden="true"></i></label>
+  </div>
+  <div class="cookie__actions">
+    <button type="button" class="btn btn--outline" data-cookie-save>Save preferences</button>
+    <button type="button" class="btn btn--dark" data-cookie-accept>Accept all</button>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cookie banner",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "This website uses cookies" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "We use cookies to run this site, measure traffic and personalise content. You can accept, reject or manage your choices at any time. We may share information about your use of our site with partners such as Google for advertising and analytics." }
+  ]
+}
+{% endschema %}

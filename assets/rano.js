@@ -150,6 +150,31 @@
     drawer.classList.remove('is-loading');
   });
 
+  /* ---------- Cookie consent (Shopify Customer Privacy API; localStorage outside Shopify) ---------- */
+  const cookie = $('[data-cookie]');
+  if (cookie) {
+    const KEY = 'rano-consent';
+    const boxes = $$('[data-consent]', cookie);
+    const show = () => { cookie.hidden = false; requestAnimationFrame(() => cookie.classList.add('is-open')); };
+    const save = (all) => {
+      const c = Object.fromEntries(boxes.map((b) => [b.dataset.consent, all || b.checked]));
+      localStorage.setItem(KEY, JSON.stringify(c));
+      const cp = window.Shopify && Shopify.customerPrivacy;
+      cp && cp.setTrackingConsent({ analytics: c.analytics, marketing: c.marketing, preferences: c.preferences, sale_of_data: c.marketing }, () => {});
+      cookie.classList.remove('is-open');
+      setTimeout(() => (cookie.hidden = true), 400);
+    };
+    $('[data-cookie-accept]', cookie).addEventListener('click', () => save(true));
+    $('[data-cookie-save]', cookie).addEventListener('click', () => save(false));
+    if (window.Shopify && Shopify.loadFeatures) {
+      Shopify.loadFeatures([{ name: 'consent-tracking-api', version: '0.1' }], (err) => {
+        if (!err && Shopify.customerPrivacy.shouldShowBanner()) show();
+      });
+    } else if (!localStorage.getItem(KEY)) {
+      show();
+    }
+  }
+
   /* ---------- Product page ---------- */
   const pdp = $('[data-product]');
   if (pdp) {
