@@ -263,6 +263,36 @@
     el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
   });
 
+  /* ---------- Help centre: topics, search, view toggle, prefilled subject ---------- */
+  const help = $('[data-help]');
+  if (help) {
+    const topicsWrap = $('[data-help-topics]', help), groups = $$('[data-faq-group]', help), empty = $('[data-help-empty]', help);
+    const showTopics = () => { topicsWrap.hidden = false; groups.forEach((g) => { g.hidden = true; g.classList.remove('help-faq--search'); $('[data-help-back]', g).hidden = false; $('.h2', g).hidden = false; $$('[data-faq]', g).forEach((d) => (d.hidden = false)); }); empty.hidden = true; };
+    $$('[data-topic]', help).forEach((t) => t.addEventListener('click', () => {
+      topicsWrap.hidden = true; groups.forEach((g) => (g.hidden = g.dataset.faqGroup !== t.dataset.topic));
+      $('#topic-' + t.dataset.topic).scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    }));
+    $$('[data-help-back]', help).forEach((b) => b.addEventListener('click', showTopics));
+    $$('[data-view]', help).forEach((b) => b.addEventListener('click', () => {
+      $$('[data-view]', help).forEach((x) => x.classList.toggle('is-active', x === b));
+      $('[data-view-target]', help).classList.toggle('is-list', b.dataset.view === 'list');
+    }));
+    $('[data-help-search]', help).addEventListener('input', (e) => {
+      const q = e.target.value.trim().toLowerCase();
+      if (q.length < 2) return showTopics();
+      topicsWrap.hidden = true; let hits = 0;
+      groups.forEach((g) => {
+        let n = 0;
+        $$('[data-faq]', g).forEach((d) => { const m = d.textContent.toLowerCase().includes(q); d.hidden = !m; if (m) n++; });
+        g.hidden = n === 0; g.classList.add('help-faq--search'); $('[data-help-back]', g).hidden = true; hits += n;
+      });
+      empty.hidden = hits > 0;
+    });
+    $$('.help-action', help).forEach((a) => a.addEventListener('click', () => {
+      if (a.getAttribute('href') === '#help-contact') { const s = $('[data-help-subject]', help); s.value = a.dataset.subject; setTimeout(() => $('#h-order', help).focus({ preventScroll: true }), 500); }
+    }));
+  }
+
   /* ---------- Product page ---------- */
   const pdp = $('[data-product]');
   if (pdp) {

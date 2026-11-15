@@ -1,0 +1,141 @@
+{%- liquid
+  assign s = section.settings
+  assign actions = section.blocks | where: 'type', 'action'
+  assign topics = section.blocks | where: 'type', 'topic'
+  assign faqs = section.blocks | where: 'type', 'faq'
+-%}
+<div class="help" data-help>
+  <header class="help-hero">
+    {% render 'media', image: s.image, fallback: s.fallback, sizes: '100vw', class: 'cover help-hero__img', eager: true, alt: '' %}
+    <div class="help-hero__inner">
+      <h1 class="help-hero__title">{{ s.heading }}</h1>
+      <label class="help-search">
+        {% render 'icon', name: 'search' %}
+        <span class="visually-hidden">Search the help centre</span>
+        <input type="search" placeholder="{{ s.search_placeholder }}" autocomplete="off" data-help-search>
+      </label>
+    </div>
+  </header>
+
+  <div class="container help-body">
+    {%- if actions.size > 0 -%}
+      <div class="help-actions">
+        {%- for block in actions -%}
+          <a href="{{ block.settings.link | default: '#help-contact' }}" class="help-action reveal" data-subject="{{ block.settings.label | escape }}" {{ block.shopify_attributes }}>
+            <span class="help-action__icon">{% render 'icon', name: 'package' %}<span class="help-action__badge">{% render 'icon', name: block.settings.icon %}</span></span>
+            <span class="help-action__label">{{ block.settings.label }}</span>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <p class="help-empty muted" data-help-empty hidden>No answers found. <a href="#help-contact" class="link">Ask us directly</a>.</p>
+
+    <div class="help-topics-wrap" data-help-topics>
+      <div class="section-head">
+        <h2 class="h2">{{ s.topics_heading }}</h2>
+        <div class="help-view" role="group" aria-label="View">
+          <button type="button" class="is-active" data-view="grid" aria-label="Grid view">{% render 'icon', name: 'grid' %}</button>
+          <button type="button" data-view="list" aria-label="List view">{% render 'icon', name: 'list-rows' %}</button>
+        </div>
+      </div>
+      <div class="help-topics" data-view-target>
+        {%- for block in topics -%}
+          {%- liquid
+            assign n = 0
+            for f in faqs
+              if f.settings.topic == block.settings.title
+                assign n = n | plus: 1
+              endif
+            endfor
+          -%}
+          <button type="button" class="help-topic reveal" data-topic="{{ forloop.index }}" {{ block.shopify_attributes }}>
+            <span class="help-topic__media">{% render 'media', image: block.settings.image, fallback: block.settings.fallback, sizes: '(min-width: 990px) 30vw, 90vw', class: 'cover', alt: '' %}</span>
+            <span class="help-topic__text">
+              <strong>{{ block.settings.title }}</strong>
+              <small>{{ n }} {{ n | pluralize: 'article', 'articles' }}</small>
+            </span>
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- for block in topics -%}
+      <section class="help-faq" id="topic-{{ forloop.index }}" data-faq-group="{{ forloop.index }}" hidden>
+        <button type="button" class="help-back link-arrow" data-help-back>{% render 'icon', name: 'caret-left' %} All topics</button>
+        <h2 class="h2">{{ block.settings.title }}</h2>
+        <div class="accordion">
+          {%- for f in faqs -%}
+            {%- if f.settings.topic == block.settings.title -%}
+              <details data-faq {{ f.shopify_attributes }}>
+                <summary>{{ f.settings.question }} {% render 'icon', name: 'plus' %}</summary>
+                <div class="rte">{{ f.settings.answer }}</div>
+              </details>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </section>
+    {%- endfor -%}
+
+    <section class="help-support" id="help-contact">
+      <h2 class="h2">{{ s.support_heading }}</h2>
+      <div class="help-support__grid">
+        <div class="help-card">
+          <a href="mailto:{{ s.email }}" class="help-card__head">{% render 'icon', name: 'mail' %}<strong>Contact us</strong>{% render 'icon', name: 'caret-right' %}</a>
+          <p class="help-card__body">{{ s.support_text }}<br><a href="mailto:{{ s.email }}" class="link">{{ s.email }}</a></p>
+        </div>
+        {%- form 'contact', class: 'form help-form' -%}
+          {%- if form.posted_successfully? -%}<p class="form-ok" role="status">Thank you. We will reply within one working day.</p>{%- endif -%}
+          {%- if form.errors -%}<div class="form-err" role="alert">{{ form.errors | default_errors }}</div>{%- endif -%}
+          <div class="help-form__row">
+            <div class="field"><label for="h-name">Name</label><input id="h-name" type="text" name="contact[name]" autocomplete="name"></div>
+            <div class="field"><label for="h-email">Email *</label><input id="h-email" type="email" name="contact[email]" autocomplete="email" required></div>
+          </div>
+          <div class="help-form__row">
+            <div class="field"><label for="h-subject">Subject</label><input id="h-subject" type="text" name="contact[subject]" data-help-subject></div>
+            <div class="field"><label for="h-order">Order number</label><input id="h-order" type="text" name="contact[order]" placeholder="#1001"></div>
+          </div>
+          <div class="field"><label for="h-body">Message *</label><textarea id="h-body" name="contact[body]" rows="5" required></textarea></div>
+          <button type="submit" class="btn btn--dark">Send message</button>
+        {%- endform -%}
+      </div>
+    </section>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Help centre",
+  "class": "section-help",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "text", "id": "fallback", "label": "Bundled hero image", "default": "life-coast.jpg" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Hi, how can we help?" },
+    { "type": "text", "id": "search_placeholder", "label": "Search placeholder", "default": "Search" },
+    { "type": "text", "id": "topics_heading", "label": "Topics heading", "default": "Choose a topic" },
+    { "type": "text", "id": "support_heading", "label": "Support heading", "default": "Get support" },
+    { "type": "textarea", "id": "support_text", "label": "Support text", "default": "Can't find your answer above? Send us a message and we will reply within one working day." },
+    { "type": "text", "id": "email", "label": "Email", "default": "info@ranoeurope.com" }
+  ],
+  "blocks": [
+    { "type": "action", "name": "Quick action", "limit": 4, "settings": [
+      { "type": "text", "id": "label", "label": "Label", "default": "Track order" },
+      { "type": "select", "id": "icon", "label": "Badge", "default": "search", "options": [
+        { "value": "search", "label": "Track" }, { "value": "return", "label": "Return" }, { "value": "cancel", "label": "Cancel" }, { "value": "warning", "label": "Problem" }
+      ]},
+      { "type": "url", "id": "link", "label": "Link", "info": "Empty = scrolls to the contact form with this label as subject." }
+    ]},
+    { "type": "topic", "name": "Topic", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Shipping" },
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "fallback", "label": "Bundled image file" }
+    ]},
+    { "type": "faq", "name": "Question", "settings": [
+      { "type": "text", "id": "topic", "label": "Topic title", "info": "Must match a topic title exactly." },
+      { "type": "text", "id": "question", "label": "Question" },
+      { "type": "richtext", "id": "answer", "label": "Answer" }
+    ]}
+  ],
+  "presets": [{ "name": "Help centre" }]
+}
+{% endschema %}

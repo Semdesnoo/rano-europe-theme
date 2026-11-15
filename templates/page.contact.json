@@ -1,10 +1,239 @@
 {
   "sections": {
     "main": {
-      "type": "contact-form",
+      "type": "help-center",
+      "blocks": {
+        "a1": {
+          "type": "action",
+          "settings": {
+            "label": "Track order",
+            "icon": "search",
+            "link": "/account"
+          }
+        },
+        "a2": {
+          "type": "action",
+          "settings": {
+            "label": "Return order",
+            "icon": "return"
+          }
+        },
+        "a3": {
+          "type": "action",
+          "settings": {
+            "label": "Cancel order",
+            "icon": "cancel"
+          }
+        },
+        "a4": {
+          "type": "action",
+          "settings": {
+            "label": "Report a problem",
+            "icon": "warning"
+          }
+        },
+        "t1": {
+          "type": "topic",
+          "settings": {
+            "title": "Care & Leather",
+            "fallback": "detail-1.jpg"
+          }
+        },
+        "t2": {
+          "type": "topic",
+          "settings": {
+            "title": "Product information",
+            "fallback": "model-giallo.jpg"
+          }
+        },
+        "t3": {
+          "type": "topic",
+          "settings": {
+            "title": "Craftsmanship",
+            "fallback": "detail-2.jpg"
+          }
+        },
+        "t4": {
+          "type": "topic",
+          "settings": {
+            "title": "Shipping",
+            "fallback": "life-stairs.jpg"
+          }
+        },
+        "t5": {
+          "type": "topic",
+          "settings": {
+            "title": "Returns",
+            "fallback": "pouch-woman.jpg"
+          }
+        },
+        "t6": {
+          "type": "topic",
+          "settings": {
+            "title": "Orders & Payment",
+            "fallback": "card-holder.jpg"
+          }
+        },
+        "f1": {
+          "type": "faq",
+          "settings": {
+            "topic": "Care & Leather",
+            "question": "How do I clean my Rano bag?",
+            "answer": "<p>Wipe the leather with a soft, dry cloth. For marks, use a slightly damp cloth and let it air dry. Avoid detergents and solvents.</p>"
+          }
+        },
+        "f2": {
+          "type": "faq",
+          "settings": {
+            "topic": "Care & Leather",
+            "question": "Will the leather change over time?",
+            "answer": "<p>Yes. Genuine leather softens and develops character with use. That is part of its charm.</p>"
+          }
+        },
+        "f3": {
+          "type": "faq",
+          "settings": {
+            "topic": "Care & Leather",
+            "question": "Can my bag get wet?",
+            "answer": "<p>Light rain is fine. Pat it dry and keep it away from heaters or direct sunlight while drying.</p>"
+          }
+        },
+        "f4": {
+          "type": "faq",
+          "settings": {
+            "topic": "Product information",
+            "question": "What are the dimensions of the Traveller?",
+            "answer": "<p>See the product page for exact measurements. The Traveller is sized as a weekender and fits most overhead cabins.</p>"
+          }
+        },
+        "f5": {
+          "type": "faq",
+          "settings": {
+            "topic": "Product information",
+            "question": "Is the leather genuine?",
+            "answer": "<p>Yes. Every Rano piece is made from 100% genuine leather with silver-tone hardware.</p>"
+          }
+        },
+        "f6": {
+          "type": "faq",
+          "settings": {
+            "topic": "Product information",
+            "question": "Will you restock sold-out colours?",
+            "answer": "<p>Our drops are limited. Sign up for the newsletter to hear first about new releases.</p>"
+          }
+        },
+        "f7": {
+          "type": "faq",
+          "settings": {
+            "topic": "Product information",
+            "question": "Do the pouch and card holder match the Traveller?",
+            "answer": "<p>Yes. Each colour (Giallo, Rosa, Blue Mare) is available across the Traveller, Travel Pouch and Card Holder.</p>"
+          }
+        },
+        "f8": {
+          "type": "faq",
+          "settings": {
+            "topic": "Craftsmanship",
+            "question": "Where are Rano bags designed?",
+            "answer": "<p>Rano is designed in Casarano, a small town in southern Italy, and carried from Amsterdam.</p>"
+          }
+        },
+        "f9": {
+          "type": "faq",
+          "settings": {
+            "topic": "Craftsmanship",
+            "question": "What makes Rano different?",
+            "answer": "<p>Clean lines, carefully selected leather and finishing details that are made to last, not to follow seasons.</p>"
+          }
+        },
+        "f10": {
+          "type": "faq",
+          "settings": {
+            "topic": "Shipping",
+            "question": "Is shipping free?",
+            "answer": "<p>Yes, shipping is free on every order.</p>"
+          }
+        },
+        "f11": {
+          "type": "faq",
+          "settings": {
+            "topic": "Shipping",
+            "question": "How long does delivery take?",
+            "answer": "<p>Orders are dispatched within 1-2 working days. Delivery usually takes 2-4 working days within Europe.</p>"
+          }
+        },
+        "f12": {
+          "type": "faq",
+          "settings": {
+            "topic": "Shipping",
+            "question": "How can I track my order?",
+            "answer": "<p>You receive a tracking link by email as soon as your order ships. You can also check your order status in your account.</p>"
+          }
+        },
+        "f13": {
+          "type": "faq",
+          "settings": {
+            "topic": "Returns",
+            "question": "Can I return my order?",
+            "answer": "<p>Unused items can be returned within 14 days of delivery. Contact us to start a return.</p>"
+          }
+        },
+        "f14": {
+          "type": "faq",
+          "settings": {
+            "topic": "Returns",
+            "question": "When will I get my refund?",
+            "answer": "<p>Refunds are processed within 5 working days after we receive your return.</p>"
+          }
+        },
+        "f15": {
+          "type": "faq",
+          "settings": {
+            "topic": "Orders & Payment",
+            "question": "Which payment methods do you accept?",
+            "answer": "<p>All major cards, iDEAL, PayPal, Apple Pay and Klarna, depending on your country.</p>"
+          }
+        },
+        "f16": {
+          "type": "faq",
+          "settings": {
+            "topic": "Orders & Payment",
+            "question": "Can I change or cancel my order?",
+            "answer": "<p>Contact us as soon as possible. As long as your order has not shipped yet, we can change or cancel it.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "a4",
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6",
+        "f7",
+        "f8",
+        "f9",
+        "f10",
+        "f11",
+        "f12",
+        "f13",
+        "f14",
+        "f15",
+        "f16"
+      ],
       "settings": {
-        "heading": "Contact",
-        "text": "<p>Questions about an order, a product or a collaboration? Send us a message and we will reply within one working day.</p>"
+        "fallback": "life-coast.jpg",
+        "email": "info@ranoeurope.com"
       }
     }
   },
