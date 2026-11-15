@@ -8,29 +8,13 @@
         "m1": {
           "type": "message",
           "settings": {
-            "text": "Free shipping on every order",
-            "link": ""
-          }
-        },
-        "m2": {
-          "type": "message",
-          "settings": {
-            "text": "Designed in Italy. Genuine leather.",
-            "link": "shopify://pages/about-us"
-          }
-        },
-        "m3": {
-          "type": "message",
-          "settings": {
-            "text": "Limited drops. No restocks.",
+            "text": "Black Friday: up to 35% off - Shop the sale",
             "link": "shopify://collections/all"
           }
         }
       },
       "block_order": [
-        "m1",
-        "m2",
-        "m3"
+        "m1"
       ]
     },
     "header": {
@@ -54,8 +38,8 @@
     }
   },
   "order": [
-    "promo",
     "announcement",
-    "header"
+    "header",
+    "promo"
   ]
 }
