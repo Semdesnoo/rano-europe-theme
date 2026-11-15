@@ -234,7 +234,7 @@ ul{list-style:none;margin:0;padding:0}
 .rich__inner .rte{margin-inline:auto;font-size:17px;color:color-mix(in srgb,var(--ink) 75%,transparent)}
 
 /* Footer */
-.footer{background:color-mix(in srgb,var(--ink) 5%,var(--bg));padding:clamp(48px,6vw,80px) 0 28px;margin-top:calc(var(--sec)/2);font-size:14px}
+.footer{background:#111;color:#fff;--ink:#fff;--line:rgba(255,255,255,.14);--soft:rgba(255,255,255,.06);padding:clamp(48px,6vw,80px) 0 28px;margin-top:calc(var(--sec)/2);font-size:14px}
 .footer__grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1.4fr;gap:40px}
 .logo--footer{width:120px;margin-bottom:18px}
 .footer__brand p{max-width:34ch;color:color-mix(in srgb,var(--ink) 65%,transparent)}
@@ -377,11 +377,11 @@ ul{list-style:none;margin:0;padding:0}
 }
 
 /* Countdown promo */
-.promo__timer{display:flex;align-items:center;justify-content:center;gap:8px;background:#0d0d0c;color:#fff;padding:8px 12px;font-size:12px}
+.promo__timer{display:flex;align-items:center;justify-content:center;gap:8px;background:#111;color:#fff;padding:8px 12px;font-size:12px}
 .promo__unit{display:inline-flex;align-items:baseline;gap:4px;background:#2a2a28;border-radius:3px;padding:3px 7px;color:#d9d9d6}
 .promo__unit b{color:#fff;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
 .promo__label{font-weight:500;margin-left:6px}
-.promo__bar{display:flex;align-items:center;justify-content:center;gap:10px 18px;flex-wrap:wrap;background:#efe8e1;padding:8px 14px;font-size:13.5px;text-align:center}
+.promo__bar{display:flex;align-items:center;justify-content:center;gap:10px 18px;flex-wrap:wrap;background:#fff;border-bottom:1px solid var(--line);padding:8px 14px;font-size:13.5px;text-align:center}
 .promo__text span{color:color-mix(in srgb,var(--ink) 65%,transparent);font-size:12.5px;margin-left:6px}
 .promo__code{display:inline-flex;align-items:center;gap:10px;border:1.5px dashed var(--sale);border-radius:999px;padding:3px 4px 3px 14px;color:var(--sale);font-weight:700;letter-spacing:.06em;font-size:13px}
 .promo__copy{display:inline-flex;align-items:center;gap:5px;background:var(--sale);color:#fff;border-radius:999px;padding:5px 11px;font-size:12px;letter-spacing:0;font-weight:600}
@@ -420,7 +420,7 @@ a.promo__code{padding:5px 14px}
 .tp-head__line{display:inline-flex;align-items:center;gap:10px}
 .tp-head__sub{font-size:13px;margin-top:8px;display:flex;justify-content:center;align-items:center;gap:5px;flex-wrap:wrap}
 .tp-grid{columns:4 240px;column-gap:10px}
-.tp-grid .tp-card{break-inside:avoid;background:#f7f8fa;padding:16px 14px;margin-bottom:10px}
+.tp-grid .tp-card{break-inside:avoid;background:#f5f5f5;padding:16px 14px;margin-bottom:10px}
 .tp-grid .tp-card.is-open .tp-card__text{-webkit-line-clamp:unset}
 .tp-reply{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;background:#fff;border-left:2px solid #04da8d;padding:10px 12px;margin-top:12px;font-size:12.5px;color:#6c6c85}
 .tp-reply .icon{width:15px;height:15px;color:#04da8d}
@@ -446,7 +446,7 @@ a.promo__code{padding:5px 14px}
 .pdp-video figcaption{font-size:12px;font-weight:500;text-align:center;margin-top:7px}
 
 /* Collections slider */
-.carousel--colls{grid-auto-columns:calc((100% - 2*var(--pad) - 7*var(--gap))/8)}
+.carousel--colls{grid-auto-columns:calc((100% - 2*var(--pad) - 7*var(--gap))/8);justify-content:safe center}
 .coll-card{display:grid;gap:10px;text-align:center}
 .coll-card__media{aspect-ratio:3/5;border-radius:8px;overflow:hidden;background:var(--card)}
 .coll-card__media .cover{transition:transform 1.2s var(--ease)}
@@ -552,7 +552,7 @@ a.promo__code{padding:5px 14px}
 @media (max-width:749px){.help-actions--sm{grid-template-columns:repeat(2,1fr);gap:10px}}
 
 /* Utility bar + localization */
-.util{background:#f4f3f0;border-bottom:1px solid var(--line);font-size:12.5px;position:relative;z-index:31}
+.util{background:#fff;border-bottom:1px solid var(--line);font-size:12.5px;position:relative;z-index:31}
 .util__inner{max-width:1680px;margin:0 auto;padding:0 var(--pad);height:34px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .util__text{color:color-mix(in srgb,var(--ink) 62%,transparent);letter-spacing:.02em}
 .util__right{display:flex;align-items:center;gap:14px;margin-left:auto}
@@ -722,3 +722,11 @@ select{border-radius:8px;cursor:pointer}
   select option:checked:hover{background:var(--soft)}
   select option::checkmark{content:"";width:6px;height:6px;border-radius:999px;background:var(--ink);order:1;margin-left:auto}
 }
+
+/* Black & white brand: footer on black */
+.footer .logo--footer{filter:invert(1)}
+.footer .news-form__row input{color:#fff}
+.footer .pay-icon{background:#fff;border-radius:3px}
+.footer .loc__list{background:#1b1b1b;color:#fff}
+.footer .loc__list button:hover{background:rgba(255,255,255,.08)}
+.footer .form-ok{background:rgba(255,255,255,.08)}

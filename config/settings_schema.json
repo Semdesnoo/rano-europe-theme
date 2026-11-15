@@ -18,10 +18,10 @@
   {
     "name": "Colors",
     "settings": [
-      { "type": "color", "id": "color_ink", "label": "Text & buttons", "default": "#151514" },
-      { "type": "color", "id": "color_bg", "label": "Background", "default": "#fcfcfa" },
-      { "type": "color", "id": "color_card", "label": "Product image background", "default": "#ececea" },
-      { "type": "color", "id": "color_sale", "label": "Sale badge", "default": "#7a2f2a" }
+      { "type": "color", "id": "color_ink", "label": "Text & buttons", "default": "#111111" },
+      { "type": "color", "id": "color_bg", "label": "Background", "default": "#ffffff" },
+      { "type": "color", "id": "color_card", "label": "Product image background", "default": "#f3f3f3" },
+      { "type": "color", "id": "color_sale", "label": "Sale badge", "default": "#111111" }
     ]
   },
   {
