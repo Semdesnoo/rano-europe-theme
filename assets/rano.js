@@ -238,6 +238,14 @@
   }
 
   /* ---------- 3D models: Shopify's model-viewer, Google CDN outside Shopify ---------- */
+  // Rotation only after tapping "Rotate 3D"; otherwise the model would swallow gallery swipes on mobile.
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-model-toggle]'); if (!btn) return;
+    const mv = btn.parentElement.querySelector('model-viewer'); const on = btn.getAttribute('aria-pressed') !== 'true';
+    mv.toggleAttribute('camera-controls', on); if (on) mv.removeAttribute('auto-rotate'); else mv.setAttribute('auto-rotate', '');
+    btn.setAttribute('aria-pressed', on); btn.querySelector('[data-on]').hidden = on; btn.querySelector('[data-off]').hidden = !on;
+    btn.closest('.pdp__slide').classList.toggle('is-rotating', on);
+  });
   if ($('model-viewer')) {
     const fallback = () => customElements.get('model-viewer') || import('https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js');
     if (window.Shopify && Shopify.loadFeatures) Shopify.loadFeatures([{ name: 'model-viewer-ui', version: '1.0', onLoad: fallback }]);

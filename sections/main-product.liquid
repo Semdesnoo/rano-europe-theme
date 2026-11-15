@@ -27,8 +27,8 @@
             {%- when 'video' -%}
               {{ media | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, image_size: '1100x', class: 'cover' }}
             {%- when 'model' -%}
-              {{ media | model_viewer_tag: image_size: '1100x', camera-controls: true, auto-rotate: true, rotation-per-second: '18deg', interaction-prompt: 'none', shadow-intensity: '1', exposure: '1.05', class: 'pdp__model', alt: alt_text }}
-              <span class="pdp__model-hint">{% render 'icon', name: 'arrows' %} Drag to rotate</span>
+              {{ media | model_viewer_tag: image_size: '1100x', auto-rotate: true, rotation-per-second: '18deg', interaction-prompt: 'none', shadow-intensity: '1', exposure: '1.05', class: 'pdp__model', alt: alt_text }}
+              <button type="button" class="pdp__model-hint pdp__model-btn" data-model-toggle aria-pressed="false">{% render 'icon', name: 'arrows' %} <span data-on>Rotate 3D</span><span data-off hidden>Done</span></button>
             {%- else -%}
               {{ media | media_tag: image_size: '1100x' }}
           {%- endcase -%}
