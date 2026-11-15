@@ -144,7 +144,7 @@ ul{list-style:none;margin:0;padding:0}
 .tabs::-webkit-scrollbar{display:none}
 .tab{font-size:12.5px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;padding:10px 0 12px;white-space:nowrap;color:color-mix(in srgb,var(--ink) 55%,transparent);border-bottom:1px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s}
 .tab.is-active,.tab:hover{color:var(--ink);border-color:var(--ink)}
-.carousel{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 2*var(--pad) - 4*var(--gap))/5);gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--pad);padding-inline:var(--pad);scrollbar-width:none;max-width:1680px;margin-inline:auto;overscroll-behavior-x:contain}
+.carousel{display:grid;grid-auto-flow:column;overflow-y:hidden;padding-block:2px;grid-auto-columns:calc((100% - 2*var(--pad) - 4*var(--gap))/5);gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--pad);padding-inline:var(--pad);scrollbar-width:none;max-width:1680px;margin-inline:auto;overscroll-behavior-x:contain}
 .carousel::-webkit-scrollbar{display:none}
 .carousel>*{scroll-snap-align:start;min-width:0}
 .tab-panel .carousel{animation:fade .5s var(--ease)}
@@ -157,7 +157,7 @@ ul{list-style:none;margin:0;padding:0}
 .card__img--alt{opacity:0}
 .card:hover .card__img{transform:scale(1.035)}
 .card:hover .card__img--alt{opacity:1}
-.badge{position:absolute;top:10px;left:10px;background:#fff;color:var(--ink);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:999px}
+.badge{position:absolute;z-index:1;top:10px;left:10px;background:#fff;color:var(--ink);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:999px}
 .badge--sale{background:var(--sale);color:#fff}
 .card__quick{position:absolute;right:10px;bottom:10px;opacity:0;transform:translateY(6px);transition:.3s var(--ease)}
 .card:hover .card__quick,.card__quick:focus-within,.card__quick:focus-visible{opacity:1;transform:none}
@@ -405,7 +405,7 @@ a.promo__code{padding:5px 14px}
 .tp-summary__based a,.tp-head__sub a{text-decoration:underline}
 .tp-arrow{width:24px;height:24px;margin-top:42px;border:1px solid #dcdce6;border-radius:999px;display:grid;place-items:center;color:#6c6c85}
 .tp-arrow .icon{width:13px;height:13px}
-.tp-track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*28px)/4);gap:28px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.tp-track{display:grid;grid-auto-flow:column;overflow-y:hidden;grid-auto-columns:calc((100% - 3*28px)/4);gap:28px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
 .tp-track::-webkit-scrollbar{display:none}
 .tp-track>*{scroll-snap-align:start;min-width:0}
 .tp-note{font-size:12px;margin:6px 0 0 calc(170px + 46px)}

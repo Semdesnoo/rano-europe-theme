@@ -29,7 +29,7 @@
       <span class="badge">{{ 'products.sold_out' | t }}</span>
     {%- elsif product.compare_at_price > product.price -%}
       {%- assign save = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
-      <span class="badge badge--sale">-{{ save }}%</span>
+      <span class="badge badge--sale">Save {{ save }}%</span>
     {%- elsif product.tags contains 'new' -%}
       <span class="badge">New</span>
     {%- elsif product.tags contains 'bestseller' -%}
