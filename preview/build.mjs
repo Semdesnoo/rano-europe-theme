@@ -116,7 +116,7 @@ engine.registerFilter('placeholder_svg_tag', (n, cls) => `<svg class="${cls || '
 engine.registerFilter('video_tag', () => '');
 engine.registerFilter('media_tag', () => '');
 engine.registerFilter('model_viewer_tag', function (m, ...args) { const h = Object.fromEntries(args.filter(Array.isArray)); delete h.image_size; return `<model-viewer src="${m.src}" poster="${m.poster}" ${Object.entries(h).map(([k, v]) => (v === true ? k : `${k}="${v}"`)).join(' ')}></model-viewer>`; });
-engine.registerFilter('payment_type_svg_tag', (t) => `<span class="pay-icon" style="display:inline-block;border:1px solid #ccc;border-radius:3px;font-size:9px;text-align:center;line-height:22px">${t}</span>`);
+engine.registerFilter('payment_type_svg_tag', (t, cls) => fs.readFileSync(path.join(THEME, 'preview/pay', t + '.svg'), 'utf8').replace('<svg', `<svg class="${cls || ''}"`));
 engine.registerFilter('default_pagination', () => '');
 engine.registerFilter('default_errors', () => '');
 engine.registerFilter('url_param_escape', (s) => encodeURIComponent(s));
