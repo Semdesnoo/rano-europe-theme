@@ -8,7 +8,7 @@
           "settings": {
             "label": "Track order",
             "icon": "search",
-            "link": "/account"
+            "link": "shopify://pages/track-order"
           }
         },
         "a2": {
