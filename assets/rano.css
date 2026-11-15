@@ -798,3 +798,5 @@ select{border-radius:8px;cursor:pointer}
 .pdp-love__title{font-weight:500;line-height:1.3}
 .pdp-love__price{font-size:12px}.pdp-love__price .price{gap:5px;flex-wrap:wrap}
 @media (max-width:989px){.pdp-love__grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pdp-ask__chips{justify-content:flex-start}}
+
+.section-head--center{justify-content:center;text-align:center}
