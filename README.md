@@ -30,4 +30,5 @@ Local preview: `npm install && npm run preview`, then serve `_site/` with any st
 Upload the zip (Online Store > Themes > Add theme > Upload zip), then:
 - Pages: assign template `page.about` to *About us*, `page.contact` to *Contact*.
 - Navigation: header uses menu `main-menu`, footer uses `main-menu` + `footer`.
+- Customer accounts (Settings > Customer accounts): turn on, then *Customize* > upload `assets/account-banner.png` as logo/banner and set the accent colour to #151514. Shopify hosts the sign-in / create-account page; `preview/account.html` shows how it looks.
 - Check shipping/returns copy in `templates/product.json` against the real policy.

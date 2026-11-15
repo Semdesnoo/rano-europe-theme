@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign in | Rano Europe</title>
+<!-- Preview-only mock of Shopify's hosted customer-account login, branded the way it is set up in Admin > Settings > Customer accounts > Customize. -->
+<style>
+@font-face{font-family:Geist;src:url(BASE/assets/geist-variable.woff2) format("woff2");font-weight:100 900}
+*{box-sizing:border-box}
+body{margin:0;font:400 15px/1.5 Geist,system-ui,sans-serif;color:#151514;background:#fff;min-height:100svh;display:flex;flex-direction:column}
+.top{border-bottom:1px solid #ececea;height:56px;display:flex;align-items:center;padding:0 20px}
+.top a{font-size:13px;color:#6b6b68;text-decoration:none}
+.top a:hover{color:#151514}
+.brand{display:grid;justify-items:center;gap:12px;margin:48px auto 0;padding:0 20px}
+.brand img{width:min(440px,88vw);height:auto}
+main{width:min(476px,calc(100% - 40px));margin:clamp(40px,9vh,110px) auto 40px}
+h1{font-size:26px;font-weight:500;margin:0}
+.sub{color:#6b6b68;margin:4px 0 22px}
+.shop{display:flex;align-items:center;gap:12px;width:100%;border:3px solid #a58bf2;border-radius:14px;background:#fff;padding:14px 16px;cursor:pointer;font:inherit;text-align:left}
+.shop:hover{background:#faf8ff}
+.shop .av{width:38px;height:38px;border-radius:999px;background:linear-gradient(135deg,#b39cf5,#8a6cf0);color:#fff;display:grid;place-items:center;font-weight:600}
+.shop b{display:block;font-weight:600}
+.shop small{font-size:13.5px}
+.shop .logo{margin-left:auto;color:#5a31f4;font-weight:800;font-size:21px;letter-spacing:-.04em}
+.or{display:flex;align-items:center;gap:16px;color:#6b6b68;margin:18px 0}
+.or::before,.or::after{content:"";flex:1;height:1px;background:#e3e3e0}
+.field{position:relative;display:block}
+.field input{width:100%;height:60px;border:1px solid #cfcfcc;border-radius:12px;padding:0 54px 0 16px;font:inherit;font-size:16px}
+.field input:focus{outline:none;border-color:#151514;box-shadow:0 0 0 1px #151514}
+.field button{position:absolute;right:8px;top:8px;width:44px;height:44px;border:0;border-radius:10px;background:none;cursor:pointer;display:grid;place-items:center}
+.field button:hover{background:#f3f3f1}
+.field svg{width:22px;height:22px}
+.err{color:#9b1c1c;font-size:13px;margin:8px 2px 0}
+.terms{text-align:center;color:#6b6b68;font-size:13.5px;margin-top:20px}
+.terms a{color:inherit}
+.code{display:flex;gap:8px;justify-content:space-between}
+.code input{width:100%;height:58px;text-align:center;font:500 22px Geist,sans-serif;border:1px solid #cfcfcc;border-radius:12px}
+.code input:focus{outline:none;border-color:#151514;box-shadow:0 0 0 1px #151514}
+.btn{width:100%;height:52px;margin-top:16px;border:0;border-radius:12px;background:#151514;color:#fff;font:600 15px Geist,sans-serif;cursor:pointer}
+.link{background:none;border:0;padding:0;color:#151514;text-decoration:underline;cursor:pointer;font:inherit}
+.ok{display:grid;justify-items:center;text-align:center;gap:10px}
+.ok .tick{width:56px;height:56px;border-radius:999px;background:#151514;color:#fff;display:grid;place-items:center;font-size:26px}
+.note{pointer-events:none;position:fixed;left:12px;bottom:12px;background:#151514;color:#fff;font-size:12px;padding:8px 12px;border-radius:4px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="top"><a href="BASE/">&larr; Back to store</a></div>
+<div class="brand"><img src="BASE/assets/account-banner.png" alt="Rano. Designed in Italy, genuine leather." width="1360" height="420"></div>
+
+<main>
+  <section data-step="email">
+    <h1>Sign in</h1>
+    <p class="sub">Sign in or create an account</p>
+    <button class="shop" type="button" data-shop>
+      <span class="av">S</span>
+      <span><b>Continue with Shop</b><small>Use your Shop account</small></span>
+      <span class="logo">shop</span>
+    </button>
+    <div class="or">or</div>
+    <form data-email-form novalidate>
+      <label class="field">
+        <span hidden>Email</span>
+        <input type="email" name="email" placeholder="Email" autocomplete="email" required>
+        <button type="submit" aria-label="Continue"><svg viewBox="0 0 256 256" fill="currentColor"><path d="M220.24,132.24l-72,72a6,6,0,0,1-8.48-8.48L201.51,134H40a6,6,0,0,1,0-12H201.51L139.76,60.24a6,6,0,0,1,8.48-8.48l72,72A6,6,0,0,1,220.24,132.24Z"/></svg></button>
+      </label>
+      <p class="err" data-err hidden>Enter a valid email address</p>
+    </form>
+    <p class="terms">By continuing, you agree to our <a href="#">Terms of service</a></p>
+  </section>
+
+  <section data-step="code" hidden>
+    <h1>Enter code</h1>
+    <p class="sub">Sent to <b data-mail></b> &middot; <button class="link" type="button" data-back>Change</button></p>
+    <form data-code-form>
+      <div class="code">
+        <input inputmode="numeric" maxlength="1" aria-label="Digit 1"><input inputmode="numeric" maxlength="1" aria-label="Digit 2"><input inputmode="numeric" maxlength="1" aria-label="Digit 3">
+        <input inputmode="numeric" maxlength="1" aria-label="Digit 4"><input inputmode="numeric" maxlength="1" aria-label="Digit 5"><input inputmode="numeric" maxlength="1" aria-label="Digit 6">
+      </div>
+      <button class="btn" type="submit">Submit</button>
+    </form>
+    <p class="terms">New here? Your account is created automatically.</p>
+  </section>
+
+  <section data-step="done" class="ok" hidden>
+    <span class="tick">&#10003;</span>
+    <h1>Welcome to Rano</h1>
+    <p class="sub">You are signed in. Track orders, manage returns and save your addresses.</p>
+    <a class="btn" style="display:grid;place-items:center;text-decoration:none" href="BASE/">Continue shopping</a>
+  </section>
+</main>
+<div class="note">Preview. In Shopify this page is hosted by Shopify and sends a real login code.</div>
+
+<script>
+const $ = (s) => document.querySelector(s), step = (n) => document.querySelectorAll('[data-step]').forEach((e) => (e.hidden = e.dataset.step !== n));
+$('[data-email-form]').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const v = e.target.email.value.trim(), ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  $('[data-err]').hidden = ok; if (!ok) return;
+  $('[data-mail]').textContent = v; step('code'); document.querySelector('.code input').focus();
+});
+$('[data-shop]').addEventListener('click', () => step('done'));
+$('[data-back]').addEventListener('click', () => step('email'));
+const digits = [...document.querySelectorAll('.code input')];
+digits.forEach((d, i) => {
+  d.addEventListener('input', () => { d.value = d.value.replace(/\D/g, ''); if (d.value && digits[i + 1]) digits[i + 1].focus(); });
+  d.addEventListener('keydown', (e) => { if (e.key === 'Backspace' && !d.value && digits[i - 1]) digits[i - 1].focus(); });
+});
+$('[data-code-form]').addEventListener('submit', (e) => { e.preventDefault(); if (digits.every((d) => d.value)) step('done'); });
+</script>
+</body>
+</html>

@@ -157,7 +157,7 @@ async function page(template, extra = {}) {
 }
 
 // ---------- static build ----------
-const BANNER = `<div style="position:fixed;left:12px;bottom:12px;z-index:60;background:#151514;color:#fff;font:500 12px/1.3 Geist,sans-serif;padding:8px 12px;border-radius:4px">Preview. Winkelmand en checkout werken pas in Shopify.</div>
+const BANNER = `<div style="position:fixed;left:12px;bottom:12px;z-index:60;background:#151514;color:#fff;font:500 12px/1.3 Geist,sans-serif;padding:8px 12px;border-radius:4px;pointer-events:none">Preview. Winkelmand en checkout werken pas in Shopify.</div>
 <script>document.addEventListener('submit',e=>{if(e.target.closest('[data-add-form]')){e.preventDefault();e.stopImmediatePropagation();alert('Preview: toevoegen aan winkelmand werkt pas in Shopify.')}},true)</script>`;
 const rebase = (html) => html.replace(/(href|src|poster|action)="\/(?!\/)/g, `$1="${BASE}`).replace(/"root":"\/"|root: "\/"/g, (m) => m.replace('/', BASE)).replace('</body>', BANNER + '</body>');
 const pages = {
@@ -179,5 +179,7 @@ fs.cpSync(path.join(THEME, 'assets'), path.join(OUT, 'assets'), { recursive: tru
 fs.cpSync(path.join(THEME, 'preview/img'), path.join(OUT, 'img'), { recursive: true });
 if (fs.existsSync(path.join(THEME, 'preview/models'))) fs.cpSync(path.join(THEME, 'preview/models'), path.join(OUT, 'models'), { recursive: true });
 fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
+fs.mkdirSync(path.join(OUT, 'account'), { recursive: true });
+fs.writeFileSync(path.join(OUT, 'account/index.html'), fs.readFileSync(path.join(THEME, 'preview/account.html'), 'utf8').replaceAll('BASE/', BASE));
 fs.copyFileSync(path.join(OUT, 'index.html'), path.join(OUT, '404.html'));
 console.log(`built ${Object.keys(pages).length} pages -> _site (base ${BASE})`);
