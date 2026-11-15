@@ -555,6 +555,9 @@ a.promo__code{padding:5px 14px}
 /* Reveal on scroll (JS adds .js to html) */
 .js .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .js .reveal.is-in{opacity:1;transform:none}
+/* Inside horizontal sliders: fade only. A translate would make the track taller than itself, so it scrolls vertically and clips the card tops (badges). */
+.js [data-carousel] .reveal,.js .pdp__track .reveal{transform:none}
+[data-carousel]{padding-top:6px;padding-bottom:8px}
 
 /* Responsive */
 .hide-desktop{display:none}
