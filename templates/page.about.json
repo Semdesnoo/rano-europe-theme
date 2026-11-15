@@ -1,22 +1,10 @@
 {
   "sections": {
-    "hero": {
-      "type": "image-banner",
-      "settings": {
-        "fallback": "life-fiat.jpg",
-        "fallback_mobile": "life-fiat.jpg",
-        "focal": "center 62%",
-        "height": "large",
-        "full_width": true,
-        "heading": "Nato a Casarano",
-        "text": "Born in the south of Italy. Carried from Amsterdam to wherever you go next."
-      }
-    },
     "mission": {
       "type": "rich-text",
       "settings": {
         "style": "statement",
-        "heading": "",
+        "heading": "Nato a Casarano",
         "text": "<p>We make leather travel pieces the Italian way: slowly, carefully and built to last. Quiet in design, strong in use, and made to move with you.</p>"
       }
     },
@@ -80,7 +68,6 @@
     }
   },
   "order": [
-    "hero",
     "mission",
     "s1",
     "s2",
