@@ -437,3 +437,39 @@ document.querySelectorAll('[data-bundle]').forEach((box) => {
   box.addEventListener('change', update);
 });
 console.assert(fmtMoney(129610) === '€1.296,10' && bundlePct(1, 10, 15) === 0 && bundlePct(2, 10, 15) === 10 && bundlePct(4, 10, 15) === 15, 'bundlePct');
+
+// Date fields: the browser's own calendar can't be styled, so swap in a rounded Rano calendar.
+document.querySelectorAll('input[type="date"]').forEach((input) => {
+  const lang = document.documentElement.lang || 'en', today = new Date(); today.setHours(0, 0, 0, 0);
+  const pad = (n) => String(n).padStart(2, '0'), fmt = (d) => `${pad(d.getDate())}-${pad(d.getMonth() + 1)}-${d.getFullYear()}`;
+  input.type = 'text'; input.readOnly = true; input.placeholder = 'dd-mm-yyyy'; input.classList.add('cal-input');
+  input.setAttribute('aria-haspopup', 'dialog'); input.setAttribute('aria-expanded', 'false');
+  const wrap = document.createElement('div'); wrap.className = 'cal-wrap'; input.before(wrap); wrap.append(input);
+  const pop = document.createElement('div'); pop.className = 'cal'; pop.hidden = true; pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Choose a date'); wrap.append(pop);
+  let view = new Date(today.getFullYear(), today.getMonth(), 1), picked = null;
+  const days = [...Array(7)].map((_, i) => new Date(2024, 0, i + 1).toLocaleDateString(lang, { weekday: 'short' }).slice(0, 2)); // 1 Jan 2024 = Monday
+  const draw = () => {
+    const first = (view.getDay() + 6) % 7, n = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+    let cells = '';
+    for (let i = 0; i < first; i++) cells += '<span></span>';
+    for (let d = 1; d <= n; d++) {
+      const dt = new Date(view.getFullYear(), view.getMonth(), d), past = dt < today;
+      const cls = [+dt === +today && 'is-today', picked && +dt === +picked && 'is-picked'].filter(Boolean).join(' ');
+      cells += `<button type="button" data-d="${d}" class="${cls}"${past ? ' disabled' : ''}>${d}</button>`;
+    }
+    pop.innerHTML = `<div class="cal__head"><button type="button" data-m="-1" aria-label="Previous month"${view <= new Date(today.getFullYear(), today.getMonth(), 1) ? ' disabled' : ''}>‹</button><strong>${view.toLocaleDateString(lang, { month: 'long', year: 'numeric' })}</strong><button type="button" data-m="1" aria-label="Next month">›</button></div><div class="cal__grid">${days.map((x) => `<small>${x}</small>`).join('')}${cells}</div><div class="cal__foot"><button type="button" data-clear>Clear</button><button type="button" data-today>Today</button></div>`;
+  };
+  const open = (on) => { pop.hidden = !on; input.setAttribute('aria-expanded', on); if (on) { draw(); (pop.querySelector('.is-picked,.is-today:not(:disabled)') || pop.querySelector('[data-d]:not(:disabled)')).focus(); } };
+  const set = (d) => { picked = d; input.value = d ? fmt(d) : ''; input.dispatchEvent(new Event('change', { bubbles: true })); open(false); input.focus(); };
+  input.addEventListener('click', () => open(pop.hidden));
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); open(true); } });
+  pop.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b || b.disabled) return;
+    if (b.dataset.m) { view = new Date(view.getFullYear(), view.getMonth() + +b.dataset.m, 1); draw(); }
+    else if (b.dataset.d) set(new Date(view.getFullYear(), view.getMonth(), +b.dataset.d));
+    else if ('clear' in b.dataset) set(null);
+    else if ('today' in b.dataset) set(new Date(today));
+  });
+  pop.addEventListener('keydown', (e) => { if (e.key === 'Escape') { open(false); input.focus(); } });
+  document.addEventListener('click', (e) => { if (!e.composedPath().includes(wrap)) open(false); });
+});

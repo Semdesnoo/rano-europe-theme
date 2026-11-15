@@ -935,3 +935,24 @@ select{border-radius:8px;cursor:pointer}
 .btn--atc .icon{width:18px;height:18px;flex:none}
 .btn--atc__price{display:inline-flex;align-items:center;gap:10px;font-variant-numeric:tabular-nums}
 .btn--atc__price::before{content:"";width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.7}
+
+/* Rano calendar (replaces the browser date picker) */
+.cal-wrap{position:relative}
+.cal-input{cursor:pointer;padding-right:40px!important;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath fill='%23111' d='M208 34h-26V24a6 6 0 0 0-12 0v10H86V24a6 6 0 0 0-12 0v10H48a14 14 0 0 0-14 14v160a14 14 0 0 0 14 14h160a14 14 0 0 0 14-14V48a14 14 0 0 0-14-14ZM48 46h26v10a6 6 0 0 0 12 0V46h84v10a6 6 0 0 0 12 0V46h26a2 2 0 0 1 2 2v34H46V48a2 2 0 0 1 2-2Zm160 164H48a2 2 0 0 1-2-2V94h164v114a2 2 0 0 1-2 2Z'/%3E%3C/svg%3E") no-repeat right 12px center/18px}
+.cal{position:absolute;top:calc(100% + 6px);left:0;z-index:20;width:296px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;box-shadow:0 16px 40px rgba(20,20,18,.12);animation:askIn .2s var(--ease)}
+.cal__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cal__head strong{font-size:14px;font-weight:600;text-transform:capitalize}
+.cal__head button{width:30px;height:30px;border-radius:999px;font-size:20px;line-height:1;display:grid;place-items:center}
+.cal__head button:hover:not(:disabled){background:var(--soft,#f3f3f3)}
+.cal__head button:disabled{opacity:.25;cursor:default}
+.cal__grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+.cal__grid small{font-size:11px;color:color-mix(in srgb,var(--ink) 50%,transparent);padding:4px 0;text-transform:capitalize}
+.cal__grid button{height:36px;border-radius:999px;font-size:13.5px;font-variant-numeric:tabular-nums;transition:background .15s}
+.cal__grid button:hover:not(:disabled){background:var(--soft,#f3f3f3)}
+.cal__grid button:disabled{color:color-mix(in srgb,var(--ink) 25%,transparent);cursor:default}
+.cal__grid button.is-today{box-shadow:inset 0 0 0 1px var(--ink)}
+.cal__grid button.is-picked{background:var(--ink);color:#fff}
+.cal button:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+.cal__foot{display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
+.cal__foot button{font-size:12.5px;font-weight:500;padding:6px 10px;border-radius:999px}
+.cal__foot button:hover{background:var(--soft,#f3f3f3)}
