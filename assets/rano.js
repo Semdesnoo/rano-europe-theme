@@ -182,6 +182,32 @@
     else fallback();
   }
 
+  /* ---------- Drag-to-rotate: 3D turn through the product photos ---------- */
+  $$('[data-spin]').forEach((el) => {
+    const img = $('img', el), srcs = el.dataset.images.split('|');
+    srcs.forEach((s) => { const i = new Image(); i.src = s; });
+    let i = 0, x0 = null, busy = false;
+    const set = (deg, t = '') => { img.style.transition = t; img.style.transform = `rotateY(${deg}deg) scale(${1 - Math.abs(deg) / 900})`; el.style.setProperty('--shine', Math.min(Math.abs(deg) / 60, 0.5)); };
+    const turn = (dir) => {
+      busy = true;
+      set(-90 * dir, 'transform .28s ease-in');
+      setTimeout(() => {
+        i = (i + dir + srcs.length) % srcs.length;
+        img.removeAttribute('srcset'); img.src = srcs[i];
+        set(90 * dir);
+        requestAnimationFrame(() => requestAnimationFrame(() => { set(0, 'transform .45s cubic-bezier(.16,1,.3,1)'); setTimeout(() => (busy = false), 450); }));
+      }, 280);
+    };
+    el.addEventListener('pointerdown', (e) => { if (busy) return; x0 = e.clientX; el.setPointerCapture(e.pointerId); });
+    el.addEventListener('pointermove', (e) => { if (x0 === null) return; set(Math.max(-70, Math.min(70, ((e.clientX - x0) / el.clientWidth) * 140))); });
+    const end = (e) => {
+      if (x0 === null) return;
+      const dx = (e.clientX - x0) / el.clientWidth; x0 = null;
+      Math.abs(dx) > 0.18 ? turn(dx < 0 ? 1 : -1) : set(0, 'transform .45s cubic-bezier(.16,1,.3,1)');
+    };
+    el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+  });
+
   /* ---------- Product page ---------- */
   const pdp = $('[data-product]');
   if (pdp) {

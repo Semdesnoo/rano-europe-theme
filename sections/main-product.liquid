@@ -16,7 +16,14 @@
           -%}
           {%- case media.media_type -%}
             {%- when 'image' -%}
-              {{ media | image_url: width: 1800 | image_tag: widths: '500, 800, 1100, 1400, 1800', sizes: '(min-width: 990px) 30vw, 100vw', loading: loading, class: 'cover', alt: alt_text }}
+              {%- if forloop.first and product.images.size > 1 and section.settings.spin -%}
+                <div class="spin" data-spin data-images="{% for img in product.images %}{{ img | image_url: width: 1400 }}{% unless forloop.last %}|{% endunless %}{% endfor %}">
+                  {{ media | image_url: width: 1800 | image_tag: widths: '500, 800, 1100, 1400, 1800', sizes: '(min-width: 990px) 30vw, 100vw', loading: loading, class: 'cover spin__img', alt: alt_text, draggable: 'false' }}
+                  <span class="pdp__model-hint">{% render 'icon', name: 'arrows' %} Drag to rotate</span>
+                </div>
+              {%- else -%}
+                {{ media | image_url: width: 1800 | image_tag: widths: '500, 800, 1100, 1400, 1800', sizes: '(min-width: 990px) 30vw, 100vw', loading: loading, class: 'cover', alt: alt_text }}
+              {%- endif -%}
             {%- when 'video' -%}
               {{ media | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, image_size: '1100x', class: 'cover' }}
             {%- when 'model' -%}
@@ -132,6 +139,7 @@
   "class": "section-pdp",
   "settings": [
     { "type": "checkbox", "id": "dynamic_checkout", "label": "Show dynamic checkout buttons", "default": true },
+    { "type": "checkbox", "id": "spin", "label": "Drag-to-rotate on first image", "info": "Turns through the product photos with a 3D effect. Real 3D models (.glb media) are shown automatically when uploaded.", "default": true },
     { "type": "url", "id": "shipping_link", "label": "Shipping policy link", "default": "/policies/shipping-policy" }
   ],
   "blocks": [
