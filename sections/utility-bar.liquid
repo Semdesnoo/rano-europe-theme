@@ -1,0 +1,25 @@
+<div class="util">
+  <div class="util__inner">
+    {%- if section.settings.text != blank -%}<p class="util__text">{{ section.settings.text }}</p>{%- endif -%}
+    <div class="util__right">
+      {%- if section.settings.support_link != blank -%}
+        <a href="{{ section.settings.support_link }}" class="util__link">{{ section.settings.support_label }}</a>
+        <span class="util__sep" aria-hidden="true"></span>
+      {%- endif -%}
+      {% render 'localization' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Utility bar",
+  "class": "section-util",
+  "settings": [
+    { "type": "text", "id": "text", "label": "Left text (desktop)", "default": "Free shipping on every order" },
+    { "type": "text", "id": "support_label", "label": "Support label", "default": "Support" },
+    { "type": "url", "id": "support_link", "label": "Support link", "default": "/pages/contact" }
+  ],
+  "presets": [{ "name": "Utility bar" }]
+}
+{% endschema %}

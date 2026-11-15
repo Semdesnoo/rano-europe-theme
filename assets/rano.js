@@ -147,6 +147,13 @@
     }
   });
 
+  /* ---------- Localization dropdowns: close on outside click / Esc ---------- */
+  document.addEventListener('click', (e) => $$('[data-loc][open]').forEach((d) => !d.contains(e.target) && d.removeAttribute('open')));
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && $$('[data-loc][open]').forEach((d) => d.removeAttribute('open')));
+
+  /* ---------- Mega menu: close after clicking a link (hover stays open otherwise) ---------- */
+  $$('[data-mega] .mega a').forEach((a) => a.addEventListener('click', () => document.activeElement.blur()));
+
   /* ---------- Tabs ---------- */
   $$('[data-tabs]').forEach((root) => {
     const tabs = $$('[data-tab]', root), panels = $$('[data-panel]', root);

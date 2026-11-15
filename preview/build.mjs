@@ -52,7 +52,12 @@ products.forEach((p) => p.collections.push(collections.all));
 
 const L = (title, url, links = []) => ({ title, url, links, active: false, child_active: false });
 const menus = {
-  'main-menu': { title: 'Shop', links: [L('Shop all', '/collections/all', [L('The Traveller', '/collections/rano-traveller'), L('Travel Pouch', '/collections/rano-travel-pouch'), L('Card Holder', '/collections/card-holder')]), L('Traveller', '/collections/rano-traveller'), L('Travel Pouch', '/collections/rano-travel-pouch'), L('Card Holder', '/collections/card-holder'), L('About us', '/pages/about-us'), L('Contact', '/pages/contact')] },
+  'main-menu': { title: 'Shop', links: [
+    L('Shop All', '/collections/all', [
+      L('By category', '/collections/all', [L('All products', '/collections/all'), L('The Traveller', '/collections/rano-traveller'), L('Travel Pouch', '/collections/rano-travel-pouch'), L('Card Holder', '/collections/card-holder'), L('Full Travel Sets', '/products/bundle-product-7')]),
+      L('By colour', '/collections/all', [L('Giallo', '/products/giallo-traveller'), L('Rosa', '/products/rano-rosa-traveller'), L('Blue Mare', '/products/blue-mare-traveller')]),
+      L('Highlights', '/collections/all', [L('Black Friday sale', '/collections/all'), L('Bestsellers', '/collections/all'), L('Gift sets', '/products/bundle-product-4')])]),
+    L('Bestsellers', '/collections/all'), L('About', '/pages/about-us'), L('Contact', '/pages/contact')] },
   footer: { title: 'Help', links: [L('Contact', '/pages/contact'), L('Shipping policy', '#'), L('Refund policy', '#'), L('Privacy policy', '#'), L('Search', '/search')] },
 };
 
@@ -127,7 +132,7 @@ class SchemaTag extends Tag { constructor(t, r, l) { super(t, r, l); r.shift(); 
 engine.registerTag('schema', SchemaTag);
 engine.registerTag('form', class extends Tag {
   constructor(t, r, l, p) { super(t, r, l); this.tpls = []; this.args = t.args; const s = p.parseStream(r).on('tag:endform', () => s.stop()).on('template', (x) => this.tpls.push(x)).on('end', () => { throw new Error('form not closed'); }); s.start(); }
-  * render(ctx, emitter) { const cls = (this.args.match(/class:\s*'([^']*)'/) || [])[1] || ''; const data = this.args.includes('data-add-form') ? ' data-add-form' : ''; emitter.write(`<form method="post" action="/cart/add" class="${cls}"${data}>`); ctx.push({ form: { errors: null, posted_successfully: false } }); yield this.liquid.renderer.renderTemplates(this.tpls, ctx, emitter); ctx.pop(); emitter.write('</form>'); }
+  * render(ctx, emitter) { const cls = (this.args.match(/class:\s*'([^']*)'/) || [])[1] || ''; const data = this.args.includes('data-add-form') ? ' data-add-form' : ''; emitter.write(this.args.includes('localization') ? `<form method="get" class="${cls}">` : `<form method="post" action="/cart/add" class="${cls}"${data}>`); ctx.push({ form: { errors: null, posted_successfully: false } }); yield this.liquid.renderer.renderTemplates(this.tpls, ctx, emitter); ctx.pop(); emitter.write('</form>'); }
 });
 engine.registerTag('paginate', class extends Tag {
   constructor(t, r, l, p) { super(t, r, l); this.tpls = []; const s = p.parseStream(r).on('tag:endpaginate', () => s.stop()).on('template', (x) => this.tpls.push(x)).on('end', () => { throw new Error('paginate not closed'); }); s.start(); }
@@ -148,10 +153,10 @@ async function page(template, extra = {}) {
   const scope = {
     settings, collections, cart, shop: { name: 'Rano Europe', privacy_policy: { url: 'https://ranoeurope.com/policies/privacy-policy' }, customer_accounts_enabled: true, enabled_payment_types: ['visa', 'master', 'ideal', 'apple_pay', 'paypal', 'klarna'] },
     routes: { root_url: '/', cart_url: '/cart', cart_add_url: '/cart/add', cart_change_url: '/cart/change', search_url: '/search', account_url: '/account', all_products_collection_url: '/collections/all' },
-    request: { locale: { iso_code: 'en' }, origin: 'http://localhost' }, localization: { available_countries: [] },
+    request: { locale: { iso_code: 'en' }, origin: 'http://localhost' }, localization: (() => { const cs = [{ iso_code: 'NL', name: 'Netherlands', src: 'https://cdn.shopify.com/static/images/flags/nl.svg', currency: { iso_code: 'EUR', symbol: '€' } },{ iso_code: 'BE', name: 'Belgium', src: 'https://cdn.shopify.com/static/images/flags/be.svg', currency: { iso_code: 'EUR', symbol: '€' } },{ iso_code: 'DE', name: 'Germany', src: 'https://cdn.shopify.com/static/images/flags/de.svg', currency: { iso_code: 'EUR', symbol: '€' } },{ iso_code: 'FR', name: 'France', src: 'https://cdn.shopify.com/static/images/flags/fr.svg', currency: { iso_code: 'EUR', symbol: '€' } },{ iso_code: 'IT', name: 'Italy', src: 'https://cdn.shopify.com/static/images/flags/it.svg', currency: { iso_code: 'EUR', symbol: '€' } },{ iso_code: 'ES', name: 'Spain', src: 'https://cdn.shopify.com/static/images/flags/es.svg', currency: { iso_code: 'EUR', symbol: '€' } },{ iso_code: 'AT', name: 'Austria', src: 'https://cdn.shopify.com/static/images/flags/at.svg', currency: { iso_code: 'EUR', symbol: '€' } },{ iso_code: 'IE', name: 'Ireland', src: 'https://cdn.shopify.com/static/images/flags/ie.svg', currency: { iso_code: 'EUR', symbol: '€' } }]; const ls = [{ iso_code: 'en', endonym_name: 'English' }, { iso_code: 'nl', endonym_name: 'Nederlands' }, { iso_code: 'de', endonym_name: 'Deutsch' }, { iso_code: 'it', endonym_name: 'Italiano' }]; return { available_countries: cs, country: cs[0], available_languages: ls, language: ls[0] }; })(),
     template: { name: template.split('.')[0] }, request: { locale: { iso_code: 'en' }, origin: 'http://localhost', design_mode: false }, canonical_url: '/', page_title: 'Rano Europe', current_page: 1, ...extra,
   };
-  Object.assign(engine.options.globals, { settings, collections, cart, routes: scope.routes, shop: scope.shop });
+  Object.assign(engine.options.globals, { settings, collections, cart, routes: scope.routes, shop: scope.shop, localization: scope.localization });
   const body = (await Promise.all(t.order.map((id) => renderSection(buildSection(id, t.sections[id]), scope)))).join('');
   return engine.parseAndRender(read('layout/theme.liquid'), { ...scope, content_for_layout: body, content_for_header: '' });
 }

@@ -22,8 +22,49 @@
       "settings": {
         "menu": "main-menu",
         "drawer_caption": "Shop the Traveller",
-        "drawer_link": "shopify://collections/rano-traveller"
-      }
+        "drawer_link": "shopify://collections/rano-traveller",
+        "accent_link": "Bestsellers"
+      },
+      "blocks": {
+        "t1": {
+          "type": "mega_tile",
+          "settings": {
+            "fallback": "model-giallo.jpg",
+            "title": "The Traveller",
+            "link": "shopify://collections/rano-traveller"
+          }
+        },
+        "t2": {
+          "type": "mega_tile",
+          "settings": {
+            "fallback": "pouch-woman.jpg",
+            "title": "Travel Pouch",
+            "link": "shopify://collections/rano-travel-pouch"
+          }
+        },
+        "t3": {
+          "type": "mega_tile",
+          "settings": {
+            "fallback": "card-holder.jpg",
+            "title": "Card Holder",
+            "link": "shopify://collections/card-holder"
+          }
+        },
+        "t4": {
+          "type": "mega_tile",
+          "settings": {
+            "fallback": "life-stairs.jpg",
+            "title": "Black Friday Sale",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ]
     },
     "promo": {
       "type": "promo-countdown",
@@ -35,9 +76,18 @@
         "text": "Use code at checkout",
         "code": "RANO35"
       }
+    },
+    "util": {
+      "type": "utility-bar",
+      "settings": {
+        "text": "Free shipping on every order",
+        "support_label": "Support",
+        "support_link": "/pages/contact"
+      }
     }
   },
   "order": [
+    "util",
     "announcement",
     "header",
     "promo"
