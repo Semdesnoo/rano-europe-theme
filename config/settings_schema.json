@@ -43,7 +43,7 @@
     "name": "Social media",
     "settings": [
       { "type": "url", "id": "social_instagram", "label": "Instagram", "default": "https://www.instagram.com/ranoeurope/" },
-      { "type": "url", "id": "social_tiktok", "label": "TikTok" }
+      { "type": "url", "id": "social_tiktok", "label": "TikTok", "default": "https://www.tiktok.com/@ranoeurope" }
     ]
   }
 ]

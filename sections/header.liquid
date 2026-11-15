@@ -116,6 +116,7 @@
   <div class="drawer__foot">
     {%- if shop.customer_accounts_enabled -%}<a href="{{ routes.account_url }}">{% render 'icon', name: 'user' %} {{ 'general.account' | t }}</a>{%- endif -%}
     {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" target="_blank" rel="noopener">{% render 'icon', name: 'instagram' %} Instagram</a>{%- endif -%}
+    {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener">{% render 'icon', name: 'tiktok' %} TikTok</a>{%- endif -%}
     <div class="drawer__loc">{% render 'localization', up: true %}</div>
   </div>
 </div>
