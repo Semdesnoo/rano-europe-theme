@@ -800,3 +800,8 @@ select{border-radius:8px;cursor:pointer}
 @media (max-width:989px){.pdp-love__grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pdp-ask__chips{justify-content:flex-start}}
 
 .section-head--center{justify-content:center;text-align:center}
+
+/* Banner with two portrait photos side by side (desktop) */
+.banner__img--duo{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.banner__half{position:relative;overflow:hidden}
+.banner__half .cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}

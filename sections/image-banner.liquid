@@ -4,7 +4,13 @@
       {%- if section.settings.video or section.settings.video_asset != blank -%}
         {% render 'video', video: section.settings.video, video_asset: section.settings.video_asset, poster: section.settings.fallback, class: 'cover' %}
       {%- else -%}
-        <div class="banner__img banner__img--desk">{% render 'media', image: section.settings.image, fallback: section.settings.fallback, sizes: '100vw', class: 'cover', alt: section.settings.heading %}</div>
+        {%- assign duo = false -%}
+        {%- if section.settings.image_2 or section.settings.fallback_2 != blank -%}{%- assign duo = true -%}{%- endif -%}
+        <div class="banner__img banner__img--desk{% if duo %} banner__img--duo{% endif %}">
+          {%- if duo -%}<div class="banner__half">{% render 'media', image: section.settings.image_2, fallback: section.settings.fallback_2, sizes: '50vw', class: 'cover cover--2', alt: '' %}</div><div class="banner__half">{%- endif -%}
+          {% render 'media', image: section.settings.image, fallback: section.settings.fallback, sizes: '100vw', class: 'cover', alt: section.settings.heading %}
+          {%- if duo -%}</div>{%- endif -%}
+        </div>
         <div class="banner__img banner__img--mob">{% render 'media', image: section.settings.image_mobile, fallback: section.settings.fallback_mobile, sizes: '100vw', class: 'cover', alt: section.settings.heading %}</div>
       {%- endif -%}
     </div>
@@ -18,6 +24,7 @@
 
 <style>
   #shopify-section-{{ section.id }} .banner__media .cover { object-position: {{ section.settings.focal }}; }
+  #shopify-section-{{ section.id }} .banner__media .cover--2 { object-position: {{ section.settings.focal_2 }}; }
 </style>
 
 {% schema %}
@@ -27,6 +34,9 @@
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "text", "id": "fallback", "label": "Bundled image file" },
+    { "type": "image_picker", "id": "image_2", "label": "Second image (desktop, left)", "info": "Optional. Shows two portrait photos side by side on desktop, so nothing gets cropped awkwardly." },
+    { "type": "text", "id": "fallback_2", "label": "Bundled second image file" },
+    { "type": "text", "id": "focal_2", "label": "Second image focus", "default": "center center" },
     { "type": "image_picker", "id": "image_mobile", "label": "Mobile image" },
     { "type": "text", "id": "fallback_mobile", "label": "Bundled mobile image file" },
     { "type": "video", "id": "video", "label": "Video (upload, replaces image)" },

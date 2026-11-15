@@ -147,12 +147,14 @@
       "settings": {
         "fallback": "life-fiat.jpg",
         "fallback_mobile": "life-fiat.jpg",
-        "focal": "center 62%",
+        "focal": "center 45%",
         "height": "large",
         "heading": "Born in Casarano",
         "text": "A small town in southern Italy, where days move slowly and details matter.",
         "button_label": "Our story",
-        "button_link": "shopify://pages/about-us"
+        "button_link": "shopify://pages/about-us",
+        "fallback_2": "life-coast.jpg",
+        "focal_2": "center 55%"
       }
     },
     "split": {
