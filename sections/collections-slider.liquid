@@ -1,0 +1,58 @@
+{%- liquid
+  assign s = section.settings
+  assign has = false
+  for block in section.blocks
+    if block.settings.collection != blank or block.settings.fallback != blank
+      assign has = true
+    endif
+  endfor
+-%}
+{%- if has -%}
+<section class="section coll-slider">
+  <div class="container section-head">
+    <h2 class="h2">{{ s.heading }}</h2>
+    <div class="carousel-nav hide-mobile">
+      <button type="button" class="icon-btn icon-btn--round" data-prev aria-label="{{ 'general.previous' | t }}">{% render 'icon', name: 'caret-left' %}</button>
+      <button type="button" class="icon-btn icon-btn--round" data-next aria-label="{{ 'general.next' | t }}">{% render 'icon', name: 'caret-right' %}</button>
+    </div>
+  </div>
+  <div class="carousel carousel--colls" data-carousel>
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign b = block.settings
+        assign c = b.collection
+        assign img = b.image | default: c.featured_image
+        assign title = b.title | default: c.title
+      -%}
+      <a href="{{ c.url | default: routes.all_products_collection_url }}" class="coll-card reveal" {{ block.shopify_attributes }}>
+        <div class="coll-card__media">{% render 'media', image: img, fallback: b.fallback, sizes: '(min-width: 990px) 14vw, 40vw', class: 'cover', alt: title %}</div>
+        <span class="coll-card__title">{{ title }}</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collections slider",
+  "class": "section-colls",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Other collections" }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "title", "label": "Title (optional)" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "fallback", "label": "Bundled image file" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Collections slider", "blocks": [{ "type": "collection" }, { "type": "collection" }, { "type": "collection" }] }]
+}
+{% endschema %}

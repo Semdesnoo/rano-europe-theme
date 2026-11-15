@@ -92,6 +92,61 @@
     track.scrollBy({ left: btn.hasAttribute('data-next') ? step : -step, behavior: reduce ? 'auto' : 'smooth' });
   });
 
+  /* ---------- Carousel autoplay (pauses on hover/touch, loops) ---------- */
+  $$('[data-autoplay]').forEach((track) => {
+    if (reduce) return;
+    let paused = false;
+    ['pointerenter', 'touchstart', 'focusin'].forEach((e) => track.addEventListener(e, () => (paused = true), { passive: true }));
+    ['pointerleave', 'focusout'].forEach((e) => track.addEventListener(e, () => (paused = false)));
+    setInterval(() => {
+      if (paused || track.offsetParent === null) return;
+      const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      track.scrollTo({ left: atEnd ? 0 : track.scrollLeft + track.firstElementChild.getBoundingClientRect().width + 12, behavior: 'smooth' });
+    }, Number(track.dataset.autoplay) * 1000);
+  });
+
+  /* ---------- Countdown promo ---------- */
+  $$('[data-countdown]').forEach((el) => {
+    const end = Date.parse(el.dataset.countdown);
+    if (!end) return;
+    const pad = (n) => String(n).padStart(2, '0');
+    const tick = () => {
+      const left = end - Date.now();
+      if (left <= 0) { el.hidden = true; return clearInterval(t); }
+      const s = Math.floor(left / 1000);
+      $('[data-d]', el).textContent = pad(Math.floor(s / 86400));
+      $('[data-h]', el).textContent = pad(Math.floor(s / 3600) % 24);
+      $('[data-m]', el).textContent = pad(Math.floor(s / 60) % 60);
+      $('[data-s]', el).textContent = pad(s % 60);
+    };
+    const t = setInterval(tick, 1000); tick();
+  });
+  document.addEventListener('click', async (e) => {
+    const b = e.target.closest('[data-copy]');
+    if (!b) return;
+    try { await navigator.clipboard.writeText(b.dataset.copy); } catch (_) {}
+    const l = $('[data-copy-label]', b); l.textContent = 'Copied'; setTimeout(() => (l.textContent = 'Copy'), 1800);
+  });
+
+  /* ---------- Click-to-play videos ---------- */
+  document.addEventListener('click', (e) => {
+    const box = e.target.closest('[data-play]');
+    if (!box) return;
+    const v = $('video', box);
+    $$('[data-play] video').forEach((o) => { if (o !== v) { o.pause(); o.closest('[data-play]').classList.remove('is-playing'); } });
+    if (v.paused) { v.muted = false; v.play().catch(() => { v.muted = true; v.play(); }); box.classList.add('is-playing'); }
+    else { v.pause(); box.classList.remove('is-playing'); }
+  });
+
+  /* ---------- Trustpilot grid: Read more only when clamped ---------- */
+  $$('[data-tp-grid] .tp-card').forEach((card) => {
+    const txt = $('.tp-card__text', card), more = $('[data-tp-more]', card);
+    if (more && txt.scrollHeight > txt.clientHeight + 2) {
+      more.hidden = false;
+      more.addEventListener('click', () => { card.classList.toggle('is-open'); more.textContent = card.classList.contains('is-open') ? 'Show less' : 'Read more'; });
+    }
+  });
+
   /* ---------- Tabs ---------- */
   $$('[data-tabs]').forEach((root) => {
     const tabs = $$('[data-tab]', root), panels = $$('[data-panel]', root);

@@ -69,7 +69,24 @@ const resolve = (type, v) => {
   return v;
 };
 const schemaOf = (type) => { const m = read(`sections/${type}.liquid`).match(/{%\s*schema\s*%}([\s\S]*?){%\s*endschema\s*%}/); return m ? JSON.parse(m[1]) : {}; };
+// Preview-only sample reviews: Rano has no Trustpilot reviews yet, so the live theme ships without any.
+const SAMPLE = [
+  ['Sophie', '2 days ago', 'Beautiful leather', 'The Giallo Traveller looks even better in real life. The leather feels soft and solid at the same time.', ''],
+  ['Daan', '5 days ago', 'Perfect weekend bag', 'Fits everything for a city trip and still goes in the overhead cabin.', '3 days ago'],
+  ['Giulia', '9 November', 'Fast delivery', 'Ordered on Monday, delivered on Wednesday. Nicely packed.', ''],
+  ['Mark', '6 November', 'Great gift', 'Bought the Rosa pouch for my girlfriend. She uses it every day.', ''],
+  ['Lotte', '2 November', 'Quality you can feel', 'You can see the craftsmanship in the stitching and the hardware. Worth it.', ''],
+  ['Youssef', '28 October', 'Exactly as shown', 'Colour is exactly like the photos. The card holder is slim and fits in my front pocket.', '27 October'],
+  ['Emma', '25 October', 'Compliments everywhere', 'Every time I travel with it someone asks where the bag is from. Customer service was very friendly when I had a question about the strap and they answered within an hour.', ''],
+  ['Thomas', '21 October', 'Solid', 'Good size, good leather, good price.', ''],
+];
+function withSampleReviews(data) {
+  if (data.type !== 'trustpilot-reviews' || (data.block_order || []).length) return data;
+  const blocks = Object.fromEntries(SAMPLE.map(([name, date, title, text, reply_date], i) => [`r${i}`, { type: 'review', settings: { stars: i === 7 ? 4 : 5, name, date, title, text, reply_date, verified: i % 3 !== 2 } }]));
+  return { ...data, blocks, block_order: Object.keys(blocks), settings: { ...data.settings, review_count: '8', rating: '4.8' } };
+}
 function buildSection(id, data) {
+  data = withSampleReviews(data);
   const schema = schemaOf(data.type);
   const types = Object.fromEntries((schema.settings || []).map((s) => [s.id, s.type]));
   const st = { ...schemaDefaults(schema), ...(data.settings || {}) };
@@ -117,7 +134,8 @@ engine.registerTag('paginate', class extends Tag {
 });
 async function renderSection(sec, scope) {
   const html = await engine.parseAndRender(read(`sections/${sec.type}.liquid`), { ...scope, section: sec });
-  return `<div id="shopify-section-${sec.id}" class="shopify-section section-${sec.type}">${html}</div>`;
+  const note = sec.type === 'trustpilot-reviews' ? '<p style="margin:0 auto;max-width:1680px;padding:0 var(--pad);font-size:12px;color:#7a2f2a">Voorbeeldreviews in deze preview. In Shopify komen hier de echte Trustpilot-reviews.</p>' : '';
+  return `<div id="shopify-section-${sec.id}" class="shopify-section section-${sec.type}">${note}${html}</div>`;
 }
 const group = (name, scope) => { const g = JSON.parse(read(`sections/${name}.json`)); return Promise.all(g.order.map((id) => renderSection(buildSection(id, g.sections[id]), scope))).then((a) => a.join('')); };
 engine.registerTag('sections', class extends Tag { constructor(t, r, l) { super(t, r, l); this.name = t.args.replace(/['"\s]/g, ''); } async render(ctx, em) { em.write(await group(this.name, ctx.getAll())); } });
@@ -130,7 +148,7 @@ async function page(template, extra = {}) {
     settings, collections, cart, shop: { name: 'Rano Europe', privacy_policy: { url: 'https://ranoeurope.com/policies/privacy-policy' }, customer_accounts_enabled: true, enabled_payment_types: ['visa', 'master', 'ideal', 'apple_pay', 'paypal', 'klarna'] },
     routes: { root_url: '/', cart_url: '/cart', cart_add_url: '/cart/add', cart_change_url: '/cart/change', search_url: '/search', account_url: '/account', all_products_collection_url: '/collections/all' },
     request: { locale: { iso_code: 'en' }, origin: 'http://localhost' }, localization: { available_countries: [] },
-    template: { name: template.split('.')[0] }, canonical_url: '/', page_title: 'Rano Europe', current_page: 1, ...extra,
+    template: { name: template.split('.')[0] }, request: { locale: { iso_code: 'en' }, origin: 'http://localhost', design_mode: false }, canonical_url: '/', page_title: 'Rano Europe', current_page: 1, ...extra,
   };
   Object.assign(engine.options.globals, { settings, collections, cart, routes: scope.routes, shop: scope.shop });
   const body = (await Promise.all(t.order.map((id) => renderSection(buildSection(id, t.sections[id]), scope)))).join('');

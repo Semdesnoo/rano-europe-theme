@@ -1,0 +1,14 @@
+{%- assign b = block.settings -%}
+<article class="tp-card{% if compact %} tp-card--compact{% endif %}" {{ block.shopify_attributes }}>
+  <div class="tp-card__top">
+    {% render 'tp-stars', rating: b.stars %}
+    {%- if b.verified -%}<span class="tp-verified">{% render 'icon', name: 'verified' %}<u>Verified</u></span>{%- endif -%}
+  </div>
+  <p class="tp-card__meta"><strong>{{ b.name }}</strong>, {{ b.date }}</p>
+  <h3 class="tp-card__title">{{ b.title }}</h3>
+  <p class="tp-card__text">{{ b.text }}</p>
+  {%- if b.reply_date != blank and compact == blank -%}
+    <div class="tp-reply">{% render 'icon', name: 'reply' %}<span>Reply from {{ shop.name | remove: ' Europe' }}</span><time>{{ b.reply_date }}</time></div>
+  {%- endif -%}
+  {%- unless compact -%}<button type="button" class="tp-more" data-tp-more hidden>Read more</button>{%- endunless -%}
+</article>

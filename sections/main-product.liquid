@@ -87,6 +87,24 @@
         <li>{% render 'icon', name: 'plane' %} Designed in Italy</li>
       </ul>
 
+      {%- assign vids = section.blocks | where: 'type', 'video' -%}
+      {%- if vids.size > 0 -%}
+        <div class="pdp-videos">
+          <p class="pdp-videos__head">{{ section.settings.videos_heading }}</p>
+          <div class="pdp-videos__grid">
+            {%- for block in vids -%}
+              <figure class="pdp-video" {{ block.shopify_attributes }}>
+                <div class="pdp-video__media" data-play>
+                  {% render 'video', video: block.settings.video, video_asset: block.settings.video_asset, poster: block.settings.poster, class: 'cover', manual: true %}
+                  <button type="button" class="pdp-video__btn" aria-label="Play {{ block.settings.caption | escape }}">{% render 'icon', name: 'play' %}</button>
+                </div>
+                <figcaption>{{ block.settings.caption }}</figcaption>
+              </figure>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
       <div class="accordion">
         {%- if product.description != blank -%}
           <details open>
@@ -95,6 +113,7 @@
           </details>
         {%- endif -%}
         {%- for block in section.blocks -%}
+          {%- if block.type != 'accordion' -%}{%- continue -%}{%- endif -%}
           <details {{ block.shopify_attributes }}>
             <summary>{{ block.settings.title }} {% render 'icon', name: 'plus' %}</summary>
             <div class="rte">{{ block.settings.content }}</div>
@@ -140,7 +159,8 @@
   "settings": [
     { "type": "checkbox", "id": "dynamic_checkout", "label": "Show dynamic checkout buttons", "default": true },
     { "type": "checkbox", "id": "spin", "label": "Drag-to-rotate on first image", "info": "Turns through the product photos with a 3D effect. Real 3D models (.glb media) are shown automatically when uploaded.", "default": true },
-    { "type": "url", "id": "shipping_link", "label": "Shipping policy link", "default": "/policies/shipping-policy" }
+    { "type": "url", "id": "shipping_link", "label": "Shipping policy link", "default": "/policies/shipping-policy" },
+    { "type": "text", "id": "videos_heading", "label": "Video blocks heading", "default": "See it in motion" }
   ],
   "blocks": [
     {
@@ -149,6 +169,17 @@
       "settings": [
         { "type": "text", "id": "title", "label": "Title", "default": "Details & care" },
         { "type": "richtext", "id": "content", "label": "Content", "default": "<p>100% genuine leather with silver-tone hardware. Wipe with a soft dry cloth. Keep away from prolonged direct sunlight.</p>" }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video",
+      "limit": 3,
+      "settings": [
+        { "type": "video", "id": "video", "label": "Video (upload)", "info": "Vertical 9:16, e.g. an Instagram reel." },
+        { "type": "text", "id": "video_asset", "label": "Bundled video file" },
+        { "type": "text", "id": "poster", "label": "Bundled poster image" },
+        { "type": "text", "id": "caption", "label": "Caption", "default": "Made for weekends" }
       ]
     }
   ]

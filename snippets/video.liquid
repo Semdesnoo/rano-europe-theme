@@ -1,11 +1,15 @@
 {%- comment -%}
   Background video: uploaded Shopify video wins, else bundled asset mp4.
-  Params: video, video_asset, poster (asset filename), class
+  Params: video, video_asset, poster (asset filename), class, manual (bool: no autoplay, click to play)
 {%- endcomment -%}
 {%- if video -%}
-  {{ video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, image_size: '1600x', class: class }}
+  {%- if manual -%}
+    {{ video | video_tag: autoplay: false, loop: true, muted: false, playsinline: true, controls: false, preload: 'metadata', image_size: '800x', class: class }}
+  {%- else -%}
+    {{ video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, image_size: '1600x', class: class }}
+  {%- endif -%}
 {%- elsif video_asset != blank -%}
-  <video class="{{ class }}" autoplay muted loop playsinline preload="metadata"{% if poster != blank %} poster="{{ poster | asset_url }}"{% endif %}>
+  <video class="{{ class }}"{% unless manual %} autoplay muted{% endunless %} loop playsinline preload="metadata"{% if poster != blank %} poster="{{ poster | asset_url }}"{% endif %}>
     <source src="{{ video_asset | asset_url }}" type="video/mp4">
   </video>
 {%- endif -%}

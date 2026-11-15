@@ -5,16 +5,57 @@
     "announcement": {
       "type": "announcement-bar",
       "blocks": {
-        "m1": { "type": "message", "settings": { "text": "Free shipping on every order", "link": "" } },
-        "m2": { "type": "message", "settings": { "text": "Designed in Italy. Genuine leather.", "link": "shopify://pages/about-us" } },
-        "m3": { "type": "message", "settings": { "text": "Limited drops. No restocks.", "link": "shopify://collections/all" } }
+        "m1": {
+          "type": "message",
+          "settings": {
+            "text": "Free shipping on every order",
+            "link": ""
+          }
+        },
+        "m2": {
+          "type": "message",
+          "settings": {
+            "text": "Designed in Italy. Genuine leather.",
+            "link": "shopify://pages/about-us"
+          }
+        },
+        "m3": {
+          "type": "message",
+          "settings": {
+            "text": "Limited drops. No restocks.",
+            "link": "shopify://collections/all"
+          }
+        }
       },
-      "block_order": ["m1", "m2", "m3"]
+      "block_order": [
+        "m1",
+        "m2",
+        "m3"
+      ]
     },
     "header": {
       "type": "header",
-      "settings": { "menu": "main-menu", "drawer_caption": "Shop the Traveller", "drawer_link": "shopify://collections/rano-traveller" }
+      "settings": {
+        "menu": "main-menu",
+        "drawer_caption": "Shop the Traveller",
+        "drawer_link": "shopify://collections/rano-traveller"
+      }
+    },
+    "promo": {
+      "type": "promo-countdown",
+      "settings": {
+        "end": "2026-11-30T23:59:00+01:00",
+        "home_only": true,
+        "timer_label": "Black Friday ends in",
+        "heading": "Black Friday: up to 35% off",
+        "text": "Use code at checkout",
+        "code": "RANO35"
+      }
     }
   },
-  "order": ["announcement", "header"]
+  "order": [
+    "promo",
+    "announcement",
+    "header"
+  ]
 }

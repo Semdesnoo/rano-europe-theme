@@ -1,0 +1,97 @@
+{%- liquid
+  assign s = section.settings
+  assign rating = s.rating | plus: 0
+  if rating >= 4.3
+    assign word = 'Excellent'
+  elsif rating >= 3.8
+    assign word = 'Great'
+  elsif rating >= 2.8
+    assign word = 'Average'
+  elsif rating >= 1.8
+    assign word = 'Poor'
+  else
+    assign word = 'Bad'
+  endif
+  assign tp_url = s.trustpilot_url | default: 'https://www.trustpilot.com/review/ranoeurope.com'
+  assign has_content = false
+  if section.blocks.size > 0 or s.business_unit_id != blank
+    assign has_content = true
+  endif
+-%}
+{%- capture logo -%}
+  <a href="{{ tp_url }}" target="_blank" rel="noopener" class="tp-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00b67a" d="M17.227 16.67l2.19 6.742-7.413-5.388 5.223-1.354zM24 9.31h-9.165L12.005.589l-2.84 8.723L0 9.3l7.422 5.397-2.84 8.714 7.422-5.388 4.583-3.326L24 9.311z"/></svg>Trustpilot</a>
+{%- endcapture -%}
+
+{%- if has_content -%}
+<section class="section tp tp--{{ s.layout }}">
+  <div class="container">
+    {%- if s.business_unit_id != blank -%}
+      {%- comment -%} Official Trustpilot TrustBox: real reviews, real layout. {%- endcomment -%}
+      {%- if s.layout == 'grid' -%}{%- assign tpl = '539adbd6dec7e10e686debee' -%}{%- assign h = '700px' -%}{%- else -%}{%- assign tpl = '53aa8912dec7e10d38f59f36' -%}{%- assign h = '140px' -%}{%- endif -%}
+      <div class="trustpilot-widget" data-locale="en-US" data-template-id="{{ tpl }}" data-businessunit-id="{{ s.business_unit_id }}" data-style-height="{{ h }}" data-style-width="100%" data-theme="light" data-stars="4,5" data-review-languages="en">
+        <a href="{{ tp_url }}" target="_blank" rel="noopener">Trustpilot</a>
+      </div>
+      {% # theme-check-disable RemoteAsset %}
+      <script async src="https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"></script>
+      {% # theme-check-enable RemoteAsset %}
+    {%- elsif s.layout == 'grid' -%}
+      <header class="tp-head">
+        <p class="tp-head__line"><span class="tp-word">{{ word }}</span> {% render 'tp-stars', rating: rating, size: 'lg' %}</p>
+        <p class="tp-head__sub">Rated {{ rating }} / 5 based on <a href="{{ tp_url }}" target="_blank" rel="noopener">{{ s.review_count }} reviews</a> on {{ logo }}</p>
+      </header>
+      <div class="tp-grid" data-tp-grid>
+        {%- for block in section.blocks -%}{% render 'tp-card', block: block %}{%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="tp-strip">
+        <div class="tp-summary">
+          <p class="tp-word">{{ word }}</p>
+          {% render 'tp-stars', rating: rating, size: 'lg' %}
+          <p class="tp-summary__based">Based on <a href="{{ tp_url }}" target="_blank" rel="noopener">{{ s.review_count }} reviews</a></p>
+          {{ logo }}
+        </div>
+        <button type="button" class="tp-arrow" data-prev aria-label="{{ 'general.previous' | t }}">{% render 'icon', name: 'caret-left' %}</button>
+        <div class="tp-track" data-carousel>
+          {%- for block in section.blocks -%}{% render 'tp-card', block: block, compact: true %}{%- endfor -%}
+        </div>
+        <button type="button" class="tp-arrow" data-next aria-label="{{ 'general.next' | t }}">{% render 'icon', name: 'caret-right' %}</button>
+      </div>
+      <p class="tp-note">Showing our favourite reviews</p>
+    {%- endif -%}
+  </div>
+</section>
+{%- elsif request.design_mode -%}
+<section class="section"><div class="container"><p class="muted">Trustpilot reviews: add a Trustpilot business unit ID or review blocks to show this section.</p></div></section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Trustpilot reviews",
+  "class": "section-tp",
+  "settings": [
+    { "type": "select", "id": "layout", "label": "Layout", "default": "carousel", "options": [
+      { "value": "carousel", "label": "Carousel (homepage)" }, { "value": "grid", "label": "Grid (product page)" }
+    ]},
+    { "type": "text", "id": "business_unit_id", "label": "Trustpilot business unit ID", "info": "Fill this in to load the official Trustpilot widget with your live reviews. Carousel and Grid widgets need a Trustpilot plan that includes them." },
+    { "type": "url", "id": "trustpilot_url", "label": "Trustpilot profile URL", "default": "https://www.trustpilot.com/review/ranoeurope.com" },
+    { "type": "text", "id": "rating", "label": "TrustScore (when not using the widget)", "default": "4.8" },
+    { "type": "text", "id": "review_count", "label": "Number of reviews", "default": "0" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "stars", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "name", "label": "Name" },
+        { "type": "text", "id": "date", "label": "Date", "default": "2 days ago" },
+        { "type": "checkbox", "id": "verified", "label": "Verified", "default": true },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "text", "label": "Review" },
+        { "type": "text", "id": "reply_date", "label": "Reply date", "info": "Shows 'Reply from Rano' when filled." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Trustpilot reviews" }]
+}
+{% endschema %}

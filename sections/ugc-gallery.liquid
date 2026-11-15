@@ -1,11 +1,17 @@
 <section class="section ugc">
   <div class="container section-head">
     <h2 class="h2">{{ section.settings.heading }}</h2>
-    {%- if settings.social_instagram != blank and section.settings.link_label != blank -%}
-      <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" class="link-arrow">{% render 'icon', name: 'instagram' %} {{ section.settings.link_label }}</a>
-    {%- endif -%}
+    <div class="ugc__actions">
+      {%- if settings.social_instagram != blank and section.settings.link_label != blank -%}
+        <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" class="link-arrow hide-mobile">{% render 'icon', name: 'instagram' %} {{ section.settings.link_label }}</a>
+      {%- endif -%}
+      <div class="carousel-nav">
+        <button type="button" class="icon-btn icon-btn--round" data-prev aria-label="{{ 'general.previous' | t }}">{% render 'icon', name: 'caret-left' %}</button>
+        <button type="button" class="icon-btn icon-btn--round" data-next aria-label="{{ 'general.next' | t }}">{% render 'icon', name: 'caret-right' %}</button>
+      </div>
+    </div>
   </div>
-  <div class="carousel carousel--ugc" data-carousel>
+  <div class="carousel carousel--ugc" data-carousel{% if section.settings.autoplay > 0 %} data-autoplay="{{ section.settings.autoplay }}"{% endif %}>
     {%- for block in section.blocks -%}
       {%- assign s = block.settings -%}
       {%- assign href = s.product.url | default: settings.social_instagram -%}
@@ -23,7 +29,8 @@
   "max_blocks": 16,
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "#ranoeurope" },
-    { "type": "text", "id": "link_label", "label": "Link label", "default": "Follow @ranoeurope" }
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Follow @ranoeurope" },
+    { "type": "range", "id": "autoplay", "label": "Auto-slide (seconds, 0 = off)", "min": 0, "max": 10, "step": 1, "default": 4 }
   ],
   "blocks": [
     {

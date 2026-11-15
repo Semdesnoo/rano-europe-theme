@@ -16,21 +16,49 @@
             "title": "Shipping & returns",
             "content": "<p>Free shipping on every order. Orders are dispatched within 1-2 working days. Not the right fit? Return unused items within 14 days.</p>"
           }
+        },
+        "v1": {
+          "type": "video",
+          "settings": {
+            "video_asset": "look-street.mp4",
+            "poster": "look-street.jpg",
+            "caption": "Carried in Amsterdam"
+          }
+        },
+        "v2": {
+          "type": "video",
+          "settings": {
+            "video_asset": "look-pouch.mp4",
+            "poster": "look-pouch.jpg",
+            "caption": "The Rosa Pouch"
+          }
+        },
+        "v3": {
+          "type": "video",
+          "settings": {
+            "video_asset": "look-canal.mp4",
+            "poster": "look-canal.jpg",
+            "caption": "Made for weekends"
+          }
         }
       },
       "block_order": [
+        "v1",
+        "v2",
+        "v3",
         "a1",
         "a2"
       ],
       "settings": {
         "dynamic_checkout": true,
-        "shipping_link": "/policies/shipping-policy"
+        "shipping_link": "/policies/shipping-policy",
+        "videos_heading": "See it in motion"
       }
     },
     "complete": {
       "type": "product-row",
       "settings": {
-        "heading": "Complete the set",
+        "heading": "More in this collection",
         "link_label": "Shop all",
         "link": "shopify://collections/all"
       }
@@ -101,11 +129,76 @@
         "heading": "#ranoeurope",
         "link_label": "Follow @ranoeurope"
       }
+    },
+    "reviews": {
+      "type": "trustpilot-reviews",
+      "settings": {
+        "layout": "grid",
+        "rating": "4.8",
+        "review_count": "0"
+      }
+    },
+    "colls": {
+      "type": "collections-slider",
+      "settings": {
+        "heading": "Other collections"
+      },
+      "blocks": {
+        "c1": {
+          "type": "collection",
+          "settings": {
+            "collection": "rano-traveller",
+            "title": "The Traveller",
+            "fallback": "model-giallo.jpg"
+          }
+        },
+        "c2": {
+          "type": "collection",
+          "settings": {
+            "collection": "rano-travel-pouch",
+            "title": "Travel Pouch",
+            "fallback": "pouch-woman.jpg"
+          }
+        },
+        "c3": {
+          "type": "collection",
+          "settings": {
+            "collection": "card-holder",
+            "title": "Card Holder",
+            "fallback": "card-holder.jpg"
+          }
+        },
+        "c4": {
+          "type": "collection",
+          "settings": {
+            "collection": "all",
+            "title": "Full Travel Sets",
+            "fallback": "life-stairs.jpg"
+          }
+        },
+        "c5": {
+          "type": "collection",
+          "settings": {
+            "collection": "all",
+            "title": "Shop all",
+            "fallback": "life-scooter.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ]
     }
   },
   "order": [
     "main",
+    "reviews",
     "complete",
+    "colls",
     "ugc"
   ]
 }

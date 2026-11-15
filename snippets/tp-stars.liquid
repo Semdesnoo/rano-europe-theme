@@ -1,0 +1,30 @@
+{%- comment -%} Trustpilot stars. Params: rating (number), size ('sm'|'lg') {%- endcomment -%}
+{%- liquid
+  assign r = rating | default: 5 | plus: 0
+  if r >= 4.5
+    assign tone = '#00b67a'
+  elsif r >= 3.5
+    assign tone = '#73cf11'
+  elsif r >= 2.5
+    assign tone = '#ffce00'
+  elsif r >= 1.5
+    assign tone = '#ff8622'
+  else
+    assign tone = '#ff3722'
+  endif
+-%}
+<span class="tp-stars tp-stars--{{ size | default: 'sm' }}" role="img" aria-label="{{ r }} out of 5 stars">
+  {%- for i in (1..5) -%}
+    {%- liquid
+      assign fill = r | minus: i | plus: 1
+      if fill >= 1
+        assign pct = 100
+      elsif fill > 0
+        assign pct = fill | times: 100 | round
+      else
+        assign pct = 0
+      endif
+    -%}
+    <span class="tp-star" style="--fill: {{ pct }}%; --tone: {{ tone }}">{% render 'icon', name: 'star' %}</span>
+  {%- endfor -%}
+</span>
