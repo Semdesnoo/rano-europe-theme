@@ -75,6 +75,59 @@
         {%- endunless -%}
         <input type="hidden" name="id" value="{{ current.id }}" data-variant-id>
         <input type="hidden" name="quantity" value="1">
+        {%- if section.settings.bundle_show -%}
+          {%- liquid
+            assign addons = ''
+            assign n = 0
+            assign kinds = 'Pouch,Card' | split: ','
+            for kind in kinds
+              if n >= section.settings.bundle_max
+                break
+              endif
+              assign pick = blank
+              for p in collections.all.products
+                if p.id == product.id or p.available == false or p.price >= product.price or p.title contains 'Set'
+                  continue
+                endif
+                unless p.title contains kind
+                  continue
+                endunless
+                if pick == blank
+                  assign pick = p
+                endif
+                if colour != blank and p.title contains colour
+                  assign pick = p
+                  break
+                endif
+              endfor
+              if pick != blank
+                assign n = n | plus: 1
+                assign addons = addons | append: pick.handle | append: ','
+              endif
+            endfor
+            assign pct2 = section.settings.bundle_pct_2
+            assign pct3 = section.settings.bundle_pct_3
+          -%}
+          {%- if n > 0 -%}
+            <div class="bundle" data-bundle data-main-price="{{ current.price }}" data-pct2="{{ pct2 }}" data-pct3="{{ pct3 }}">
+              <div class="bundle__head">
+                <p class="bundle__title">{{ section.settings.bundle_heading }}</p>
+                <p class="bundle__tiers"><span>2 pieces <b>-{{ pct2 }}%</b></span><span>3+ pieces <b>-{{ pct3 }}%</b></span></p>
+              </div>
+              {%- assign hs = addons | split: ',' -%}
+              {%- for h in hs -%}
+                {%- assign p = collections.all.products | where: 'handle', h | first -%}
+                {%- if p == blank -%}{%- continue -%}{%- endif -%}
+                <label class="bundle__item">
+                  <span class="bundle__img">{{ p.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: p.title }}</span>
+                  <span class="bundle__info"><strong>{{ p.title }}</strong><span class="bundle__price"><s>{{ p.price | money }}</s> <span data-bundle-from="{{ p.price }}">{%- assign keep = 100 | minus: pct2 -%}{{ p.price | times: keep | divided_by: 100 | money }}</span></span></span>
+                  <input type="checkbox" class="bundle__check" value="{{ p.selected_or_first_available_variant.id }}" data-bundle-item data-price="{{ p.price }}" aria-label="Add {{ p.title | escape }}">
+                </label>
+              {%- endfor -%}
+              <p class="bundle__sum" data-bundle-sum hidden>Set total <b data-bundle-total></b> <s data-bundle-was></s> <span class="bundle__save">You save <b data-bundle-save></b></span></p>
+            </div>
+          {%- endif -%}
+        {%- endif -%}
         {%- if section.settings.gift_wrap -%}
           <label class="pdp-gift">
             <span class="pdp-gift__icon">{% render 'icon', name: 'gift' %}</span>
@@ -205,6 +258,12 @@
     { "type": "checkbox", "id": "spin", "label": "Drag-to-rotate on first image", "info": "Turns through the product photos with a 3D effect. Real 3D models (.glb media) are shown automatically when uploaded.", "default": true },
     { "type": "url", "id": "shipping_link", "label": "Shipping policy link", "default": "/policies/shipping-policy" },
     { "type": "text", "id": "videos_heading", "label": "Video blocks heading", "default": "See it in motion" },
+    { "type": "header", "content": "Complete the set (bundle)" },
+    { "type": "checkbox", "id": "bundle_show", "label": "Show smaller add-on products", "default": true, "info": "Lists cheaper products (no sets) as add-ons. The discount itself must be an automatic discount in Shopify, see README." },
+    { "type": "text", "id": "bundle_heading", "label": "Heading", "default": "Complete the set & save" },
+    { "type": "range", "id": "bundle_max", "label": "Max add-ons", "info": "One per type: a pouch and a card holder, matching colour first.", "min": 1, "max": 2, "step": 1, "default": 2 },
+    { "type": "range", "id": "bundle_pct_2", "label": "Discount with 2 pieces (%)", "min": 0, "max": 40, "step": 1, "default": 10 },
+    { "type": "range", "id": "bundle_pct_3", "label": "Discount with 3+ pieces (%)", "min": 0, "max": 40, "step": 1, "default": 15 },
     { "type": "header", "content": "Gift wrapping" },
     { "type": "checkbox", "id": "gift_wrap", "label": "Show gift wrapping option", "info": "Adds the line item property 'Gift wrapping: Yes' to the order.", "default": true },
     { "type": "text", "id": "gift_title", "label": "Title", "default": "Add gift wrapping" },

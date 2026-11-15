@@ -904,3 +904,28 @@ select{border-radius:8px;cursor:pointer}
 @media (max-width:749px){.apply__grid{grid-template-columns:1fr}.apply__grid>.cfield--half{grid-column:1/-1}}
 
 .main-content>.shopify-section:first-child .rich--statement,main>.shopify-section:first-child .rich--statement{padding-top:clamp(40px,6vw,88px)}
+
+/* Complete the set (bundle add-ons) */
+.bundle{border:1px solid var(--line);border-radius:8px;padding:14px;margin:18px 0 0;display:grid;gap:8px}
+.bundle__head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:2px}
+.bundle__title{font-size:13.5px;font-weight:600}
+.bundle__tiers{display:flex;gap:6px;font-size:11.5px}
+.bundle__tiers span{background:var(--soft,#f3f3f3);border-radius:999px;padding:3px 9px}
+.bundle__item{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:12px;padding:8px;border:1px solid transparent;border-radius:6px;cursor:pointer;transition:border-color .2s,background .2s}
+.bundle__item:hover{background:var(--soft,#f6f6f6)}
+.bundle__item.is-on{border-color:var(--ink);background:#fff}
+.bundle__img{width:52px;height:52px;border-radius:5px;overflow:hidden;background:var(--card)}
+.bundle__img img{width:100%;height:100%;object-fit:cover}
+.bundle__info{display:grid;gap:2px;min-width:0}
+.bundle__info strong{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bundle__price{font-size:12.5px;font-weight:600}
+.bundle__price s{font-weight:400;color:color-mix(in srgb,var(--ink) 50%,transparent);margin-right:4px}
+.bundle__check{appearance:none;width:22px;height:22px;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center;margin:0;cursor:pointer;transition:background .2s}
+.bundle__check:checked{background:var(--ink)}
+.bundle__check:checked::after{content:"";width:6px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
+.bundle__check:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.bundle__sum{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;border-top:1px solid var(--line);padding-top:10px;margin-top:2px;font-size:13px}
+.bundle__sum b{font-weight:600}
+.bundle__sum s{color:color-mix(in srgb,var(--ink) 50%,transparent)}
+.bundle__save{margin-left:auto;background:var(--ink);color:#fff;border-radius:999px;padding:3px 10px;font-size:11.5px}
+.bundle+.pdp-gift{margin-top:10px}

@@ -53,3 +53,11 @@ Fill in the placeholders in square brackets first: legal entity name, address, K
 These texts follow EU/Dutch consumer law and GDPR but are not legal advice; have them checked once.
 
 **Footer menus**: point *Track my order* to `/pages/track-order`, and Craftsmanship / Partnerships / Reseller / Corporate Gifting to their pages.
+
+## "Complete the set & save" (product page bundle)
+
+The product page offers a matching pouch and card holder (same colour first). Chosen add-ons go into the bag together with the main product, each tagged with the hidden property `_bundle: Rano set`.
+The theme only **shows** the set price. To actually charge it, create two automatic discounts in Shopify (Discounts > Create > Amount off products, Automatic):
+- *Rano set 10%*: 10% off, minimum quantity of items **2**, applies to all products.
+- *Rano set 15%*: 15% off, minimum quantity of items **3**, applies to all products.
+Shopify applies the best one. Keep the percentages equal to the product section settings (default 10 / 15).

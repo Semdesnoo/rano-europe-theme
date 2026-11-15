@@ -195,7 +195,14 @@
     const btn = $('[type="submit"]', form);
     btn && btn.classList.add('is-loading');
     try {
-      const res = await fetch(window.rano.cartAdd, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) });
+      const extras = $$('[data-bundle-item]:checked', form);
+      let body = new FormData(form), headers = { Accept: 'application/json' };
+      if (extras.length) { // main product + add-ons in one request, tagged so an automatic discount / report can see the set
+        const props = { _bundle: 'Rano set' }; for (const [k, v] of body) { const m = k.match(/^properties\[(.+)\]$/); if (m) props[m[1]] = v; }
+        body = JSON.stringify({ items: [{ id: Number(body.get('id')), quantity: Number(body.get('quantity') || 1), properties: props }, ...extras.map((x) => ({ id: Number(x.value), quantity: 1, properties: { _bundle: 'Rano set' } }))] });
+        headers['Content-Type'] = 'application/json';
+      }
+      const res = await fetch(window.rano.cartAdd, { method: 'POST', headers, body });
       if (!res.ok) { const err = await res.json(); alert(err.description || 'Could not add to bag'); return; }
       await refreshCart(true);
     } catch (_) { form.submit(); }
@@ -404,3 +411,27 @@ document.addEventListener('submit', (e) => {
   const need = [...e.target.querySelectorAll('[data-need-one]')].find((g) => !g.querySelector(':checked'));
   if (need) { e.preventDefault(); need.closest('fieldset').scrollIntoView({ behavior: 'smooth', block: 'center' }); need.animate([{ transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'none' }], 240); }
 }, true);
+
+// Bundle: live set total. Prices in cents; pct by number of pieces (main + checked add-ons).
+// ponytail: display only; the real discount is a Shopify automatic discount (see README).
+// ponytail: matches the store's EUR money format (€1.234,56); read shop.money_format if more currencies are added
+const fmtMoney = (c) => '€' + (c / 100).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+,)/g, '.');
+const bundlePct = (pieces, p2, p3) => (pieces >= 3 ? p3 : pieces === 2 ? p2 : 0);
+document.querySelectorAll('[data-bundle]').forEach((box) => {
+  const main = +box.dataset.mainPrice, p2 = +box.dataset.pct2, p3 = +box.dataset.pct3;
+  const update = () => {
+    const on = [...box.querySelectorAll('[data-bundle-item]:checked')];
+    const pieces = on.length + 1, pct = bundlePct(pieces, p2, p3), was = on.reduce((t, x) => t + +x.dataset.price, main), now = Math.round(was * (100 - pct) / 100);
+    box.querySelectorAll('[data-bundle-from]').forEach((el) => { el.textContent = fmtMoney(Math.round(+el.dataset.bundleFrom * (100 - bundlePct(Math.max(pieces, 2), p2, p3)) / 100)); });
+    box.querySelectorAll('.bundle__item').forEach((l) => l.classList.toggle('is-on', l.querySelector('input').checked));
+    const sum = box.querySelector('[data-bundle-sum]'); sum.hidden = !on.length;
+    box.querySelector('[data-bundle-total]').textContent = fmtMoney(now);
+    box.querySelector('[data-bundle-was]').textContent = fmtMoney(was);
+    box.querySelector('[data-bundle-save]').textContent = fmtMoney(was - now);
+    const atc = box.closest('form').querySelector('[data-atc]');
+    if (atc && !atc.disabled) atc.textContent = on.length ? `Add set to bag · ${fmtMoney(now)}` : atc.dataset.label || (atc.dataset.label = atc.textContent.trim(), atc.textContent);
+  };
+  const atc = box.closest('form').querySelector('[data-atc]'); if (atc) atc.dataset.label = atc.textContent.trim();
+  box.addEventListener('change', update);
+});
+console.assert(fmtMoney(129610) === '€1.296,10' && bundlePct(1, 10, 15) === 0 && bundlePct(2, 10, 15) === 10 && bundlePct(4, 10, 15) === 15, 'bundlePct');
