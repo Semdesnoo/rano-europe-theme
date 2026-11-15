@@ -1,0 +1,159 @@
+// Static preview of this Shopify theme for GitHub Pages (liquidjs + mocked Shopify objects).
+// Usage: node preview/build.mjs [basePath]   -> writes _site/
+// ponytail: mocks only what this theme uses; not a general Shopify emulator.
+import { Liquid, Tag, Hash } from 'liquidjs';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const THEME = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const OUT = path.join(THEME, '_site');
+const BASE = (process.argv[2] || '/').replace(/\/?$/, '/');
+const read = (p) => fs.readFileSync(path.join(THEME, p), 'utf8');
+const locale = JSON.parse(read('locales/en.default.json'));
+
+// ---------- mock catalogue (real Rano products) ----------
+const im = (f) => ({ src: `/img/${f}`, alt: '', width: 1200, height: 1500, media_type: 'image' });
+const P = (handle, title, price, compare, imgs, tags = []) => ({
+  id: handle, handle, title, url: `/products/${handle}`, price: price * 100, compare_at_price: compare ? compare * 100 : null,
+  available: true, tags, vendor: 'Rano Europe', has_only_default_variant: true, price_varies: false,
+  images: imgs.map(im), media: imgs.map(im), featured_image: im(imgs[0]),
+  description: `<p>The ${title} is a statement in motion: designed in Italy from full-grain premium leather, defined by clean lines and a bold tone that blends luxury with confidence.</p><p>A spacious, lightweight piece that holds its structure, featuring silver hardware and a smart interior.</p>`,
+  variants: [{ id: 1, title: 'Default Title', price: price * 100, compare_at_price: compare ? compare * 100 : null, available: true, options: ['Default Title'] }],
+  options_with_values: [], collections: [],
+});
+const withVariant = (p) => { p.selected_or_first_available_variant = p.variants[0]; p.variants[0].id = p.handle; return p; };
+const products = [
+  P('giallo-traveller', 'Giallo Traveller', 258, 359, ['DSC03510.jpg', 'Rano___Model-070.jpg', 'Rano___Model-076.jpg', 'Rano___Model-077.jpg', 'WhatsApp_Image_2026-02-11_at_18.37.43.jpg']),
+  P('blue-mare-traveller', 'Blue Mare Traveller', 258, 359, ['DSC03522.jpg', 'Rano___Model-045.jpg', 'DSC03516.jpg', 'DSC00214.jpg']),
+  P('rano-rosa-traveller', 'Rosa Traveller', 258, 359, ['DSC03523_b261c397-68c1-4f94-84bc-4193bc80164e.jpg', 'Rano_Model-112.jpg', 'E9841D9D-FC6B-46F2-B7E4-CA70BB4A064C.jpg']),
+  P('giallo-travel-pouch', 'Giallo Travel Pouch', 71, 110, ['GEELFRONT.png', 'DSC00016.jpg']),
+  P('rosa-travel-pouch', 'Rosa Travel Pouch', 71, 110, ['ROZEFRONT.png', 'Minimalistische_roze_lederen_toilettas.png']),
+  P('blue-mare-travel-pouch', 'Blue Mare Travel Pouch', 71, 110, ['BLAUWFRONT.png', 'BLAUWSIDE.png']),
+  P('giallo-cardholder', 'Giallo Card Holder', 31, 39, ['yellow1.png', 'yellow2.png']),
+  P('rosa-cardholder', 'Rosa Card Holder', 31, 39, ['pinkcardholder1.png']),
+  P('blue-mare-card-holder', 'Blue Mare Card Holder', 31, 39, ['Blue_Mare_Cardholder_Shopify.png', 'ChatGPT_Image_28_aug_2026_00_18_21.png']),
+  P('bundle-product-7', 'Giallo Full Travel Set', 360, null, ['DSC03510.jpg', 'GEELFRONT.png', 'yellow1.png'], ['bundle']),
+  P('bundle-product-4', 'Rosa Full Travel Set', 360, null, ['DSC03523_b261c397-68c1-4f94-84bc-4193bc80164e.jpg', 'ROZEFRONT.png'], ['bundle']),
+];
+products.forEach(withVariant);
+const byHandle = Object.fromEntries(products.map((p) => [p.handle, p]));
+const C = (handle, title, hs) => ({ handle, title, url: `/collections/${handle}`, products: hs.map((h) => byHandle[h]), products_count: hs.length, description: '', sort_options: [{ value: 'manual', name: 'Featured' }, { value: 'price-ascending', name: 'Price, low to high' }], sort_by: 'manual' });
+const collections = {
+  'rano-traveller': C('rano-traveller', 'Rano Traveller', ['giallo-traveller', 'blue-mare-traveller', 'rano-rosa-traveller']),
+  'rano-travel-pouch': C('rano-travel-pouch', 'Rano Travel Pouch', ['giallo-travel-pouch', 'rosa-travel-pouch', 'blue-mare-travel-pouch']),
+  'card-holder': C('card-holder', 'Card Holder', ['giallo-cardholder', 'rosa-cardholder', 'blue-mare-card-holder']),
+  all: C('all', 'All products', products.map((p) => p.handle)),
+};
+for (const c of Object.values(collections)) if (c.handle !== 'all') c.products.forEach((p) => p.collections.push(c));
+products.forEach((p) => p.collections.push(collections.all));
+
+const L = (title, url, links = []) => ({ title, url, links, active: false, child_active: false });
+const menus = {
+  'main-menu': { title: 'Shop', links: [L('Shop all', '/collections/all', [L('The Traveller', '/collections/rano-traveller'), L('Travel Pouch', '/collections/rano-travel-pouch'), L('Card Holder', '/collections/card-holder')]), L('Traveller', '/collections/rano-traveller'), L('Travel Pouch', '/collections/rano-travel-pouch'), L('Card Holder', '/collections/card-holder'), L('About us', '/pages/about-us'), L('Contact', '/pages/contact')] },
+  footer: { title: 'Help', links: [L('Contact', '/pages/contact'), L('Shipping policy', '#'), L('Refund policy', '#'), L('Privacy policy', '#'), L('Search', '/search')] },
+};
+
+// ---------- settings ----------
+const schemaDefaults = (schema) => Object.fromEntries((schema.settings || []).filter((s) => 'default' in s).map((s) => [s.id, s.default]));
+const globalSchema = JSON.parse(read('config/settings_schema.json'));
+const settings = Object.assign({}, ...globalSchema.map(schemaDefaults), JSON.parse(read('config/settings_data.json')).presets.Default);
+const resolve = (type, v) => {
+  if (v == null || v === '') return type === 'url' || type === 'text' ? v : null;
+  if (type === 'collection') return collections[v] || null;
+  if (type === 'product') return byHandle[v] || null;
+  if (type === 'link_list') return menus[v] || null;
+  if (type === 'url') return String(v).replace('shopify://collections/', '/collections/').replace('shopify://pages/', '/pages/');
+  return v;
+};
+const schemaOf = (type) => { const m = read(`sections/${type}.liquid`).match(/{%\s*schema\s*%}([\s\S]*?){%\s*endschema\s*%}/); return m ? JSON.parse(m[1]) : {}; };
+function buildSection(id, data) {
+  const schema = schemaOf(data.type);
+  const types = Object.fromEntries((schema.settings || []).map((s) => [s.id, s.type]));
+  const st = { ...schemaDefaults(schema), ...(data.settings || {}) };
+  for (const k in st) st[k] = resolve(types[k], st[k]);
+  const blocks = (data.block_order || []).map((bid) => {
+    const b = data.blocks[bid]; const bs = (schema.blocks || []).find((x) => x.type === b.type) || {};
+    const bt = Object.fromEntries((bs.settings || []).map((s) => [s.id, s.type]));
+    const s = { ...schemaDefaults(bs), ...b.settings }; for (const k in s) s[k] = resolve(bt[k], s[k]);
+    return { id: bid, type: b.type, settings: s, shopify_attributes: '' };
+  });
+  return { id, type: data.type, settings: st, blocks };
+}
+
+// ---------- engine ----------
+const engine = new Liquid({ root: [path.join(THEME, 'snippets')], extname: '.liquid', jsTruthy: false, strictFilters: true });
+const money = (c) => '€' + (Number(c || 0) / 100).toFixed(2).replace('.', ',');
+const attrs = (h) => Object.entries(h || {}).filter(([, v]) => v !== false && v != null && v !== '').map(([k, v]) => `${k}="${String(v).replace(/"/g, '&quot;')}"`).join(' ');
+engine.registerFilter('t', (k) => k.split('.').reduce((o, x) => o?.[x], locale) ?? k);
+engine.registerFilter('asset_url', (f) => `/assets/${f}`);
+engine.registerFilter('image_url', (img) => (typeof img === 'string' ? img : img?.src || ''));
+engine.registerFilter('image_tag', function (src, ...args) { const h = Object.fromEntries(args.filter(Array.isArray)); delete h.widths; return `<img src="${src}" ${attrs(h)}>`; });
+engine.registerFilter('money', money);
+engine.registerFilter('money_with_currency', (c) => money(c) + ' EUR');
+engine.registerFilter('stylesheet_tag', (u) => `<link rel="stylesheet" href="${u}">`);
+engine.registerFilter('preload_tag', (u) => `<link rel="preload" href="${u}" as="font" crossorigin>`);
+engine.registerFilter('placeholder_svg_tag', (n, cls) => `<svg class="${cls || ''}" style="background:#ddd"></svg>`);
+engine.registerFilter('video_tag', () => '');
+engine.registerFilter('media_tag', () => '');
+engine.registerFilter('payment_type_svg_tag', (t) => `<span class="pay-icon" style="display:inline-block;border:1px solid #ccc;border-radius:3px;font-size:9px;text-align:center;line-height:22px">${t}</span>`);
+engine.registerFilter('default_pagination', () => '');
+engine.registerFilter('default_errors', () => '');
+engine.registerFilter('pluralize', (n, a, b) => (n === 1 ? a : b));
+engine.registerFilter('payment_button', () => '');
+
+class SchemaTag extends Tag { constructor(t, r, l) { super(t, r, l); r.shift(); while (r.length) { const x = r.shift(); if (x.name === 'endschema') break; } } * render() {} }
+engine.registerTag('schema', SchemaTag);
+engine.registerTag('form', class extends Tag {
+  constructor(t, r, l, p) { super(t, r, l); this.tpls = []; this.args = t.args; const s = p.parseStream(r).on('tag:endform', () => s.stop()).on('template', (x) => this.tpls.push(x)).on('end', () => { throw new Error('form not closed'); }); s.start(); }
+  * render(ctx, emitter) { const cls = (this.args.match(/class:\s*'([^']*)'/) || [])[1] || ''; const data = this.args.includes('data-add-form') ? ' data-add-form' : ''; emitter.write(`<form method="post" action="/cart/add" class="${cls}"${data}>`); ctx.push({ form: { errors: null, posted_successfully: false } }); yield this.liquid.renderer.renderTemplates(this.tpls, ctx, emitter); ctx.pop(); emitter.write('</form>'); }
+});
+engine.registerTag('paginate', class extends Tag {
+  constructor(t, r, l, p) { super(t, r, l); this.tpls = []; const s = p.parseStream(r).on('tag:endpaginate', () => s.stop()).on('template', (x) => this.tpls.push(x)).on('end', () => { throw new Error('paginate not closed'); }); s.start(); }
+  * render(ctx, emitter) { ctx.push({ paginate: { pages: 1 } }); yield this.liquid.renderer.renderTemplates(this.tpls, ctx, emitter); ctx.pop(); }
+});
+async function renderSection(sec, scope) {
+  const html = await engine.parseAndRender(read(`sections/${sec.type}.liquid`), { ...scope, section: sec });
+  return `<div id="shopify-section-${sec.id}" class="shopify-section section-${sec.type}">${html}</div>`;
+}
+const group = (name, scope) => { const g = JSON.parse(read(`sections/${name}.json`)); return Promise.all(g.order.map((id) => renderSection(buildSection(id, g.sections[id]), scope))).then((a) => a.join('')); };
+engine.registerTag('sections', class extends Tag { constructor(t, r, l) { super(t, r, l); this.name = t.args.replace(/['"\s]/g, ''); } async render(ctx, em) { em.write(await group(this.name, ctx.getAll())); } });
+engine.registerTag('section', class extends Tag { constructor(t, r, l) { super(t, r, l); this.name = t.args.replace(/['"\s]/g, ''); } async render(ctx, em) { em.write(await renderSection(buildSection(this.name, { type: this.name }), ctx.getAll())); } });
+
+const cart = { item_count: 0, items: [], total_price: 0, currency: { iso_code: 'EUR' } };
+async function page(template, extra = {}) {
+  const t = JSON.parse(read(`templates/${template}.json`));
+  const scope = {
+    settings, collections, cart, shop: { name: 'Rano Europe', customer_accounts_enabled: true, enabled_payment_types: ['visa', 'master', 'ideal', 'apple_pay', 'paypal', 'klarna'] },
+    routes: { root_url: '/', cart_url: '/cart', cart_add_url: '/cart/add', cart_change_url: '/cart/change', search_url: '/search', account_url: '/account', all_products_collection_url: '/collections/all' },
+    request: { locale: { iso_code: 'en' }, origin: 'http://localhost' }, localization: { available_countries: [] },
+    template: { name: template.split('.')[0] }, canonical_url: '/', page_title: 'Rano Europe', current_page: 1, ...extra,
+  };
+  Object.assign(engine.options.globals, { settings, collections, cart, routes: scope.routes, shop: scope.shop });
+  const body = (await Promise.all(t.order.map((id) => renderSection(buildSection(id, t.sections[id]), scope)))).join('');
+  return engine.parseAndRender(read('layout/theme.liquid'), { ...scope, content_for_layout: body, content_for_header: '' });
+}
+
+// ---------- static build ----------
+const BANNER = `<div style="position:fixed;left:12px;bottom:12px;z-index:60;background:#151514;color:#fff;font:500 12px/1.3 Geist,sans-serif;padding:8px 12px;border-radius:4px">Preview. Winkelmand en checkout werken pas in Shopify.</div>
+<script>document.addEventListener('submit',e=>{if(e.target.closest('[data-add-form]')){e.preventDefault();e.stopImmediatePropagation();alert('Preview: toevoegen aan winkelmand werkt pas in Shopify.')}},true)</script>`;
+const rebase = (html) => html.replace(/(href|src|poster|action)="\/(?!\/)/g, `$1="${BASE}`).replace(/"root":"\/"|root: "\/"/g, (m) => m.replace('/', BASE)).replace('</body>', BANNER + '</body>');
+const pages = {
+  '': () => page('index'),
+  'pages/about-us': () => page('page.about', { page: { title: 'About us' } }),
+  'pages/contact': () => page('page.contact', { page: { title: 'Contact' } }),
+  'cart': () => page('cart'),
+  'search': () => page('search', { search: { performed: false } }),
+  ...Object.fromEntries(products.map((p) => [`products/${p.handle}`, () => page('product', { product: p, page_title: p.title })])),
+  ...Object.fromEntries(Object.values(collections).map((c) => [`collections/${c.handle}`, () => page('collection', { collection: c })])),
+};
+fs.rmSync(OUT, { recursive: true, force: true });
+for (const [route, render] of Object.entries(pages)) {
+  const dir = path.join(OUT, route); fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'index.html'), rebase(await render()));
+}
+fs.cpSync(path.join(THEME, 'assets'), path.join(OUT, 'assets'), { recursive: true });
+fs.cpSync(path.join(THEME, 'preview/img'), path.join(OUT, 'img'), { recursive: true });
+fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
+fs.copyFileSync(path.join(OUT, 'index.html'), path.join(OUT, '404.html'));
+console.log(`built ${Object.keys(pages).length} pages -> _site (base ${BASE})`);

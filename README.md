@@ -1,17 +1,33 @@
 # Rano Europe - Shopify theme
 
-OS 2.0 theme for [ranoeurope.com](https://ranoeurope.com), layout modelled on doreandrose.com. Vanilla JS + one CSS file, no build step.
+OS 2.0 theme for [ranoeurope.com](https://ranoeurope.com), layout modelled on doreandrose.com.
 
-## Install
+**Live preview:** https://semdesnoo.github.io/rano-europe-theme/
+**Shopify zip (always latest):** [Releases > latest > rano-europe-theme.zip](https://github.com/Semdesnoo/rano-europe-theme/releases/tag/latest)
 
-**Option A - GitHub integration (recommended):** Shopify admin → Online Store → Themes → Add theme → Connect from GitHub → pick this repo + `main`. Every push updates the theme.
+## Workflow
+1. Edit files on GitHub (pencil icon) or locally, commit to `main`.
+2. GitHub Actions rebuilds the preview site and the Shopify zip (about 1 minute, see the *Actions* tab).
+3. Happy with the preview? Download the zip from *Releases* and upload it in Shopify.
 
-**Option B - zip:** download this repo as zip (or zip the 7 theme folders) → Themes → Add theme → Upload zip.
+## Where to change what
+| What | File |
+|---|---|
+| Homepage texts, images, videos, section order | `templates/index.json` |
+| Product page tabs (care, shipping) | `templates/product.json` |
+| About / Contact page | `templates/page.about.json`, `templates/page.contact.json` |
+| Announcement bar, header | `sections/header-group.json` |
+| Footer texts | `sections/footer.liquid` (schema defaults) |
+| Colours, logo width, cart message | `config/settings_data.json` |
+| Photos & videos | `assets/` (upload a file with the same name to replace it) |
+| Styling | `assets/rano.css` |
 
-Then:
+Preview-only (not in the zip): `preview/` renders the theme with the real Rano products; product photos live in `preview/img/` because in Shopify they come from the store itself. Cart/checkout only work in Shopify.
+
+Local preview: `npm install && npm run preview`, then serve `_site/` with any static server.
+
+## Shopify install
+Upload the zip (Online Store > Themes > Add theme > Upload zip), then:
 - Pages: assign template `page.about` to *About us*, `page.contact` to *Contact*.
 - Navigation: header uses menu `main-menu`, footer uses `main-menu` + `footer`.
-
-## Notes
-- Every image/video section has a bundled fallback in `assets/`; uploads in the theme editor override it.
 - Check shipping/returns copy in `templates/product.json` against the real policy.

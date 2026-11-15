@@ -1,0 +1,10 @@
+{
+  "name": "rano-europe-theme",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "preview": "node preview/build.mjs",
+    "zip": "node -e \"require('child_process').execSync('git archive -o rano-europe-theme.zip HEAD assets config layout locales sections snippets templates',{stdio:'inherit'})\""
+  },
+  "devDependencies": { "liquidjs": "10.30.1" }
+}
