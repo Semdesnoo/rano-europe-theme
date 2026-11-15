@@ -6,7 +6,7 @@
   <div class="pdp__gallery" data-gallery>
     <div class="pdp__track">
       {%- for media in product.media -%}
-        <div class="pdp__slide{% if forloop.first %} pdp__slide--first{% endif %}">
+        <div class="pdp__slide{% if forloop.first %} pdp__slide--first{% endif %}{% if media.media_type == 'model' %} pdp__slide--model{% endif %}">
           {%- liquid
             assign loading = 'lazy'
             if forloop.first
@@ -19,6 +19,9 @@
               {{ media | image_url: width: 1800 | image_tag: widths: '500, 800, 1100, 1400, 1800', sizes: '(min-width: 990px) 30vw, 100vw', loading: loading, class: 'cover', alt: alt_text }}
             {%- when 'video' -%}
               {{ media | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, image_size: '1100x', class: 'cover' }}
+            {%- when 'model' -%}
+              {{ media | model_viewer_tag: image_size: '1100x', camera-controls: true, auto-rotate: true, rotation-per-second: '18deg', interaction-prompt: 'none', shadow-intensity: '1', exposure: '1.05', class: 'pdp__model', alt: alt_text }}
+              <span class="pdp__model-hint">{% render 'icon', name: 'arrows' %} Drag to rotate</span>
             {%- else -%}
               {{ media | media_tag: image_size: '1100x' }}
           {%- endcase -%}

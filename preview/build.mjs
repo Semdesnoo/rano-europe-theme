@@ -37,6 +37,8 @@ const products = [
   P('bundle-product-4', 'Rosa Full Travel Set', 360, null, ['DSC03523_b261c397-68c1-4f94-84bc-4193bc80164e.jpg', 'ROZEFRONT.png'], ['bundle']),
 ];
 products.forEach(withVariant);
+// 3D: a preview/models/<handle>.glb becomes the product's first media (in Shopify: upload the .glb as product media)
+for (const p of products) if (fs.existsSync(path.join(THEME, 'preview/models', p.handle + '.glb'))) p.media.unshift({ media_type: 'model', src: `/models/${p.handle}.glb`, alt: p.title, poster: p.images[0].src });
 const byHandle = Object.fromEntries(products.map((p) => [p.handle, p]));
 const C = (handle, title, hs) => ({ handle, title, url: `/collections/${handle}`, products: hs.map((h) => byHandle[h]), products_count: hs.length, description: '', sort_options: [{ value: 'manual', name: 'Featured' }, { value: 'price-ascending', name: 'Price, low to high' }], sort_by: 'manual' });
 const collections = {
@@ -96,6 +98,7 @@ engine.registerFilter('preload_tag', (u) => `<link rel="preload" href="${u}" as=
 engine.registerFilter('placeholder_svg_tag', (n, cls) => `<svg class="${cls || ''}" style="background:#ddd"></svg>`);
 engine.registerFilter('video_tag', () => '');
 engine.registerFilter('media_tag', () => '');
+engine.registerFilter('model_viewer_tag', function (m, ...args) { const h = Object.fromEntries(args.filter(Array.isArray)); delete h.image_size; return `<model-viewer src="${m.src}" poster="${m.poster}" ${Object.entries(h).map(([k, v]) => (v === true ? k : `${k}="${v}"`)).join(' ')}></model-viewer>`; });
 engine.registerFilter('payment_type_svg_tag', (t) => `<span class="pay-icon" style="display:inline-block;border:1px solid #ccc;border-radius:3px;font-size:9px;text-align:center;line-height:22px">${t}</span>`);
 engine.registerFilter('default_pagination', () => '');
 engine.registerFilter('default_errors', () => '');
@@ -154,6 +157,7 @@ for (const [route, render] of Object.entries(pages)) {
 }
 fs.cpSync(path.join(THEME, 'assets'), path.join(OUT, 'assets'), { recursive: true });
 fs.cpSync(path.join(THEME, 'preview/img'), path.join(OUT, 'img'), { recursive: true });
+if (fs.existsSync(path.join(THEME, 'preview/models'))) fs.cpSync(path.join(THEME, 'preview/models'), path.join(OUT, 'models'), { recursive: true });
 fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
 fs.copyFileSync(path.join(OUT, 'index.html'), path.join(OUT, '404.html'));
 console.log(`built ${Object.keys(pages).length} pages -> _site (base ${BASE})`);

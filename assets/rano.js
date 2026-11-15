@@ -175,6 +175,13 @@
     }
   }
 
+  /* ---------- 3D models: Shopify's model-viewer, Google CDN outside Shopify ---------- */
+  if ($('model-viewer')) {
+    const fallback = () => customElements.get('model-viewer') || import('https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js');
+    if (window.Shopify && Shopify.loadFeatures) Shopify.loadFeatures([{ name: 'model-viewer-ui', version: '1.0', onLoad: fallback }]);
+    else fallback();
+  }
+
   /* ---------- Product page ---------- */
   const pdp = $('[data-product]');
   if (pdp) {
