@@ -1177,3 +1177,5 @@ select{border-radius:8px;cursor:pointer}
   .film-hero__line>span,.film-hero__eyebrow,.film-hero__text{animation:none;transform:none;opacity:1}
   .story__media .cover{transform:none}
 }
+.craft__mark{position:relative;width:46%;height:auto}
+@media (max-width:989px){.craft__mark{width:44%}}

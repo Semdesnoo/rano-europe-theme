@@ -7,7 +7,7 @@
         {% render 'video', video: s.video, video_asset: s.video_asset, poster: s.poster, class: 'cover' %}
         <span class="craft__stamp" aria-hidden="true">
           <svg viewBox="0 0 120 120"><defs><path id="stamp-{{ section.id }}" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><text><textPath href="#stamp-{{ section.id }}">{{ s.stamp }}</textPath></text></svg>
-          <b>R</b>
+          <img src="{{ 'logo-mark-white.png' | asset_url }}" alt="" width="355" height="340" loading="lazy" class="craft__mark">
         </span>
       </div>
     </div>
