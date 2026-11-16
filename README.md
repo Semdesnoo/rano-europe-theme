@@ -67,7 +67,7 @@ Shopify applies the best one. Keep the percentages equal to the product section 
 - Sale badges and struck-through prices are **off** by default (Theme settings > Product cards > *Show sale badges and original prices*). Switch on only during a sale.
 
 ## Countries, languages and currencies
-- The country picker (top right + footer) lists the most visited markets first (US, UK, AU, NL, DE, BE, FR, IT, ES, CH), then the rest A-Z, with a search field.
+- One combined picker (top right + footer): search field, most visited markets first (US, UK, AU, NL, DE), then all other countries A-Z, and EN/NL/DE/FR/IT/ES language chips at the bottom. It lists exactly the countries enabled in Markets; the preview shows the full list of 221 countries (`preview/countries.json`).
 - Picking a country also switches to its language when that language is published (NL/BE -> Nederlands, DE/AT/CH -> Deutsch, FR/LU -> Français, IT -> Italiano, ES -> Español, others -> English).
 - Theme texts are translated in `locales/` (en, nl, de, fr, it, es).
 - In Shopify: **Settings > Markets** add the countries and turn on *local currency* (prices are converted automatically, rounding rules optional). **Settings > Languages** add and publish nl, de, fr, it, es; use the free *Translate & Adapt* app to auto-translate products, pages and section texts.

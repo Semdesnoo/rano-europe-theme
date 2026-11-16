@@ -1008,3 +1008,18 @@ select{border-radius:8px;cursor:pointer}
 .footer .loc__search{background:rgba(255,255,255,.06)}
 @media (max-width:749px){.loc__list--countries{position:fixed;left:12px;right:12px;top:42px;min-width:0}}
 .loc__sep.loc__sep--off{border-top:0;margin-top:0;padding-top:0}
+
+/* Single compact picker (D&R size): ~4.5 rows visible, search on top, language chips at the bottom */
+.loc__list--countries{min-width:0;width:270px}
+.loc__list--countries ul{max-height:178px;padding:4px 6px}
+.loc__list--countries button{padding:7px 8px;font-size:13px}
+.loc__search{margin:8px 8px 2px}
+.loc__search input{padding:7px 0;font-size:13px}
+.loc__langs{display:flex;align-items:center;gap:2px;flex-wrap:wrap;border-top:1px solid var(--line);padding:6px 8px}
+.loc__langs .icon{width:14px;height:14px;opacity:.55;margin-right:4px}
+.loc__langs button{display:inline-block;width:auto;padding:4px 7px;border-radius:4px;font-size:11.5px;letter-spacing:.06em;color:color-mix(in srgb,var(--ink) 65%,transparent)}
+.loc__langs button:hover{background:var(--soft);color:var(--ink)}
+.loc__langs button[aria-current]{background:var(--ink);color:#fff;font-weight:500}
+.loc__langs button[aria-current]::after{display:none}
+.footer .loc__langs button[aria-current]{background:#fff;color:#111}
+@media (max-width:749px){.loc__list--countries{width:auto}.loc__list--countries ul{max-height:200px}}

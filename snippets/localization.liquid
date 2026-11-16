@@ -1,24 +1,12 @@
 {%- comment -%}
-  Country/currency + language picker (Shopify localization form). Native <details> dropdowns, no JS.
+  One picker for country, currency and language (Shopify localization form). Language follows the country; EN/NL/... chips to override.
   Params: id (unique suffix), up (bool: open upwards)
 {%- endcomment -%}
 {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
   {%- form 'localization', class: 'loc' -%}
-    {%- if localization.available_languages.size > 1 -%}
+    {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
       <details class="loc__dd{% if up %} loc__dd--up{% endif %}" data-loc>
-        <summary class="loc__btn" aria-label="Language">
-          {% render 'icon', name: 'globe' %}<span>{{ localization.language.endonym_name | capitalize }}</span>{% render 'icon', name: 'caret-down' %}
-        </summary>
-        <ul class="loc__list" role="list">
-          {%- for lang in localization.available_languages -%}
-            <li><button type="submit" name="language_code" value="{{ lang.iso_code }}"{% if lang.iso_code == localization.language.iso_code %} aria-current="true"{% endif %}>{{ lang.endonym_name | capitalize }}</button></li>
-          {%- endfor -%}
-        </ul>
-      </details>
-    {%- endif -%}
-    {%- if localization.available_countries.size > 1 -%}
-      <details class="loc__dd{% if up %} loc__dd--up{% endif %}" data-loc>
-        <summary class="loc__btn" aria-label="Country / currency">
+        <summary class="loc__btn" aria-label="Country, currency and language">
           {{ localization.country | image_url: width: 32 | image_tag: class: 'loc__flag', alt: '', width: 16, height: 12 }}<span>{{ localization.country.name }} ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }})</span>{% render 'icon', name: 'caret-down' %}
         </summary>
         <div class="loc__list loc__list--countries" data-loc-panel>
@@ -27,7 +15,7 @@
           </label>
           {%- liquid
             # Most visited markets first, then the rest A-Z. Language follows the country when that language is enabled.
-            assign top = 'US,GB,AU,NL,DE,BE,FR,IT,ES,CH' | split: ','
+            assign top = 'US,GB,AU,NL,DE' | split: ','
             assign langs = 'NL:nl,BE:nl,DE:de,AT:de,CH:de,LU:fr,FR:fr,IT:it,SM:it,ES:es,MX:es,AR:es,PT:pt,BR:pt,DK:da,SE:sv,NO:nb,FI:fi,PL:pl,JP:ja,KR:ko,CN:zh-CN,TW:zh-TW' | split: ','
             assign enabled = localization.available_languages | map: 'iso_code' | join: ','
           -%}
@@ -44,6 +32,14 @@
             {%- endfor -%}
           </ul>
           <p class="loc__empty" data-loc-empty hidden>No country found</p>
+          {%- if localization.available_languages.size > 1 -%}
+            <div class="loc__langs" role="group" aria-label="Language">
+              {% render 'icon', name: 'globe' %}
+              {%- for lang in localization.available_languages -%}
+                <button type="submit" name="language_code" value="{{ lang.iso_code }}"{% if lang.iso_code == localization.language.iso_code %} aria-current="true"{% endif %}>{{ lang.iso_code | upcase }}</button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
         </div>
         <input type="hidden" name="language_code" value="" data-loc-lang disabled>
       </details>
