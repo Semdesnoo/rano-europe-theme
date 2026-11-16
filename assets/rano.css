@@ -1098,3 +1098,15 @@ select{border-radius:8px;cursor:pointer}
 .cart-drawer .cart-total{font-size:15px;letter-spacing:.04em;text-transform:uppercase}
 .cart-drawer .cart-total strong{font-weight:500}
 @media (max-width:749px){.cart-drawer__head{padding:72px 24px 14px}.cart-drawer .drawer__body,.cart-drawer__foot,.cart-drawer .drawer__foot{padding-inline:24px}}
+
+/* Carousel arrows on the cards themselves (no round buttons in the header) */
+.carousel-wrap{position:relative;max-width:1680px;margin-inline:auto}
+.carousel-edge{position:absolute;z-index:3;top:var(--edge-top,0);height:var(--edge-h,100%);width:clamp(44px,4.5vw,72px);display:grid;align-items:center;color:#fff;opacity:.92;transition:opacity .4s var(--lux,ease),width .5s var(--lux,ease)}
+.carousel-edge svg{width:26px;height:26px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35));transition:transform .5s var(--lux,ease)}
+.carousel-edge--prev{left:0;justify-items:start;padding-left:clamp(10px,1.4vw,22px);background:linear-gradient(90deg,rgba(17,17,17,.55),rgba(17,17,17,0))}
+.carousel-edge--next{right:0;justify-items:end;padding-right:clamp(10px,1.4vw,22px);background:linear-gradient(270deg,rgba(17,17,17,.55),rgba(17,17,17,0))}
+.carousel-edge:hover{opacity:1;width:clamp(56px,6vw,96px)}
+.carousel-edge--prev:hover svg{transform:translateX(-3px)}
+.carousel-edge--next:hover svg{transform:translateX(3px)}
+.carousel-edge[hidden]{display:grid;opacity:0;pointer-events:none}
+.carousel-edge:focus-visible{outline:2px solid #fff;outline-offset:-4px}

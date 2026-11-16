@@ -2,10 +2,6 @@
   <div class="container">
     <div class="section-head">
       <h2 class="h2">{{ section.settings.heading }}</h2>
-      <div class="carousel-nav hide-mobile">
-        <button type="button" class="icon-btn icon-btn--round" data-prev aria-label="{{ 'general.previous' | t }}">{% render 'icon', name: 'caret-left' %}</button>
-        <button type="button" class="icon-btn icon-btn--round" data-next aria-label="{{ 'general.next' | t }}">{% render 'icon', name: 'caret-right' %}</button>
-      </div>
     </div>
     {%- if section.blocks.size > 1 -%}
       <div class="tabs" role="tablist">

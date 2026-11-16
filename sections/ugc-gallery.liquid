@@ -8,10 +8,6 @@
       {%- if settings.social_tiktok != blank -%}
         <a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" class="link-arrow hide-mobile">{% render 'icon', name: 'tiktok' %} TikTok</a>
       {%- endif -%}
-      <div class="carousel-nav">
-        <button type="button" class="icon-btn icon-btn--round" data-prev aria-label="{{ 'general.previous' | t }}">{% render 'icon', name: 'caret-left' %}</button>
-        <button type="button" class="icon-btn icon-btn--round" data-next aria-label="{{ 'general.next' | t }}">{% render 'icon', name: 'caret-right' %}</button>
-      </div>
     </div>
   </div>
   <div class="carousel carousel--ugc" data-carousel{% if section.settings.autoplay > 0 %} data-autoplay="{{ section.settings.autoplay }}"{% endif %}>

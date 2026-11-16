@@ -81,16 +81,23 @@
     schedule();
   });
 
-  /* ---------- Carousels: arrows scroll the visible track ---------- */
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-prev],[data-next]');
-    if (!btn) return;
-    const section = btn.closest('section');
-    const track = $$('[data-carousel]', section).find((t) => t.offsetParent !== null);
-    if (!track) return;
-    const step = track.clientWidth * 0.8;
-    track.scrollBy({ left: btn.hasAttribute('data-next') ? step : -step, behavior: reduce ? 'auto' : 'smooth' });
+  /* ---------- Carousels: arrows sit on the cards' edge (over the photos), shown only when there is more to scroll ---------- */
+  $$('.carousel[data-carousel]').forEach((track) => {
+    const wrap = document.createElement('div'); wrap.className = 'carousel-wrap'; track.before(wrap); wrap.append(track);
+    const mk = (dir) => { const b = document.createElement('button'); b.type = 'button'; b.className = `carousel-edge carousel-edge--${dir}`; b.setAttribute('aria-label', dir === 'prev' ? 'Previous' : 'Next');
+      b.innerHTML = `<svg viewBox="0 0 256 256" aria-hidden="true"><path fill="currentColor" d="${dir === 'prev' ? 'M164.24 203.76a6 6 0 1 1-8.48 8.48l-80-80a6 6 0 0 1 0-8.48l80-80a6 6 0 0 1 8.48 8.48L88.49 128Z' : 'M180.24 132.24l-80 80a6 6 0 0 1-8.48-8.48L167.51 128 91.76 52.24a6 6 0 0 1 8.48-8.48l80 80a6 6 0 0 1 0 8.48Z'}"/></svg>`;
+      b.addEventListener('click', () => track.scrollBy({ left: (dir === 'next' ? 1 : -1) * track.clientWidth * 0.8, behavior: reduce ? 'auto' : 'smooth' })); wrap.append(b); return b; };
+    const prev = mk('prev'), next = mk('next');
+    const sync = () => {
+      const media = track.querySelector('img,video'); const r = media && media.getBoundingClientRect(), t = track.getBoundingClientRect();
+      if (r && r.height) { wrap.style.setProperty('--edge-top', `${r.top - t.top}px`); wrap.style.setProperty('--edge-h', `${r.height}px`); }
+      const max = track.scrollWidth - track.clientWidth;
+      prev.hidden = track.scrollLeft < 8; next.hidden = track.scrollLeft > max - 8 || max < 8;
+    };
+    track.addEventListener('scroll', sync, { passive: true }); addEventListener('resize', sync); addEventListener('load', sync); sync();
+    new MutationObserver(sync).observe(track.closest('[hidden]') || track, { attributes: true, attributeFilter: ['hidden'] });
   });
+  document.addEventListener('click', (e) => { if (e.target.closest('[data-tab]')) requestAnimationFrame(() => dispatchEvent(new Event('resize'))); });
 
   /* ---------- Carousel autoplay (pauses on hover/touch, loops) ---------- */
   $$('[data-autoplay]').forEach((track) => {
