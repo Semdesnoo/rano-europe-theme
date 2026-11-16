@@ -1,15 +1,5 @@
 {
   "sections": {
-    "film": {
-      "type": "film-hero",
-      "settings": {
-        "eyebrow": "Nato a Casarano",
-        "heading": "Cut by hand.|Made to travel.",
-        "text": "Italian leather, shaped slowly in the south of Italy.",
-        "badge": "Fatto in Italia",
-        "scroll_to": "story"
-      }
-    },
     "mission": {
       "type": "rich-text",
       "settings": {
@@ -22,11 +12,11 @@
       "type": "story-film",
       "settings": {
         "anchor": "story",
-        "video_asset": "atelier-cut.mp4",
-        "poster": "atelier-cut.jpg",
-        "eyebrow": "Il mestiere",
-        "heading": "From hide to heirloom",
-        "text": "Four steps, all by hand, before a Rano piece is ready for its first journey.",
+        "video_asset": "atelier.mp4",
+        "poster": "atelier.jpg",
+        "eyebrow": "Nato a Casarano",
+        "heading": "The story behind Rano",
+        "text": "Born in Casarano, in the heel of Italy, where leather has been worked by hand for generations.",
         "button_label": ""
       },
       "blocks": {
@@ -174,9 +164,8 @@
     }
   },
   "order": [
-    "film",
-    "mission",
     "craft",
+    "mission",
     "facts",
     "s1",
     "s2",
