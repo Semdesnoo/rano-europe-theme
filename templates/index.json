@@ -327,7 +327,7 @@
     "reviews": {
       "type": "trustpilot-reviews",
       "settings": {
-        "layout": "carousel",
+        "layout": "grid",
         "rating": "4.8",
         "review_count": "0"
       }

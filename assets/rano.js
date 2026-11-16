@@ -381,8 +381,8 @@ document.addEventListener('click', (e) => {
   if (body && q.get('q') && !body.value) body.value = (q.get('product') ? `About ${q.get('product')}: ` : '') + q.get('q');
 }
 
-// Mobile reviews: turn grid/strip into a seamless, non-pausing marquee
-if (matchMedia('(max-width: 749px)').matches) {
+// Reviews: turn grid/strip into a seamless, non-pausing marquee (all screen sizes)
+{
   document.querySelectorAll('[data-tp-grid], .tp-track').forEach((box) => {
     const cards = [...box.children]; if (cards.length < 2) return;
     const inner = document.createElement('div'); inner.className = 'tp-marquee__inner';
