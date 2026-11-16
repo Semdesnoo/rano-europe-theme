@@ -15,7 +15,7 @@
           "type": "accordion",
           "settings": {
             "title": "Shipping & returns",
-            "content": "<p>Free shipping on every order. Orders are dispatched within 1-2 working days. Not the right fit? Return unused items within 14 days.</p>",
+            "content": "<p>Complimentary shipping on every order, sent with DHL in your Rano dust bag. Orders are dispatched within 1-2 working days. Not the right fit? Return unused items within 14 days.</p>",
             "icon": "truck"
           }
         },
@@ -88,7 +88,8 @@
         "dynamic_checkout": true,
         "shipping_link": "/policies/shipping-policy",
         "videos_heading": "See it in motion",
-        "gift_wrap": false
+        "gift_wrap": false,
+        "bundle_heading": "Complete the set"
       }
     },
     "complete": {

@@ -56,11 +56,11 @@ const menus = {
     L('Shop All', '/collections/all', [
       L('By category', '/collections/all', [L('All products', '/collections/all'), L('The Traveller', '/collections/rano-traveller'), L('Travel Pouch', '/collections/rano-travel-pouch'), L('Card Holder', '/collections/card-holder'), L('Full Travel Sets', '/products/bundle-product-7')]),
       L('By colour', '/collections/all', [L('Giallo', '/products/giallo-traveller'), L('Rosa', '/products/rano-rosa-traveller'), L('Blue Mare', '/products/blue-mare-traveller')]),
-      L('Highlights', '/collections/all', [L('Black Friday sale', '/collections/all'), L('Bestsellers', '/collections/all'), L('Gift sets', '/products/bundle-product-4')])]),
+      L('Highlights', '/collections/all', [L('The Gift Edit', '/products/bundle-product-4'), L('Bestsellers', '/collections/all'), L('Gift sets', '/products/bundle-product-4')])]),
     L('Bestsellers', '/collections/all'), L('About', '/pages/about-us'), L('Contact', '/pages/contact')] },
   'footer-company': { title: 'Company', links: [L('About us', '/pages/about-us'), L('Reviews', '/#reviews'), L('Craftsmanship', '/pages/craftsmanship'), L('Partnerships & Ambassadors', '/pages/partnerships'), L('Become a reseller', '/pages/reseller'), L('Corporate Gifting', '/pages/corporate-gifting'), L('Instagram', 'https://www.instagram.com/ranoeurope/'), L('TikTok', 'https://www.tiktok.com/@ranoeurope')] },
   footer: { title: 'Customer service', links: [L('Help centre & FAQs', '/pages/contact'), L('Track my order', '/pages/track-order'), L('Shipping Policy', '/policies/shipping-policy'), L('Return & Refund Policy', '/policies/refund-policy'), L('Privacy Policy', '/policies/privacy-policy'), L('Terms of Service', '/policies/terms-of-service'), L('Contact', '/pages/contact-form')] },
-  'footer-shop': { title: 'Rano', links: [L('Shop All', '/collections/all'), L('Bestsellers', '/collections/all?sort_by=best-selling'), L('The Traveller', '/collections/rano-traveller'), L('Travel Pouch', '/collections/rano-travel-pouch'), L('Card Holder', '/collections/card-holder'), L('Full Travel Sets', '/products/bundle-product-7'), L('Black Friday Sale', '/collections/all')] },
+  'footer-shop': { title: 'Rano', links: [L('Shop All', '/collections/all'), L('Bestsellers', '/collections/all?sort_by=best-selling'), L('The Traveller', '/collections/rano-traveller'), L('Travel Pouch', '/collections/rano-travel-pouch'), L('Card Holder', '/collections/card-holder'), L('Full Travel Sets', '/products/bundle-product-7'), L('The Gift Edit', '/products/bundle-product-4')] },
 };
 
 // ---------- settings ----------

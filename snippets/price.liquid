@@ -1,5 +1,5 @@
 {%- comment -%} Params: price, compare (cents) {%- endcomment -%}
-{%- if compare > price -%}
+{%- if compare > price and settings.show_sale -%}
   <span class="price price--sale">
     <span class="price__now">{{ price | money }}</span>
     <s class="price__was">{{ compare | money }}</s>

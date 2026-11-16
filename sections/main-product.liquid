@@ -52,7 +52,7 @@
       {%- endif -%}
       <h1 class="pdp__title">{{ product.title }}</h1>
       <div class="pdp__price" data-price>{% render 'price', price: current.price, compare: current.compare_at_price %}</div>
-      <p class="muted small">Tax included. <a href="{{ section.settings.shipping_link }}" class="link">Free shipping</a>.</p>
+      <p class="muted small">Tax included. <a href="{{ section.settings.shipping_link }}" class="link">Complimentary shipping</a> and returns.</p>
 
       {%- capture sw -%}{% render 'swatches', product: product, large: true %}{%- endcapture -%}
       {%- if sw != blank -%}
@@ -112,7 +112,7 @@
             <div class="bundle" data-bundle data-main-price="{{ current.price }}" data-pct2="{{ pct2 }}" data-pct3="{{ pct3 }}">
               <div class="bundle__head">
                 <p class="bundle__title">{{ section.settings.bundle_heading }}</p>
-                <p class="bundle__tiers"><span>2 pieces <b>-{{ pct2 }}%</b></span><span>3+ pieces <b>-{{ pct3 }}%</b></span></p>
+                <p class="bundle__tiers">{{ pct2 }}% on two pieces, {{ pct3 }}% on three</p>
               </div>
               {%- assign hs = addons | split: ',' -%}
               {%- for h in hs -%}
@@ -124,7 +124,7 @@
                   <input type="checkbox" class="bundle__check" value="{{ p.selected_or_first_available_variant.id }}" data-bundle-item data-price="{{ p.price }}" aria-label="Add {{ p.title | escape }}">
                 </label>
               {%- endfor -%}
-              <p class="bundle__sum" data-bundle-sum hidden>Set total <b data-bundle-total></b> <s data-bundle-was></s> <span class="bundle__save">You save <b data-bundle-save></b></span></p>
+              <p class="bundle__sum" data-bundle-sum hidden>Set total <b data-bundle-total></b> <s data-bundle-was></s> <span class="bundle__save">Set privilege <b data-bundle-save></b></span></p>
             </div>
           {%- endif -%}
         {%- endif -%}
@@ -143,7 +143,7 @@
         </button>
         {%- if section.settings.dynamic_checkout -%}{{ form | payment_button }}{%- endif -%}
       {%- endform -%}
-      <p class="pdp-trust"><span>{% render 'icon', name: 'return' %} 14-day returns</span><span>{% render 'icon', name: 'truck' %} Free shipping</span><span>{% render 'icon', name: 'seal' %} Genuine leather</span></p>
+      <p class="pdp-trust"><span>{% render 'icon', name: 'return' %} 14-day returns</span><span>{% render 'icon', name: 'truck' %} Complimentary shipping</span><span>{% render 'icon', name: 'seal' %} Genuine leather</span></p>
 
 
       {%- assign vids = section.blocks | where: 'type', 'video' -%}
@@ -171,7 +171,7 @@
         <div class="pdp-ask" data-ask>
           <div class="pdp-ask__chips">
             {%- for block in qs -%}
-              <button type="button" class="pdp-ask__chip" data-ask-q="{{ forloop.index }}" aria-expanded="false" {{ block.shopify_attributes }}>{% render 'icon', name: 'sparkle' %} {{ block.settings.question }}</button>
+              <button type="button" class="pdp-ask__chip" data-ask-q="{{ forloop.index }}" aria-expanded="false" {{ block.shopify_attributes }}>{{ block.settings.question }}</button>
             {%- endfor -%}
           </div>
           {%- for block in qs -%}
@@ -262,7 +262,7 @@
     { "type": "text", "id": "videos_heading", "label": "Video blocks heading", "default": "See it in motion" },
     { "type": "header", "content": "Complete the set (bundle)" },
     { "type": "checkbox", "id": "bundle_show", "label": "Show smaller add-on products", "default": true, "info": "Lists cheaper products (no sets) as add-ons. The discount itself must be an automatic discount in Shopify, see README." },
-    { "type": "text", "id": "bundle_heading", "label": "Heading", "default": "Complete the set & save" },
+    { "type": "text", "id": "bundle_heading", "label": "Heading", "default": "Complete the set" },
     { "type": "range", "id": "bundle_max", "label": "Max add-ons", "info": "One per type: a pouch and a card holder, matching colour first.", "min": 1, "max": 2, "step": 1, "default": 2 },
     { "type": "range", "id": "bundle_pct_2", "label": "Discount with 2 pieces (%)", "min": 0, "max": 40, "step": 1, "default": 10 },
     { "type": "range", "id": "bundle_pct_3", "label": "Discount with 3+ pieces (%)", "min": 0, "max": 40, "step": 1, "default": 15 },

@@ -8,13 +8,29 @@
         "m1": {
           "type": "message",
           "settings": {
-            "text": "Black Friday: up to 35% off - Shop the sale",
-            "link": "shopify://collections/all"
+            "text": "Complimentary shipping & 14-day returns across Europe",
+            "link": "shopify://pages/track-order"
+          }
+        },
+        "m2": {
+          "type": "message",
+          "settings": {
+            "text": "Designed in Casarano, Italy. Made in limited numbers.",
+            "link": "shopify://pages/craftsmanship"
+          }
+        },
+        "m3": {
+          "type": "message",
+          "settings": {
+            "text": "Each piece arrives in its Rano dust bag",
+            "link": "shopify://pages/about-us"
           }
         }
       },
       "block_order": [
-        "m1"
+        "m1",
+        "m2",
+        "m3"
       ]
     },
     "header": {
@@ -23,7 +39,7 @@
         "menu": "main-menu",
         "drawer_caption": "Shop the Traveller",
         "drawer_link": "shopify://collections/rano-traveller",
-        "accent_link": "Bestsellers"
+        "accent_link": ""
       },
       "blocks": {
         "t1": {
@@ -54,7 +70,7 @@
           "type": "mega_tile",
           "settings": {
             "fallback": "life-stairs.jpg",
-            "title": "Black Friday Sale",
+            "title": "The Gift Edit",
             "link": "shopify://collections/all"
           }
         }
@@ -69,7 +85,7 @@
     "util": {
       "type": "utility-bar",
       "settings": {
-        "text": "Free shipping on every order",
+        "text": "Complimentary shipping across Europe",
         "support_label": "Support",
         "support_link": "/pages/contact"
       }

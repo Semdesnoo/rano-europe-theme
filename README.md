@@ -61,3 +61,7 @@ The theme only **shows** the set price. To actually charge it, create two automa
 - *Rano set 10%*: 10% off, minimum quantity of items **2**, applies to all products.
 - *Rano set 15%*: 15% off, minimum quantity of items **3**, applies to all products.
 Shopify applies the best one. Keep the percentages equal to the product section settings (default 10 / 15).
+
+## Premium look
+- Headings use **Bodoni Moda** (self-hosted, SIL OFL), body text Geist.
+- Sale badges and struck-through prices are **off** by default (Theme settings > Product cards > *Show sale badges and original prices*). Switch on only during a sale.

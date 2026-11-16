@@ -29,6 +29,7 @@
     "settings": [
       { "type": "checkbox", "id": "card_hover_image", "label": "Show second image on hover", "default": true },
       { "type": "checkbox", "id": "card_quick_add", "label": "Show quick add button", "default": true },
+      { "type": "checkbox", "id": "show_sale", "label": "Show sale badges and original prices", "info": "Off keeps the store quiet and premium. Turn on during a sale.", "default": false },
       { "type": "text", "id": "card_subtitle", "label": "Default subtitle", "default": "Genuine Italian leather" }
     ]
   },
