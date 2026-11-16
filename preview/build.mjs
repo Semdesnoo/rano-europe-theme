@@ -25,7 +25,7 @@ const P = (handle, title, price, compare, imgs, tags = []) => ({
 const withVariant = (p) => { p.selected_or_first_available_variant = p.variants[0]; p.variants[0].id = p.handle; return p; };
 const products = [
   P('giallo-traveller', 'Giallo Traveller', 258, 359, ['DSC03510.jpg', 'Rano___Model-070.jpg', 'Rano___Model-076.jpg', 'Rano___Model-077.jpg']),
-  P('blue-mare-traveller', 'Blue Mare Traveller', 258, 359, ['DSC03522.jpg', 'Rano___Model-045.jpg', 'DSC03516.jpg', 'DSC00214.jpg']),
+  P('blue-mare-traveller', 'Blue Mare Traveller', 258, 359, ['DSC03516.jpg', 'Rano___Model-045.jpg', 'DSC03522.jpg', 'DSC00214.jpg']),
   P('rano-rosa-traveller', 'Rosa Traveller', 258, 359, ['DSC03523_b261c397-68c1-4f94-84bc-4193bc80164e.jpg', 'Rano_Model-112.jpg', 'E9841D9D-FC6B-46F2-B7E4-CA70BB4A064C.jpg']),
   P('giallo-travel-pouch', 'Giallo Travel Pouch', 71, 110, ['GEELFRONT.png', 'DSC00016.jpg']),
   P('rosa-travel-pouch', 'Rosa Travel Pouch', 71, 110, ['ROZEFRONT.png', 'Minimalistische_roze_lederen_toilettas.png']),
