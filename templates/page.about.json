@@ -1,12 +1,114 @@
 {
   "sections": {
+    "film": {
+      "type": "film-hero",
+      "settings": {
+        "eyebrow": "Nato a Casarano",
+        "heading": "Cut by hand.|Made to travel.",
+        "text": "Italian leather, shaped slowly in the south of Italy.",
+        "badge": "Fatto in Italia",
+        "scroll_to": "story"
+      }
+    },
     "mission": {
       "type": "rich-text",
       "settings": {
         "style": "statement",
-        "heading": "Nato a Casarano",
+        "heading": "",
         "text": "<p>We make leather travel pieces the Italian way: slowly, carefully and built to last. Quiet in design, strong in use, and made to move with you.</p>"
       }
+    },
+    "craft": {
+      "type": "craft-steps",
+      "settings": {
+        "anchor": "story",
+        "eyebrow": "Il mestiere",
+        "heading": "From hide to heirloom"
+      },
+      "blocks": {
+        "s0": {
+          "type": "step",
+          "settings": {
+            "italian": "La scelta",
+            "title": "Selecting the leather",
+            "text": "Every hide is chosen by hand for its grain, weight and the way it softens. Only full-grain leather makes the cut."
+          }
+        },
+        "s1": {
+          "type": "step",
+          "settings": {
+            "italian": "Il taglio",
+            "title": "Cut by hand",
+            "text": "Patterns are laid out to follow the natural grain, then cut with a blade, piece by piece, so every panel lines up."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "italian": "La cucitura",
+            "title": "Stitched to last",
+            "text": "Dense, even stitching and reinforced handle joints. A travel bag has to carry more than looks."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "italian": "La rifinitura",
+            "title": "Finished with intention",
+            "text": "Edges are smoothed and sealed, hardware checked, the Rano mark pressed in. Then it waits for its first journey."
+          }
+        }
+      },
+      "block_order": [
+        "s0",
+        "s1",
+        "s2",
+        "s3"
+      ]
+    },
+    "facts": {
+      "type": "facts",
+      "blocks": {
+        "f0": {
+          "type": "fact",
+          "settings": {
+            "number": 100,
+            "suffix": "%",
+            "label": "Full-grain leather"
+          }
+        },
+        "f1": {
+          "type": "fact",
+          "settings": {
+            "number": 4,
+            "suffix": "",
+            "label": "Hands on every piece"
+          }
+        },
+        "f2": {
+          "type": "fact",
+          "settings": {
+            "number": 14,
+            "suffix": "",
+            "label": "Days to make one Traveller"
+          }
+        },
+        "f3": {
+          "type": "fact",
+          "settings": {
+            "number": 1,
+            "suffix": "",
+            "label": "Small town in Puglia"
+          }
+        }
+      },
+      "block_order": [
+        "f0",
+        "f1",
+        "f2",
+        "f3"
+      ],
+      "settings": {}
     },
     "s1": {
       "type": "image-with-text",
@@ -55,7 +157,7 @@
         "link": "shopify://collections/all"
       }
     },
-    "film": {
+    "film_end": {
       "type": "image-banner",
       "settings": {
         "video_asset": "rano-film.mp4",
@@ -68,12 +170,15 @@
     }
   },
   "order": [
+    "film",
     "mission",
+    "craft",
+    "facts",
     "s1",
     "s2",
     "s3",
     "quote",
     "bestsellers",
-    "film"
+    "film_end"
   ]
 }

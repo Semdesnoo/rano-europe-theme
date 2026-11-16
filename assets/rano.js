@@ -497,3 +497,20 @@ document.querySelectorAll('[data-loc-panel]').forEach((panel) => {
     lang.disabled = !b.dataset.lang; lang.value = b.dataset.lang;
   });
 });
+
+// Facts: count up once when visible (keeps the final number in the HTML for no-JS / reduced motion)
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const cio = new IntersectionObserver((ents) => ents.forEach((en) => {
+    if (!en.isIntersecting) return; cio.unobserve(en.target);
+    const el = en.target, end = +el.dataset.count, t0 = performance.now(), dur = 1800;
+    const tick = (t) => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 4); el.textContent = Math.round(end * e); if (k < 1) requestAnimationFrame(tick); };
+    el.textContent = '0'; requestAnimationFrame(tick);
+  }), { threshold: .6 });
+  document.querySelectorAll('[data-count]').forEach((el) => cio.observe(el));
+  // Gentle parallax on story photos
+  const pics = [...document.querySelectorAll('.story__media')];
+  if (pics.length) {
+    let raf = 0; const run = () => { raf = 0; const vh = innerHeight; pics.forEach((m) => { const r = m.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return; const p = (r.top + r.height / 2 - vh / 2) / vh; m.style.setProperty('--py', `${(-p * 6).toFixed(2)}%`); }); };
+    addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(run); }, { passive: true }); run();
+  }
+}

@@ -71,3 +71,7 @@ Shopify applies the best one. Keep the percentages equal to the product section 
 - Picking a country also switches to its language when that language is published (NL/BE -> Nederlands, DE/AT/CH -> Deutsch, FR/LU -> Français, IT -> Italiano, ES -> Español, others -> English).
 - Theme texts are translated in `locales/` (en, nl, de, fr, it, es).
 - In Shopify: **Settings > Markets** add the countries and turn on *local currency* (prices are converted automatically, rounding rules optional). **Settings > Languages** add and publish nl, de, fr, it, es; use the free *Translate & Adapt* app to auto-translate products, pages and section texts.
+
+## Our story page (`page.about`)
+Film hero (`atelier.mp4`), craft steps with sticky film (`atelier-hands.mp4`), counting facts, story rows with parallax.
+Craftsman footage: free Pexels videos 4452763, 4452751, 4456168, 4452810 (Pexels licence, commercial use allowed, no attribution required). Replace with Rano's own atelier footage when available (section settings > Video).

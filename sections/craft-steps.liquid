@@ -1,0 +1,55 @@
+{%- comment -%} Sticky film on one side, numbered craft steps scrolling past on the other. {%- endcomment -%}
+{%- assign s = section.settings -%}
+<section class="section craft" id="{{ s.anchor }}">
+  <div class="container craft__grid">
+    <div class="craft__sticky">
+      <div class="craft__film reveal">
+        {% render 'video', video: s.video, video_asset: s.video_asset, poster: s.poster, class: 'cover' %}
+        <span class="craft__stamp" aria-hidden="true">
+          <svg viewBox="0 0 120 120"><defs><path id="stamp-{{ section.id }}" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><text><textPath href="#stamp-{{ section.id }}">{{ s.stamp }}</textPath></text></svg>
+          <b>R</b>
+        </span>
+      </div>
+    </div>
+    <div class="craft__steps">
+      {%- if s.eyebrow != blank -%}<p class="craft__eyebrow reveal">{{ s.eyebrow }}</p>{%- endif -%}
+      <h2 class="h2 craft__heading reveal">{{ s.heading }}</h2>
+      <ol class="craft__list">
+        {%- for block in section.blocks -%}
+          <li class="craft__step reveal" {{ block.shopify_attributes }}>
+            <span class="craft__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <div>
+              <p class="craft__it">{{ block.settings.italian }}</p>
+              <h3 class="craft__title">{{ block.settings.title }}</h3>
+              <p class="craft__text">{{ block.settings.text }}</p>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Craft steps",
+  "class": "section-craft",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "story" },
+    { "type": "video", "id": "video", "label": "Video (upload)" },
+    { "type": "text", "id": "video_asset", "label": "Bundled video file", "default": "atelier-hands.mp4" },
+    { "type": "text", "id": "poster", "label": "Bundled poster image", "default": "atelier-hands.jpg" },
+    { "type": "text", "id": "stamp", "label": "Round stamp text", "default": "FATTO A MANO · CASARANO · ITALIA · " },
+    { "type": "text", "id": "eyebrow", "label": "Small label", "default": "Il mestiere" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "From hide to heirloom" }
+  ],
+  "blocks": [
+    { "type": "step", "name": "Step", "settings": [
+      { "type": "text", "id": "italian", "label": "Italian label", "default": "La scelta" },
+      { "type": "text", "id": "title", "label": "Title", "default": "Selecting the leather" },
+      { "type": "textarea", "id": "text", "label": "Text" }
+    ]}
+  ],
+  "presets": [{ "name": "Craft steps" }]
+}
+{% endschema %}

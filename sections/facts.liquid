@@ -1,0 +1,26 @@
+{%- comment -%} Big numbers that count up when scrolled into view. {%- endcomment -%}
+<section class="section facts">
+  <div class="container facts__grid">
+    {%- for block in section.blocks -%}
+      <div class="facts__item reveal" {{ block.shopify_attributes }}>
+        <p class="facts__num"><span data-count="{{ block.settings.number }}">{{ block.settings.number }}</span>{{ block.settings.suffix }}</p>
+        <p class="facts__label">{{ block.settings.label }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Facts",
+  "class": "section-facts",
+  "blocks": [
+    { "type": "fact", "name": "Fact", "settings": [
+      { "type": "number", "id": "number", "label": "Number", "default": 100 },
+      { "type": "text", "id": "suffix", "label": "Suffix", "default": "%" },
+      { "type": "text", "id": "label", "label": "Label", "default": "Full-grain leather" }
+    ]}
+  ],
+  "presets": [{ "name": "Facts" }]
+}
+{% endschema %}
