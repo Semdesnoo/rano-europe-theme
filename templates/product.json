@@ -89,7 +89,8 @@
         "shipping_link": "/policies/shipping-policy",
         "videos_heading": "See it in motion",
         "gift_wrap": false,
-        "bundle_heading": "Complete the set"
+        "bundle_heading": "Complete the set",
+        "spin": false
       }
     },
     "complete": {
