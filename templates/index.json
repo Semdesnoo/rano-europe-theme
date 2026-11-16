@@ -11,7 +11,7 @@
             "fallback": "rano-film-poster.jpg",
             "heading": "Designed in Italy. Carried everywhere.",
             "text": "Genuine leather travel pieces, made in small numbers.",
-            "button_label": "Shop the collection",
+            "button_label": "Discover the collection",
             "button_link": "shopify://collections/all"
           }
         },
@@ -24,7 +24,7 @@
             "fallback_3": "model-blue.jpg",
             "heading": "One silhouette. Three colours.",
             "text": "Giallo, Rosa and Blue Mare. Pick yours.",
-            "button_label": "Shop the Traveller",
+            "button_label": "Discover the Traveller",
             "button_link": "shopify://collections/rano-traveller"
           }
         }
@@ -76,7 +76,7 @@
         "t4"
       ],
       "settings": {
-        "heading": "Bestsellers",
+        "heading": "The Icons",
         "limit": 8,
         "link_label": "View all",
         "link": "shopify://collections/all"
@@ -166,7 +166,7 @@
             "fallback": "life-stairs.jpg",
             "heading": "The Traveller",
             "text": "A spacious weekender that holds its shape.",
-            "button_label": "Shop now",
+            "button_label": "Discover",
             "link": "shopify://collections/rano-traveller"
           }
         },
@@ -176,7 +176,7 @@
             "fallback": "pouch-woman.jpg",
             "heading": "The Travel Pouch",
             "text": "Your essentials, organised in leather.",
-            "button_label": "Shop now",
+            "button_label": "Discover",
             "link": "shopify://collections/rano-travel-pouch"
           }
         }

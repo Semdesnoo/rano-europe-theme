@@ -1023,3 +1023,52 @@ select{border-radius:8px;cursor:pointer}
 .loc__langs button[aria-current]::after{display:none}
 .footer .loc__langs button[aria-current]{background:#fff;color:#111}
 @media (max-width:749px){.loc__list--countries{width:auto}.loc__list--countries ul{max-height:200px}}
+
+/* ===== Loro Piana-inspired motion: slow, soft, never bouncy ===== */
+:root{--lux:cubic-bezier(.19,1,.22,1)}
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:luxOut .35s ease both}
+::view-transition-new(root){animation:luxIn .7s var(--lux) both}
+@keyframes luxOut{to{opacity:0}}
+@keyframes luxIn{from{opacity:0;transform:translateY(8px)}}
+/* scroll reveal: longer travel, slower ease, stagger in grids */
+.js .reveal{transform:translateY(40px);transition:opacity 1.2s var(--lux),transform 1.4s var(--lux)}
+.js .reveal.is-in{transform:none}
+.js [data-carousel] .reveal,.js .pdp__track .reveal{transform:none}
+.js .grid>.reveal:nth-child(4n+2),.js .tiles>.reveal:nth-child(4n+2),.js .details__grid>.reveal:nth-child(2),.js .split>.reveal:nth-child(2){transition-delay:.12s}
+.js .grid>.reveal:nth-child(4n+3),.js .tiles>.reveal:nth-child(4n+3),.js .details__grid>.reveal:nth-child(3){transition-delay:.24s}
+.js .grid>.reveal:nth-child(4n+4),.js .tiles>.reveal:nth-child(4n+4){transition-delay:.36s}
+/* images: curtain reveal from the bottom + slow settle of the zoom */
+.js :is(.banner,.split__item,.story__media,.details__item).reveal{clip-path:inset(14% 0 0 0);transition:opacity 1.2s var(--lux),transform 1.4s var(--lux),clip-path 1.6s var(--lux)}
+.js :is(.banner,.split__item,.story__media,.details__item).reveal.is-in{clip-path:inset(0 0 0 0)}
+.js .reveal .cover{transition:transform 2.2s var(--lux)}
+.js .reveal:not(.is-in) .cover{transform:scale(1.12)}
+/* text inside revealed blocks rises a beat later than the image */
+.js .reveal :is(.banner__content,.split__content,.story__text>*,figcaption){transition:opacity 1s var(--lux) .25s,transform 1.2s var(--lux) .25s}
+.js .reveal:not(.is-in) :is(.banner__content,.split__content,figcaption){opacity:0;transform:translateY(24px)}
+/* hero: slower Ken Burns, title lines drift up one after another */
+.hero__media .cover{transform:scale(1.12);transition:transform 9s cubic-bezier(.25,.1,.25,1)}
+.hero__slide .hero__content>*{transform:translateY(30px);transition:opacity 1.4s var(--lux),transform 1.6s var(--lux)}
+.hero__slide.is-active .hero__content>:nth-child(1){transition-delay:.35s}
+.hero__slide.is-active .hero__content>:nth-child(2){transition-delay:.55s}
+.hero__slide.is-active .hero__content>:nth-child(3){transition-delay:.75s}
+.hero__slide{transition:opacity 1.6s ease,visibility 1.6s}
+/* product cards: slow crossfade + barely-there zoom */
+.card__img{transition:opacity .9s ease,transform 1.8s var(--lux)}
+.card:hover .card__img{transform:scale(1.025)}
+/* text links: hairline draws in from the left */
+.link-arrow,.footer__col li a,.mega__col li a,.pdp__crumb,.util__link{background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .6s var(--lux),color .3s}
+.link-arrow:hover,.footer__col li a:hover,.mega__col li a:hover,.pdp__crumb:hover,.util__link:hover{background-size:100% 1px;text-decoration:none}
+.mega__col li a:hover{transform:none}
+/* buttons: ink fills from the bottom */
+.btn--dark{background:linear-gradient(#3a3a3a,#3a3a3a) 0 100%/100% 0 no-repeat,var(--ink);transition:background-size .6s var(--lux),color .3s}
+.btn--dark:hover:not(:disabled){background:linear-gradient(#3a3a3a,#3a3a3a) 0 100%/100% 100% no-repeat,var(--ink)}
+/* mega menu: soft drop, columns stagger */
+.mega{transition:opacity .5s var(--lux),visibility .5s,transform .6s var(--lux)}
+.nav__item.has-mega:hover .mega__col:nth-child(2){transition-delay:.06s}
+.nav__item.has-mega:hover .mega__col:nth-child(3){transition-delay:.12s}
+@media (prefers-reduced-motion:reduce){
+  @view-transition{navigation:none}
+  .js .reveal,.js .reveal .cover,.js .reveal :is(.banner__content,.split__content,figcaption){transform:none!important;opacity:1!important;clip-path:none!important;transition:none!important}
+  .hero__media .cover{transition:none;transform:none}
+}
