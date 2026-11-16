@@ -1,7 +1,12 @@
 <div class="drawer drawer--right cart-drawer" id="cart-drawer" data-drawer hidden role="dialog" aria-modal="true" aria-label="{{ 'cart.title' | t }}">
-  <div class="drawer__head">
-    <h2 class="drawer__title">{{ 'cart.title' | t }} <span class="muted">({{ cart.item_count }})</span></h2>
-    <button class="icon-btn" type="button" data-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+  <button class="cart-drawer__close" type="button" data-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+  <div class="cart-drawer__head">
+    {%- if cart.item_count == 0 -%}
+      <h2 class="cart-drawer__title">Your Bag <em>is Empty</em></h2>
+      <p class="cart-drawer__sub">A Rano piece is waiting for its first journey.</p>
+    {%- else -%}
+      <h2 class="cart-drawer__title">Your Bag <em>({{ cart.item_count }})</em></h2>
+    {%- endif -%}
   </div>
   {%- if settings.cart_note != blank -%}
     <p class="cart-drawer__note">{% render 'icon', name: 'truck' %} {{ settings.cart_note }}</p>
@@ -9,12 +14,17 @@
 
   {%- if cart.item_count == 0 -%}
     <div class="drawer__body cart-empty">
-      <p class="cart-empty__title">{{ 'cart.empty' | t }}</p>
-      <a href="{{ routes.all_products_collection_url }}" class="btn btn--dark">Shop the collection</a>
       {%- assign suggest = settings.cart_empty_collection | default: collections.all -%}
+      <p class="cart-empty__label">The Icons</p>
       <div class="cart-empty__grid">
         {%- for p in suggest.products limit: 2 -%}{% render 'product-card', product: p, sizes: '200px' %}{%- endfor -%}
       </div>
+    </div>
+    <div class="cart-drawer__foot cart-drawer__foot--empty">
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--dark btn--block btn--lg">Start shopping</a>
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="cart-drawer__login">Login or register</a>
+      {%- endif -%}
     </div>
   {%- else -%}
     <ul class="drawer__body cart-lines">

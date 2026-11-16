@@ -1072,3 +1072,28 @@ select{border-radius:8px;cursor:pointer}
   .js .reveal,.js .reveal .cover,.js .reveal :is(.banner__content,.split__content,figcaption){transform:none!important;opacity:1!important;clip-path:none!important;transition:none!important}
   .hero__media .cover{transition:none;transform:none}
 }
+
+/* Cart drawer, D&R structure in Rano black & white */
+.cart-drawer{width:min(500px,94vw)}
+.cart-drawer__close{position:absolute;top:18px;right:18px;z-index:2;width:42px;height:42px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;transition:transform .5s var(--lux,ease),background .3s}
+.cart-drawer__close .icon{width:18px;height:18px}
+.cart-drawer__close:hover{transform:rotate(90deg);background:#3a3a3a}
+.cart-drawer__head{padding:clamp(56px,9vh,96px) 36px 18px}
+.cart-drawer__title{font-family:var(--serif);font-weight:400;font-size:clamp(28px,2.4vw,34px);line-height:1.15;letter-spacing:-.01em}
+.cart-drawer__title em{font-style:italic}
+.cart-drawer__sub{margin-top:14px;font-size:15px;color:color-mix(in srgb,var(--ink) 62%,transparent)}
+.cart-drawer .drawer__body{padding:8px 36px 22px}
+.cart-drawer__note{padding:12px 36px}
+.cart-empty{padding-top:24px;align-content:end}
+.cart-empty__label{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:color-mix(in srgb,var(--ink) 55%,transparent)}
+.cart-empty__grid{margin-top:4px}
+.cart-drawer .drawer__foot,.cart-drawer__foot{padding:22px 36px 28px;border-top:0}
+.cart-drawer__foot--empty{display:grid;gap:0}
+.cart-drawer__login{justify-self:center;margin-top:22px;padding-top:22px;width:100%;text-align:center;border-top:1px solid var(--line);font-size:14px;letter-spacing:.02em}
+.cart-drawer__login{background:none}
+.cart-drawer__login:hover{text-decoration:underline;text-underline-offset:4px}
+.cart-drawer .cart-line{grid-template-columns:96px 1fr auto}
+.cart-drawer .cart-line__title{font-family:var(--serif);font-size:17px;font-weight:400}
+.cart-drawer .cart-total{font-size:15px;letter-spacing:.04em;text-transform:uppercase}
+.cart-drawer .cart-total strong{font-weight:500}
+@media (max-width:749px){.cart-drawer__head{padding:72px 24px 14px}.cart-drawer .drawer__body,.cart-drawer__foot,.cart-drawer .drawer__foot{padding-inline:24px}}

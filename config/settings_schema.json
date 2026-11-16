@@ -36,7 +36,7 @@
   {
     "name": "Cart",
     "settings": [
-      { "type": "text", "id": "cart_note", "label": "Cart drawer message", "default": "Free shipping on every order" },
+      { "type": "text", "id": "cart_note", "label": "Cart drawer message", "default": "Complimentary shipping and returns across Europe" },
       { "type": "collection", "id": "cart_empty_collection", "label": "Suggested collection when cart is empty" }
     ]
   },
