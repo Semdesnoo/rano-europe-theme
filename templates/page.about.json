@@ -19,11 +19,15 @@
       }
     },
     "craft": {
-      "type": "craft-steps",
+      "type": "story-film",
       "settings": {
         "anchor": "story",
+        "video_asset": "atelier-cut.mp4",
+        "poster": "atelier-cut.jpg",
         "eyebrow": "Il mestiere",
-        "heading": "From hide to heirloom"
+        "heading": "From hide to heirloom",
+        "text": "Four steps, all by hand, before a Rano piece is ready for its first journey.",
+        "button_label": ""
       },
       "blocks": {
         "s0": {
@@ -31,7 +35,7 @@
           "settings": {
             "italian": "La scelta",
             "title": "Selecting the leather",
-            "text": "Every hide is chosen by hand for its grain, weight and the way it softens. Only full-grain leather makes the cut."
+            "text": "Every hide is chosen by hand for its grain, weight and the way it softens."
           }
         },
         "s1": {
@@ -47,7 +51,7 @@
           "settings": {
             "italian": "La cucitura",
             "title": "Stitched to last",
-            "text": "Dense, even stitching and reinforced handle joints. A travel bag has to carry more than looks."
+            "text": "Dense, even stitching and reinforced handle joints."
           }
         },
         "s3": {
@@ -55,7 +59,7 @@
           "settings": {
             "italian": "La rifinitura",
             "title": "Finished with intention",
-            "text": "Edges are smoothed and sealed, hardware checked, the Rano mark pressed in. Then it waits for its first journey."
+            "text": "Edges are smoothed and sealed, hardware checked, the Rano mark pressed in."
           }
         }
       },
