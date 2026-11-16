@@ -1,0 +1,28 @@
+{
+  "general": {
+    "skip": "Naar inhoud",
+    "menu": "Menu",
+    "close": "Sluiten",
+    "search": "Zoeken",
+    "account": "Account",
+    "cart": "Tas",
+    "previous": "Vorige",
+    "next": "Volgende"
+  },
+  "products": {
+    "add_to_cart": "In de tas",
+    "sold_out": "Uitverkocht",
+    "unavailable": "Niet beschikbaar",
+    "sale": "Sale",
+    "colour": "Kleur",
+    "quantity": "Aantal"
+  },
+  "cart": {
+    "title": "Jouw tas",
+    "empty": "Je tas is leeg",
+    "subtotal": "Subtotaal",
+    "checkout": "Afrekenen",
+    "remove": "Verwijderen",
+    "taxes": "Inclusief btw. Verzending wordt berekend bij het afrekenen."
+  }
+}

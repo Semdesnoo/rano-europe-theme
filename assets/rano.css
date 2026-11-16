@@ -994,3 +994,17 @@ select{border-radius:8px;cursor:pointer}
 .announce{letter-spacing:.2em;font-size:10.5px;font-weight:400}
 .announce__msg a{text-decoration:none}
 @media (max-width:749px){.announce{letter-spacing:.08em;font-size:9.5px}.announce__msg{padding-inline:8px}}
+
+/* Country picker with search (D&R style) */
+.loc__list--countries{min-width:300px;max-height:none;overflow:visible;padding:0;display:flex;flex-direction:column}
+.loc__list--countries ul{max-height:300px;overflow:auto;padding:6px;overscroll-behavior:contain;scrollbar-width:thin}
+.loc__search{display:flex;align-items:center;gap:8px;margin:10px 10px 4px;border:1px solid var(--line);border-radius:6px;padding:0 10px;background:var(--soft)}
+.loc__search .icon{width:14px;height:14px;opacity:.5;flex:none}
+.loc__search input{border:0;outline:none;background:none;width:100%;padding:9px 0;font-size:13.5px}
+.loc__search:focus-within{border-color:var(--ink);background:#fff}
+.loc__list--countries button{grid-template-columns:auto 1fr auto}
+.loc__sep{border-top:1px solid var(--line);margin-top:6px;padding-top:6px}
+.loc__empty{padding:14px;font-size:13px;color:color-mix(in srgb,var(--ink) 55%,transparent);text-align:center}
+.footer .loc__search{background:rgba(255,255,255,.06)}
+@media (max-width:749px){.loc__list--countries{position:fixed;left:12px;right:12px;top:42px;min-width:0}}
+.loc__sep.loc__sep--off{border-top:0;margin-top:0;padding-top:0}

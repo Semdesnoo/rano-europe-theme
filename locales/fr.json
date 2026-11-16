@@ -1,0 +1,28 @@
+{
+  "general": {
+    "skip": "Aller au contenu",
+    "menu": "Menu",
+    "close": "Fermer",
+    "search": "Rechercher",
+    "account": "Compte",
+    "cart": "Sac",
+    "previous": "Précédent",
+    "next": "Suivant"
+  },
+  "products": {
+    "add_to_cart": "Ajouter au sac",
+    "sold_out": "Épuisé",
+    "unavailable": "Indisponible",
+    "sale": "Soldes",
+    "colour": "Couleur",
+    "quantity": "Quantité"
+  },
+  "cart": {
+    "title": "Votre sac",
+    "empty": "Votre sac est vide",
+    "subtotal": "Sous-total",
+    "checkout": "Paiement",
+    "remove": "Supprimer",
+    "taxes": "TVA incluse. Livraison calculée au paiement."
+  }
+}

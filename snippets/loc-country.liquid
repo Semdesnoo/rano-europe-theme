@@ -1,0 +1,17 @@
+{%- comment -%} One country row in the localization picker. Params: c, langs (CC:lang list), enabled (comma list), sep {%- endcomment -%}
+{%- liquid
+  assign lang = 'en'
+  for l in langs
+    assign kv = l | split: ':'
+    if kv[0] == c.iso_code
+      assign lang = kv[1]
+    endif
+  endfor
+  assign lang_list = enabled | split: ','
+  unless lang_list contains lang
+    assign lang = ''
+  endunless
+-%}
+<li{% if sep %} class="loc__sep"{% endif %}><button type="submit" name="country_code" value="{{ c.iso_code }}" data-lang="{{ lang }}" data-name="{{ c.name | downcase | escape }} {{ c.iso_code | downcase }} {{ c.currency.iso_code | downcase }}"{% if c.iso_code == localization.country.iso_code %} aria-current="true"{% endif %}>
+  {{ c | image_url: width: 32 | image_tag: class: 'loc__flag', alt: '', width: 16, height: 12, loading: 'lazy' }}<span>{{ c.name }} ({{ c.currency.iso_code }} {{ c.currency.symbol }})</span>
+</button></li>

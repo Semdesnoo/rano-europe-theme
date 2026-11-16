@@ -1,0 +1,28 @@
+{
+  "general": {
+    "skip": "Vai al contenuto",
+    "menu": "Menu",
+    "close": "Chiudi",
+    "search": "Cerca",
+    "account": "Account",
+    "cart": "Borsa",
+    "previous": "Precedente",
+    "next": "Successivo"
+  },
+  "products": {
+    "add_to_cart": "Aggiungi alla borsa",
+    "sold_out": "Esaurito",
+    "unavailable": "Non disponibile",
+    "sale": "Saldi",
+    "colour": "Colore",
+    "quantity": "Quantità"
+  },
+  "cart": {
+    "title": "La tua borsa",
+    "empty": "La tua borsa è vuota",
+    "subtotal": "Subtotale",
+    "checkout": "Cassa",
+    "remove": "Rimuovi",
+    "taxes": "IVA inclusa. Spedizione calcolata alla cassa."
+  }
+}

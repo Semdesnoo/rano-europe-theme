@@ -473,3 +473,20 @@ document.querySelectorAll('input[type="date"]').forEach((input) => {
   pop.addEventListener('keydown', (e) => { if (e.key === 'Escape') { open(false); input.focus(); } });
   document.addEventListener('click', (e) => { if (!e.composedPath().includes(wrap)) open(false); });
 });
+
+// Country picker: live search + switch language with the country
+document.querySelectorAll('[data-loc-panel]').forEach((panel) => {
+  const q = panel.querySelector('[data-loc-search]'), items = [...panel.querySelectorAll('[data-loc-items] li')], empty = panel.querySelector('[data-loc-empty]');
+  q.addEventListener('input', () => {
+    const v = q.value.trim().toLowerCase(); let n = 0;
+    items.forEach((li) => { const hit = !v || li.querySelector('button').dataset.name.includes(v); li.hidden = !hit; n += hit; li.classList.toggle('loc__sep--off', !!v); });
+    empty.hidden = n > 0;
+  });
+  q.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); const first = items.find((li) => !li.hidden); first && first.querySelector('button').click(); } });
+  panel.closest('details').addEventListener('toggle', (e) => { if (e.target.open && matchMedia('(hover:hover)').matches) q.focus(); });
+  panel.addEventListener('click', (e) => {
+    const b = e.target.closest('button[name="country_code"]'); if (!b) return;
+    const lang = panel.closest('form').querySelector('[data-loc-lang]');
+    lang.disabled = !b.dataset.lang; lang.value = b.dataset.lang;
+  });
+});

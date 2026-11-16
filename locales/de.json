@@ -1,0 +1,28 @@
+{
+  "general": {
+    "skip": "Zum Inhalt",
+    "menu": "Menü",
+    "close": "Schließen",
+    "search": "Suchen",
+    "account": "Konto",
+    "cart": "Tasche",
+    "previous": "Zurück",
+    "next": "Weiter"
+  },
+  "products": {
+    "add_to_cart": "In die Tasche",
+    "sold_out": "Ausverkauft",
+    "unavailable": "Nicht verfügbar",
+    "sale": "Sale",
+    "colour": "Farbe",
+    "quantity": "Menge"
+  },
+  "cart": {
+    "title": "Deine Tasche",
+    "empty": "Deine Tasche ist leer",
+    "subtotal": "Zwischensumme",
+    "checkout": "Zur Kasse",
+    "remove": "Entfernen",
+    "taxes": "Inkl. MwSt. Versand wird an der Kasse berechnet."
+  }
+}

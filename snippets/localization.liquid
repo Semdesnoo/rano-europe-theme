@@ -21,13 +21,31 @@
         <summary class="loc__btn" aria-label="Country / currency">
           {{ localization.country | image_url: width: 32 | image_tag: class: 'loc__flag', alt: '', width: 16, height: 12 }}<span>{{ localization.country.name }} ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }})</span>{% render 'icon', name: 'caret-down' %}
         </summary>
-        <ul class="loc__list loc__list--countries" role="list">
-          {%- for c in localization.available_countries -%}
-            <li><button type="submit" name="country_code" value="{{ c.iso_code }}"{% if c.iso_code == localization.country.iso_code %} aria-current="true"{% endif %}>
-              {{ c | image_url: width: 32 | image_tag: class: 'loc__flag', alt: '', width: 16, height: 12, loading: 'lazy' }}<span>{{ c.name }}</span><small>{{ c.currency.iso_code }} {{ c.currency.symbol }}</small>
-            </button></li>
-          {%- endfor -%}
-        </ul>
+        <div class="loc__list loc__list--countries" data-loc-panel>
+          <label class="loc__search"><span class="visually-hidden">Search country</span>
+            {% render 'icon', name: 'search' %}<input type="search" placeholder="Search country" autocomplete="off" data-loc-search>
+          </label>
+          {%- liquid
+            # Most visited markets first, then the rest A-Z. Language follows the country when that language is enabled.
+            assign top = 'US,GB,AU,NL,DE,BE,FR,IT,ES,CH' | split: ','
+            assign langs = 'NL:nl,BE:nl,DE:de,AT:de,CH:de,LU:fr,FR:fr,IT:it,SM:it,ES:es,MX:es,AR:es,PT:pt,BR:pt,DK:da,SE:sv,NO:nb,FI:fi,PL:pl,JP:ja,KR:ko,CN:zh-CN,TW:zh-TW' | split: ','
+            assign enabled = localization.available_languages | map: 'iso_code' | join: ','
+          -%}
+          <ul role="list" data-loc-items>
+            {%- for code in top -%}
+              {%- assign c = localization.available_countries | where: 'iso_code', code | first -%}
+              {%- if c -%}{% render 'loc-country', c: c, langs: langs, enabled: enabled %}{%- endif -%}
+            {%- endfor -%}
+            {%- assign sep = true -%}
+            {%- for c in localization.available_countries -%}
+              {%- if top contains c.iso_code -%}{%- continue -%}{%- endif -%}
+              {% render 'loc-country', c: c, langs: langs, enabled: enabled, sep: sep %}
+              {%- assign sep = false -%}
+            {%- endfor -%}
+          </ul>
+          <p class="loc__empty" data-loc-empty hidden>No country found</p>
+        </div>
+        <input type="hidden" name="language_code" value="" data-loc-lang disabled>
       </details>
     {%- endif -%}
   {%- endform -%}
